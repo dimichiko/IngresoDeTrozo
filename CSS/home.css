@@ -1,0 +1,101 @@
+.home-container {
+    width: 100%;
+    display: grid;
+    min-height: 100vh;
+    border-color: var(--dl-color-theme-neutral-dark);
+    border-style: groove;
+    border-width: 1px;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.home-button16 {
+    width: 252px;
+    height: 176px;
+    display: grid;
+    place-items: start;
+    border-style: ridge;
+    background-color: #FFD700;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.home-button18 {
+    width: 252px;
+    height: 176px;
+    background-color: #FFD700;
+}
+
+.home-button22 {
+    width: 252px;
+    height: 169px;
+    background-color: #FFD700;
+}
+
+.home-button20 {
+    width: 252px;
+    height: 176px;
+    background-color: #FFD700;
+}
+
+.home-button24 {
+    width: 252px;
+    height: 176px;
+    margin-right: 57px;
+    background-color: #FF4500;
+}
+
+.home-button26 {
+    width: 252px;
+    height: 176px;
+    margin-right: 57px;
+    background-color: #FF4500;
+}
+
+.home-button28 {
+    width: 252px;
+    height: 176px;
+    background-color: #FF4500;
+}
+
+.home-button30 {
+    width: 252px;
+    height: 176px;
+    background-color: #FF4500;
+}
+
+.home-button32 {
+    width: 252px;
+    height: 176px;
+    background-color: #FF4500;
+}
+
+.home-button34 {
+    width: 252px;
+    height: 176px;
+    background-color: #32CD32;
+}
+
+.home-button36 {
+    width: 252px;
+    height: 176px;
+    background-color: #32CD32;
+}
+
+.home-button38 {
+    width: 252px;
+    height: 176px;
+    background-color: #32CD32;
+}
+
+.home-button40 {
+    width: 252px;
+    height: 176px;
+    background-color: #32CD32;
+}
+
+.home-button1 {
+    width: 252px;
+    height: 176px;
+    background-color: #1E90FF;
+}
