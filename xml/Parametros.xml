@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BaseParametro>
+  <Empresa cod_empresa="1" nom_empresa="AAH" ></Empresa>
+  <Empresa cod_empresa="2" nom_empresa="ASC" ></Empresa>
+  <Empresa cod_empresa="4" nom_empresa="AAH-Servicios" ></Empresa>
+  <Empresa cod_empresa="3" nom_empresa="CAH" ></Empresa>
+  <Empresa cod_empresa="5" nom_empresa="FAY" ></Empresa>
+  <Empresa cod_empresa="6" nom_empresa="IAH" ></Empresa>
+  <Empresa cod_empresa="7" nom_empresa="TRC" ></Empresa>
+  <Empresa cod_empresa="8" nom_empresa="FAH" ></Empresa>
+  <Empresa cod_empresa="9" nom_empresa="ALM" ></Empresa>
+  <Empresa cod_empresa="11" nom_empresa="ANI" ></Empresa>
+
+  <Area cod_area="1" nom_area="Dashboard" ></Area>
+  <Area cod_area="1" nom_area="Forestal" ></Area>
+  <Area cod_area="2" nom_area="Operaciones" ></Area>
+  <Area cod_area="3" nom_area="Trading" ></Area>
+  <Area cod_area="4" nom_area="Servicios" ></Area>
+  <Area cod_area="5" nom_area="Contabilidad" ></Area>
+  <Area cod_area="6" nom_area="Gerencia" ></Area>
+
+  <Ano cod_ano="2021" nom_ano="2021"></Ano>
+  <Ano cod_ano="2022" nom_ano="2022"></Ano>
+  <Ano cod_ano="2023" nom_ano="2023"></Ano>
+  <Ano cod_ano="2024" nom_ano="2024"></Ano>
+
+  <Mes cod_mes="12" nom_mes="Diciembre"></Mes>
+  <Mes cod_mes="11" nom_mes="Noviembre"></Mes>
+  <Mes cod_mes="10" nom_mes="Octubre"></Mes>
+  <Mes cod_mes="9" nom_mes="Septiembre"></Mes>
+  <Mes cod_mes="8" nom_mes="Agosto"></Mes>
+  <Mes cod_mes="7" nom_mes="Julio"></Mes>
+  <Mes cod_mes="6" nom_mes="Junio"></Mes>
+  <Mes cod_mes="5" nom_mes="Mayo"></Mes>
+  <Mes cod_mes="4" nom_mes="Abril"></Mes>
+  <Mes cod_mes="3" nom_mes="Marzo"></Mes>
+  <Mes cod_mes="2" nom_mes="Febrero"></Mes>
+  <Mes cod_mes="1" nom_mes="Enero"></Mes>
+
+  <Reporte cod_reporte="1" nom_reporte="Bono de Produccion ASC"></Reporte>
+  <Reporte cod_reporte="2" nom_reporte="Informacion de Despacho"></Reporte>
+  <!---><Reporte cod_reporte="3" nom_reporte="Proformas a Proveedores"></Reporte>-->
+  <Reporte cod_reporte="4" nom_reporte="Compra Trozos"></Reporte>
+  <Reporte cod_reporte="5" nom_reporte="Compra de Maderas y Servicios"></Reporte>
+  <Reporte cod_reporte="6" nom_reporte="Compra de Astillas"></Reporte>
+  <Reporte cod_reporte="7" nom_reporte="Venta Trozos"></Reporte>
+  <Reporte cod_reporte="8" nom_reporte="Venta de Madera por Estado"></Reporte>
+  <Reporte cod_reporte="9" nom_reporte="Venta de Astillas"></Reporte>
+  <Reporte cod_reporte="10" nom_reporte="Balance de Negocios"></Reporte>
+  <Reporte cod_reporte="11" nom_reporte="Liquidacion de Transportistas"></Reporte>
+    <!--<Reporte cod_reporte="12" nom_reporte="Informe diario ASC"></Reporte>
+<Reporte cod_reporte="13" nom_reporte="Informe Entregas Area Forestal"></Reporte>-->
+  <Reporte cod_reporte="14" nom_reporte="Detalle Exportaciones"></Reporte>
+  <Reporte cod_reporte="15" nom_reporte="Resumen Exportaciones"></Reporte>
+  <!--<Reporte cod_reporte="16" nom_reporte="Bono de Produccion AAH"></Reporte>
+  <Reporte cod_reporte="17" nom_reporte="Informe diario"></Reporte>-->
+
+
+  <Exportacion cod_exp="1" nom_exp="Trozos - Compra"></Exportacion>
+  <Exportacion cod_exp="2" nom_exp="Trozos - Consumo"></Exportacion>
+  <Exportacion cod_exp="3" nom_exp="Trozos - Venta"></Exportacion>
+  <Exportacion cod_exp="4" nom_exp="Madera - Compra"></Exportacion>
+  <Exportacion cod_exp="5" nom_exp="Madera - Produccion"></Exportacion>
+  <Exportacion cod_exp="6" nom_exp="Madera - Consumo"></Exportacion>
+  <Exportacion cod_exp="7" nom_exp="Madera - Secado Produccion"></Exportacion>
+  <Exportacion cod_exp="8" nom_exp="Madera - Secado Consumo"></Exportacion>
+  <Exportacion cod_exp="9" nom_exp="Madera - Despacho"></Exportacion>
+  <Exportacion cod_exp="10" nom_exp="Astillas - Compra"></Exportacion>
+  <Exportacion cod_exp="11" nom_exp="Astillas - Venta"></Exportacion>
+
+  <HT codHT="1" nomHT="SI"></HT>
+  <HT codHT="0" nomHT="NO"></HT>
+
+  <MovCV cod_mov="C" nom_mov="Compra"></MovCV>
+  <MovCV cod_mov="V" nom_mov="Venta"></MovCV>
+
+  <Estado_Usuario cod_estado="1" nom_estado="Activo"></Estado_Usuario>
+  <Estado_Usuario cod_estado="2" nom_estado="Deshabilitado"></Estado_Usuario>
+
+  <TipoDocCont cod_doc="1" nom_doc="Libro Mayor"></TipoDocCont>
+  <TipoDocCont cod_doc="2" nom_doc="DTE SII (Registro)"></TipoDocCont>
+  <TipoDocCont cod_doc="3" nom_doc="DTE DF"></TipoDocCont>
+  <TipoDocCont cod_doc="4" nom_doc="Cotejo RCV SII/DF"></TipoDocCont>
+  <TipoDocCont cod_doc="5" nom_doc="DTE SII (Pendiente)"></TipoDocCont>
+
+  <Area_Cont cod_area_cont="1" nom_area_cont="Area 1"></Area_Cont>
+
+
+  <Subarea cod_subarea="1" nom_subarea="Sub Area 1"></Subarea>
+
+
+  <Estado_AF cod_estado="1" nom_estado="Bueno"></Estado_AF>
+  <Estado_AF cod_estado="2" nom_estado="Regular"></Estado_AF>
+  <Estado_AF cod_estado="3" nom_estado="Malo"></Estado_AF>
+
+
+  <Cuenta_Cont cod_cuentacont="1212101001" nom_cuentacont="TERRENOS"></Cuenta_Cont>
+  <Cuenta_Cont cod_cuentacont="1212102001" nom_cuentacont="EDIFICACION Y CONSTRUCCION"></Cuenta_Cont>
+  <Cuenta_Cont cod_cuentacont="1212102002" nom_cuentacont="INSTALACIONES"></Cuenta_Cont>
+  <Cuenta_Cont cod_cuentacont="1212102003" nom_cuentacont="PROYECTOS EN EJECUCCION"></Cuenta_Cont>
+  <Cuenta_Cont cod_cuentacont="1212103001" nom_cuentacont="MAQUINARIAS"></Cuenta_Cont>
+  <Cuenta_Cont cod_cuentacont="1212103003" nom_cuentacont="MUEBLES Y UTILES"></Cuenta_Cont>
+  <Cuenta_Cont cod_cuentacont="1212103004" nom_cuentacont="EQUIPOS COMPUTACIONALES"></Cuenta_Cont>
+  <Cuenta_Cont cod_cuentacont="1212103005" nom_cuentacont="HERRAMIENTAS"></Cuenta_Cont>
+  <Cuenta_Cont cod_cuentacont="1212103006" nom_cuentacont="EQUIPOS RODANTES"></Cuenta_Cont>
+  <Cuenta_Cont cod_cuentacont="1212106001" nom_cuentacont="D A EDIFICACION Y CONSTRUCCION"></Cuenta_Cont>
+  <Cuenta_Cont cod_cuentacont="1212106002" nom_cuentacont="D A INSTALACIONES"></Cuenta_Cont>
+  <Cuenta_Cont cod_cuentacont="1212107001" nom_cuentacont="D A MAQUINARIAS"></Cuenta_Cont>
+  <Cuenta_Cont cod_cuentacont="1212107003" nom_cuentacont="D A MUEBLES Y UTILES"></Cuenta_Cont>
+  <Cuenta_Cont cod_cuentacont="1212107004" nom_cuentacont="D A EQUIPOS COMPUTACIONALES"></Cuenta_Cont>
+  <Cuenta_Cont cod_cuentacont="1212107005" nom_cuentacont="D A LEASING"></Cuenta_Cont>
+  <Cuenta_Cont cod_cuentacont="1212107006" nom_cuentacont="D A HERRAMIENTAS"></Cuenta_Cont>
+  <Cuenta_Cont cod_cuentacont="1212107007" nom_cuentacont="D A EQUIPOS RODANTES"></Cuenta_Cont>
+
+
+  <Usuario_Cod cod_usuario="1" abrev_usu="Gian Luca De Luigi"></Usuario_Cod>
+  <Usuario_Cod cod_usuario="2" abrev_usu="Juan Carlos Utreras"></Usuario_Cod>
+  <Usuario_Cod cod_usuario="3" abrev_usu="Jose Luis Friz"></Usuario_Cod>
+  <Usuario_Cod cod_usuario="4" abrev_usu="Manuel Dehays"></Usuario_Cod>
+  <Usuario_Cod cod_usuario="5" abrev_usu="Marcel didier"></Usuario_Cod>
+  <Usuario_Cod cod_usuario="6" abrev_usu="Pedro Caamaño"></Usuario_Cod>
+  <Usuario_Cod cod_usuario="7" abrev_usu="Piero de Luigi"></Usuario_Cod>
+  <Usuario_Cod cod_usuario="8" abrev_usu="Sergio Leiva"></Usuario_Cod>
+  <Usuario_Cod cod_usuario="9" abrev_usu="Claudio Ponce"></Usuario_Cod>
+  <Usuario_Cod cod_usuario="10" abrev_usu="Marla Tapia"></Usuario_Cod>
+  <Usuario_Cod cod_usuario="11" abrev_usu="Claudio Ponce"></Usuario_Cod>
+  <Usuario_Cod cod_usuario="12" abrev_usu="Julia Pacheco"></Usuario_Cod>
+  <Usuario_Cod cod_usuario="13" abrev_usu="Cristian Gonzalez"></Usuario_Cod>
+
+  <Usuario_Abrev cod_usuario="1" abrev_usu="Gian Luca De Luigi"></Usuario_Abrev>
+  <Usuario_Abrev cod_usuario="2" abrev_usu="Juan Carlos Utreras"></Usuario_Abrev>
+  <Usuario_Abrev cod_usuario="3" abrev_usu="Jose Luis Friz"></Usuario_Abrev>
+  <Usuario_Abrev cod_usuario="4" abrev_usu="Manuel Dehays"></Usuario_Abrev>
+  <Usuario_Abrev cod_usuario="5" abrev_usu="Marcel didier"></Usuario_Abrev>
+  <Usuario_Abrev cod_usuario="6" abrev_usu="Pedro Caamaño"></Usuario_Abrev>
+  <Usuario_Abrev cod_usuario="7" abrev_usu="Piero de Luigi"></Usuario_Abrev>
+  <Usuario_Abrev cod_usuario="8" abrev_usu="Sergio Leiva"></Usuario_Abrev>
+  <Usuario_Abrev cod_usuario="9" abrev_usu="Claudio Ponce"></Usuario_Abrev>
+  
+
+  <Diametro_trozo cod_dia="16" nom_dia="16"></Diametro_trozo>
+  <Diametro_trozo cod_dia="18" nom_dia="18"></Diametro_trozo>
+  <Diametro_trozo cod_dia="20" nom_dia="20"></Diametro_trozo>
+  
+  <Tipo_Mov_Trozo cod_mov_tr="1" nom_mov_tr="Recepcion"></Tipo_Mov_Trozo>
+  <Tipo_Mov_Trozo cod_mov_tr="2" nom_mov_tr="Consumo"></Tipo_Mov_Trozo>
+  <Tipo_Mov_Trozo cod_mov_tr="3" nom_mov_tr="Merma"></Tipo_Mov_Trozo>
+
+
+  <CCosto cod_cc="100" nom_cc="CC1"></CCosto>
+  <CCosto cod_cc="200" nom_cc="CC2"></CCosto>
+  <CCosto cod_cc="300" nom_cc="CC3"></CCosto>
+  <CCosto cod_cc="400" nom_cc="CC4"></CCosto>
+
+
+
+  <CtaContable cod_ccta="1" nom_ccta="Cta.Contable 1"></CtaContable>
+  <CtaContable cod_ccta="2" nom_ccta="Cta.Contable 2"></CtaContable>
+  <CtaContable cod_ccta="3" nom_ccta="Cta.Contable 3"></CtaContable>
+  <CtaContable cod_ccta="4" nom_ccta="Cta.Contable 4"></CtaContable>
+  <CtaContable cod_ccta="5" nom_ccta="Cta.Contable 5"></CtaContable>
+  <CtaContable cod_ccta="6" nom_ccta="Cta.Contable 6"></CtaContable>
+
+
+  <Bodega cod_bodega="1" nom_bodega="Bodega 1"></Bodega>
+  <Bodega cod_bodega="2" nom_bodega="Bodega 2"></Bodega>
+  <Bodega cod_bodega="3" nom_bodega="Bodega 3"></Bodega>
+  <Bodega cod_bodega="4" nom_bodega="Bodega 4"></Bodega>
+
+
+
+  <Maquinaria cod_maq="1" nom_maq="Maquinaria 1"></Maquinaria>
+  <Maquinaria cod_maq="2" nom_maq="Maquinaria 2"></Maquinaria>
+  <Maquinaria cod_maq="3" nom_maq="Maquinaria 3"></Maquinaria>
+
+  <Importacion cod_Tipoimp="1" nom_TipoImp="Orden de Compra"></Importacion>
+  
+  
+</BaseParametro>
