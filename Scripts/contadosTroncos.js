@@ -1,30 +1,24 @@
-﻿let lastDiameter = null;
+﻿let modoResta = false;
 
-$(document).ready(function () {
-    // Cargar datos iniciales desde la API
-    $.get('/api/trunk', function (data) {
-        if (data) {
-            data.forEach(trunk => {
-                $(`#count-${trunk.diameter}`).text(trunk.count);
-            });
-        }
-    });
-});
-
-function updateCounter(diameter, action) {
-    if (action === 'increment') {
-        lastDiameter = diameter;
-    }
-
-    $.post(`/api/trunk/${action}/${diameter}`, function (data) {
-        if (data) {
-            data.forEach(trunk => {
-                $(`#count-${trunk.diameter}`).text(trunk.count);
-            });
-        }
-    });
+function activarModoResta(event) {
+    event.preventDefault();
+    modoResta = true;
 }
 
-function getLastDiameter() {
-    return lastDiameter;
+function manejarClick(id, event) {
+    event.preventDefault();
+    const btn = document.getElementById(id);
+    let count = parseInt(btn.dataset.count);
+
+    if (modoResta) {
+        if (count > 0) count--;
+        modoResta = false;
+    } else {
+        count++;
+    }
+
+    btn.dataset.count = count;
+    const diametro = id.split('-')[1];
+    btn.innerText = `Diámetro ${diametro} | Contador: ${count}`;
+    localStorage.setItem(id, count);
 }

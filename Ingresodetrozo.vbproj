@@ -98,6 +98,7 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="contartrozos.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -114,10 +115,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
-    <Content Include="ConteoTroncos.aspx.cs" />
     <Content Include="CSS\home.css" />
     <Content Include="CSS\style.css" />
-    <Content Include="ConteoTroncos.aspx" />
     <Content Include="Global.asax" />
     <Content Include="JS\formulario.js" />
     <Content Include="JS\formulario2.js" />
@@ -134,11 +133,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CSS\not-found.css" />
-    <Compile Include="ConteoTroncos.aspx.designer.vb">
-      <DependentUpon>ConteoTroncos.aspx</DependentUpon>
+    <Compile Include="contartrozos.aspx.designer.vb">
+      <DependentUpon>contartrozos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ConteoTroncos.aspx.vb">
-      <DependentUpon>ConteoTroncos.aspx</DependentUpon>
+    <Compile Include="contartrozos.aspx.vb">
+      <DependentUpon>contartrozos.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Global.asax.vb">
