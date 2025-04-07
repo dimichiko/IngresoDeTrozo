@@ -1,15 +1,18 @@
+/* Contenedor principal */
 .home-container {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 0;
-    width: 100%;
-    min-height: 100vh;
-    border-color: var(--dl-color-theme-neutral-dark);
-    border-style: groove;
-    border-width: 1px;
+    grid-template-columns: repeat(6, 1fr); /* 6 columnas en pantallas grandes */
+    grid-auto-rows: 1fr; /* Las filas se ajustan automáticamente */
+    gap: 8px; /* Espaciado entre los elementos */
+    width: 100vw; /* Ocupa el 100% del ancho de la ventana */
+    height: 100vh; /* Ocupa el 100% del alto de la ventana */
+    border: 1px groove var(--dl-color-theme-neutral-dark);
+    padding: 10px; /* Espaciado interno */
+    box-sizing: border-box; /* Incluye el padding en el tamaño total */
+    background-color: #f9f9f9; /* Fondo claro para mejor contraste */
 }
 
+    /* Botones */
     .home-container > div {
         display: flex;
         justify-content: center;
@@ -17,54 +20,57 @@
     }
 
         .home-container > div > button {
-            width: 100%;
-            height: 100%;
-            border: 1px solid black;
+            width: 100%; /* Ocupa todo el ancho disponible */
+            height: 100%; /* Ocupa todo el alto disponible */
+            border: 2px solid black; /* Borde más visible */
             font-size: 16px;
-            background-color: #FFD700;
-            display: grid;
-            place-items: center;
+            background-color: #FFD700; /* Color dorado */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
             border-style: ridge;
             cursor: pointer;
-            transition: background-color 0.2s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Transición más fluida */
+            border-radius: 5px; /* Bordes redondeados */
         }
 
+            /* Efecto hover */
+            .home-container > div > button:hover {
+                background-color: #FFC107; /* Color más oscuro al pasar el mouse */
+                transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+            }
+
+        /* Primer elemento (azul) ocupa toda la fila superior */
+        .home-container > div:first-child {
+            grid-column: span 6; /* Ocupa las 6 columnas en pantallas grandes */
+            background-color: #007BFF; /* Fondo azul */
+        }
+
+    /* Botón especial (último) */
     .home-container button:last-child {
-        background-color: #b30000;
+        background-color: #b30000; /* Botón especial en rojo oscuro */
         color: white;
         font-weight: bold;
+        border-radius: 5px; /* Bordes redondeados */
     }
 
-.square {
-    width: 132px;
-    height: 129px;
-    background-color: lightblue;
-    margin: 5px;
-    display: inline-block;
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-    .square {
-        width: 132px;
-        height: 129px;
-    }
-}
-
-@media (min-width: 1280px) {
-    .square {
-        width: 252px;
-        height: 504px;
-    }
-}
-
+/* Diseño para móviles */
 @media (max-width: 767px) {
     .home-container {
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(6, 1fr);
+        grid-template-columns: repeat(6, 1fr); /* 6 columnas en móviles */
+        grid-template-rows: repeat(3, 1fr); /* 3 filas horizontales */
+        gap: 6px; /* Espaciado reducido */
     }
 
+        /* El primer elemento ocupa toda la fila superior */
+        .home-container > div:first-child {
+            grid-column: span 6; /* Ocupa las 6 columnas */
+            grid-row: span 1; /* Ocupa solo la primera fila */
+        }
+
+        /* Los demás elementos se distribuyen normalmente */
         .home-container > div > button {
-            height: 50px;
-            font-size: 14px;
+            font-size: 14px; /* Tamaño de fuente reducido */
         }
 }
