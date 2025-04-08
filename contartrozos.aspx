@@ -1,47 +1,68 @@
-﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="contartrozos.aspx.vb" Inherits="Ingresodetrozo.contartrozos" %>
+﻿<%@ Page Language="VB" AutoEventWireup="true" CodeBehind="contartrozos.aspx.vb" Inherits="Ingresodetrozo.contartrozos" %>
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<html>
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Conteo de Troncos</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="CSS/home.css" />
 </head>
 <body>
     <form id="form1" runat="server">
-      <div id="total-display">Total: 0</div>
-      <div id="volumen-display">Volumen Total: 0</div>
-      <button onclick="resetearContadores(event)">Reset</button>
-<div class="home-container">
-    <button id="btn-16" onclick="manejarClick('btn-16', event)" data-count="0">Diámetro 16 | Contador: 0</button>
-    <button id="btn-18" onclick="manejarClick('btn-18', event)" data-count="0">Diámetro 18 | Contador: 0</button>
-    <button id="btn-20" onclick="manejarClick('btn-20', event)" data-count="0">Diámetro 20 | Contador: 0</button>
-    <button id="btn-22" onclick="manejarClick('btn-22', event)" data-count="0">Diámetro 22 | Contador: 0</button>
-    <button id="btn-24" onclick="manejarClick('btn-24', event)" data-count="0">Diámetro 24 | Contador: 0</button>
-    <button id="btn-26" onclick="manejarClick('btn-26', event)" data-count="0">Diámetro 26 | Contador: 0</button>
-    <button id="btn-28" onclick="manejarClick('btn-28', event)" data-count="0">Diámetro 28 | Contador: 0</button>
-    <button id="btn-30" onclick="manejarClick('btn-30', event)" data-count="0">Diámetro 30 | Contador: 0</button>
-    <button id="btn-32" onclick="manejarClick('btn-32', event)" data-count="0">Diámetro 32 | Contador: 0</button>
-    <button id="btn-34" onclick="manejarClick('btn-34', event)" data-count="0">Diámetro 34 | Contador: 0</button>
-    <button id="btn-36" onclick="manejarClick('btn-36', event)" data-count="0">Diámetro 36 | Contador: 0</button>
-    <button id="btn-38" onclick="manejarClick('btn-38', event)" data-count="0">Diámetro 38 | Contador: 0</button>
-    <button id="btn-40" onclick="manejarClick('btn-40', event)" data-count="0">Diámetro 40 | Contador: 0</button>
-    <button id="btn-42" onclick="manejarClick('btn-42', event)" data-count="0">Diámetro 42 | Contador: 0</button>
-    <button id="btn-44" onclick="manejarClick('btn-44', event)" data-count="0">Diámetro 44 | Contador: 0</button>
-    <button id="btn-46" onclick="manejarClick('btn-46', event)" data-count="0">Diámetro 46 | Contador: 0</button>
-    <button id="btn-48" onclick="manejarClick('btn-48', event)" data-count="0">Diámetro 48 | Contador: 0</button>
+        <!-- Contenedor principal deslizante -->
+        <div class="slider-container">
+            <!-- Pantalla 1 -->
+            <div class="slider-screen">
+                <div class="header">
+                    <div id="total-display-1">Total: 0</div>
+                    <div id="volumen-display-1">Volumen Total: 0</div>
+                </div>
+                <div class="grid-container">
+                    <button id="btn-16" onclick="manejarClick('btn-16', event)" data-count="0">Diámetro 16</button>
+                    <button id="btn-18" onclick="manejarClick('btn-18', event)" data-count="0">Diámetro 18</button>
+                    <button id="btn-20" onclick="manejarClick('btn-20', event)" data-count="0">Diámetro 20</button>
+                    <button id="btn-22" onclick="manejarClick('btn-22', event)" data-count="0">Diámetro 22</button>
+                    <button id="btn-24" onclick="manejarClick('btn-24', event)" data-count="0">Diámetro 24</button>
+                    <button id="btn-26" onclick="manejarClick('btn-26', event)" data-count="0">Diámetro 26</button>
+                    <button id="btn-28" onclick="manejarClick('btn-28', event)" data-count="0">Diámetro 28</button>
+                    <button id="btn-30" onclick="manejarClick('btn-30', event)" data-count="0">Diámetro 30</button>
+                </div>
+                <div class="footer">
+                    <button type="button" onclick="resetearContadores(event)">Reset</button>
+                    <button type="button" onclick="irAlResumen(event)">Ir al Resumen</button>
+                </div>
+            </div>
 
-    <button onclick="activarModoResta(event)">Disminuir el siguiente</button>
-</div>
+            <!-- Pantalla 2 -->
+            <div class="slider-screen">
+                <div class="header">
+                    <div id="total-display-2">Total: 0</div>
+                    <div id="volumen-display-2">Volumen Total: 0</div>
+                </div>
+                <div class="grid-container">
+                    <button id="btn-32" onclick="manejarClick('btn-32', event)" data-count="0">Diámetro 32</button>
+                    <button id="btn-34" onclick="manejarClick('btn-34', event)" data-count="0">Diámetro 34</button>
+                    <button id="btn-36" onclick="manejarClick('btn-36', event)" data-count="0">Diámetro 36</button>
+                    <button id="btn-38" onclick="manejarClick('btn-38', event)" data-count="0">Diámetro 38</button>
+                    <button id="btn-40" onclick="manejarClick('btn-40', event)" data-count="0">Diámetro 40</button>
+                    <button id="btn-42" onclick="manejarClick('btn-42', event)" data-count="0">Diámetro 42</button>
+                    <button id="btn-44" onclick="manejarClick('btn-44', event)" data-count="0">Diámetro 44</button>
+                    <button id="btn-46" onclick="manejarClick('btn-46', event)" data-count="0">Diámetro 46</button>
+                    <button id="btn-48" onclick="manejarClick('btn-48', event)" data-count="0">Diámetro 48</button>
+                </div>
+                <div class="footer">
+                    <button type="button" onclick="resetearContadores(event)">Reset</button>
+                    <button type="button" onclick="irAlResumen(event)">Ir al Resumen</button>
+                </div>
+            </div>
+        </div>
     </form>
 
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/Scripts/contadosTroncos.js"></script>
 </body>
 </html>
-
 
 
 

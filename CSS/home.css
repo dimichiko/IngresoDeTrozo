@@ -1,76 +1,105 @@
-/* Contenedor principal */
-.home-container {
+/* Contenedor deslizante */
+.slider-container {
+    display: flex;
+    overflow-x: scroll; /* Permite desplazamiento horizontal */
+    scroll-snap-type: x mandatory; /* Desplazamiento suave entre pantallas */
+    width: 100vw;
+    height: 100vh;
+}
+
+.slider-screen {
+    flex: 0 0 100%; /* Cada pantalla ocupa el 100% del ancho */
+    scroll-snap-align: start; /* Alinea cada pantalla al inicio */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* General */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    font-size: 24px;
+    margin: 20px 0;
+}
+
+/* Contenedor de botones con CSS Grid */
+.grid-container {
     display: grid;
-    grid-template-columns: repeat(6, 1fr); /* 6 columnas en pantallas grandes */
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Botones responsivos */
     grid-auto-rows: 1fr; /* Las filas se ajustan automáticamente */
-    gap: 8px; /* Espaciado entre los elementos */
-    width: 100vw; /* Ocupa el 100% del ancho de la ventana */
-    height: 100vh; /* Ocupa el 100% del alto de la ventana */
-    border: 1px groove var(--dl-color-theme-neutral-dark);
-    padding: 10px; /* Espaciado interno */
-    box-sizing: border-box; /* Incluye el padding en el tamaño total */
-    background-color: #f9f9f9; /* Fondo claro para mejor contraste */
+    gap: 10px; /* Espaciado entre los botones */
+    width: 100vw; /* Ocupa todo el ancho de la ventana */
+    height: 100vh; /* Ocupa todo el alto de la ventana */
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
 }
 
     /* Botones */
-    .home-container > div {
+    .grid-container button {
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-
-        .home-container > div > button {
-            width: 100%; /* Ocupa todo el ancho disponible */
-            height: 100%; /* Ocupa todo el alto disponible */
-            border: 2px solid black; /* Borde más visible */
-            font-size: 16px;
-            background-color: #FFD700; /* Color dorado */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            border-style: ridge;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease; /* Transición más fluida */
-            border-radius: 5px; /* Bordes redondeados */
-        }
-
-            /* Efecto hover */
-            .home-container > div > button:hover {
-                background-color: #FFC107; /* Color más oscuro al pasar el mouse */
-                transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
-            }
-
-        /* Primer elemento (azul) ocupa toda la fila superior */
-        .home-container > div:first-child {
-            grid-column: span 6; /* Ocupa las 6 columnas en pantallas grandes */
-            background-color: #007BFF; /* Fondo azul */
-        }
-
-    /* Botón especial (último) */
-    .home-container button:last-child {
-        background-color: #b30000; /* Botón especial en rojo oscuro */
+        text-align: center;
+        font-size: 16px;
+        background-color: #007BFF;
         color: white;
-        font-weight: bold;
-        border-radius: 5px; /* Bordes redondeados */
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        padding: 10px;
     }
 
-/* Diseño para móviles */
-@media (max-width: 767px) {
-    .home-container {
-        grid-template-columns: repeat(6, 1fr); /* 6 columnas en móviles */
-        grid-template-rows: repeat(3, 1fr); /* 3 filas horizontales */
-        gap: 6px; /* Espaciado reducido */
-    }
-
-        /* El primer elemento ocupa toda la fila superior */
-        .home-container > div:first-child {
-            grid-column: span 6; /* Ocupa las 6 columnas */
-            grid-row: span 1; /* Ocupa solo la primera fila */
+        .grid-container button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
         }
 
-        /* Los demás elementos se distribuyen normalmente */
-        .home-container > div > button {
-            font-size: 14px; /* Tamaño de fuente reducido */
-        }
+/* Totales */
+#total-display, #volumen-display {
+    text-align: center;
+    font-size: 18px;
+    margin: 10px 0;
 }
+
+/* Botón de Reset y Resumen */
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #FF5733;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+    button:hover {
+        background-color: #C13C1A;
+    }
+
+.grid-container button {
+    padding: 10px;
+    font-size: 14px;
+    background-color: #FF5733;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+    .grid-container button:hover {
+        background-color: #C13C1A;
+    }
