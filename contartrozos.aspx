@@ -10,14 +10,17 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <!-- Contenedor principal deslizante -->
         <div class="slider-container">
-            <!-- Pantalla 1 -->
             <div class="slider-screen">
-                <div class="header">
-                    <div id="total-display-1">Total: 0</div>
-                    <div id="volumen-display-1">Volumen Total: 0</div>
+                 <div class="header">
+                 <div class="header-left">
+                   <span id="total-display-1">Total: 0</span>
+                   <span id="volumen-display-1">Volumen Total: 0 </span>
                 </div>
+                <div class="header-right">
+                   <button id="Resta-1" type="button" onclick="activarModoResta(event)">Modo Resta</button>
+               </div>
+               </div>
                 <div class="grid-container">
                     <button id="btn-16" onclick="manejarClick('btn-16', event)" data-count="0">Diámetro 16</button>
                     <button id="btn-18" onclick="manejarClick('btn-18', event)" data-count="0">Diámetro 18</button>
@@ -27,24 +30,32 @@
                     <button id="btn-26" onclick="manejarClick('btn-26', event)" data-count="0">Diámetro 26</button>
                     <button id="btn-28" onclick="manejarClick('btn-28', event)" data-count="0">Diámetro 28</button>
                     <button id="btn-30" onclick="manejarClick('btn-30', event)" data-count="0">Diámetro 30</button>
-                </div>
-                <div class="footer">
-                    <button type="button" onclick="resetearContadores(event)">Reset</button>
-                    <button type="button" onclick="irAlResumen(event)">Ir al Resumen</button>
-                </div>
-            </div>
-
-            <!-- Pantalla 2 -->
-            <div class="slider-screen">
-                <div class="header">
-                    <div id="total-display-2">Total: 0</div>
-                    <div id="volumen-display-2">Volumen Total: 0</div>
-                </div>
-                <div class="grid-container">
                     <button id="btn-32" onclick="manejarClick('btn-32', event)" data-count="0">Diámetro 32</button>
                     <button id="btn-34" onclick="manejarClick('btn-34', event)" data-count="0">Diámetro 34</button>
                     <button id="btn-36" onclick="manejarClick('btn-36', event)" data-count="0">Diámetro 36</button>
                     <button id="btn-38" onclick="manejarClick('btn-38', event)" data-count="0">Diámetro 38</button>
+                </div>
+                <div class="footer">
+                    <div class="footer-left">
+                        <button id="resetearContador-1" type="button" onclick="resetearContadores(event)">Reset</button>
+                </div>
+                    <div class="footer-right">
+                        <button id="irResumen-1" type="button" onclick="irAlResumen(event)">Resumen</button>
+                </div>
+                </div>
+            </div>
+
+            <div class="slider-screen">
+                <div class="header">
+                    <div class="header-left">
+                        <span id="total-display-2">Total: 0</span>
+                        <span id="volumen-display-2">Volumen Total: 0 </span>
+                </div>
+                <div class="header-right">
+                    <button id="Resta-2" type="button" onclick="activarModoResta(event)">Modo Resta</button>
+                </div>
+                </div>
+                <div class="grid-container">
                     <button id="btn-40" onclick="manejarClick('btn-40', event)" data-count="0">Diámetro 40</button>
                     <button id="btn-42" onclick="manejarClick('btn-42', event)" data-count="0">Diámetro 42</button>
                     <button id="btn-44" onclick="manejarClick('btn-44', event)" data-count="0">Diámetro 44</button>
@@ -52,14 +63,16 @@
                     <button id="btn-48" onclick="manejarClick('btn-48', event)" data-count="0">Diámetro 48</button>
                 </div>
                 <div class="footer">
-                    <button type="button" onclick="resetearContadores(event)">Reset</button>
-                    <button type="button" onclick="irAlResumen(event)">Ir al Resumen</button>
+                    <div class="footer-left">
+                        <button id="resetearContador-2" type="button" onclick="resetearContadores(event)">Reset</button>
                 </div>
+                    <div class="footer-right">
+                        <button id="irResumen-2" type="button" onclick="irAlResumen(event)">Resumen</button>
+                </div>
+               </div>
             </div>
         </div>
     </form>
-
-    <!-- Scripts -->
     <script src="/Scripts/contadosTroncos.js"></script>
 </body>
 </html>

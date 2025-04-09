@@ -16,7 +16,6 @@
             </tr>
         </thead>
         <tbody id="tabla-resumen">
-            <!-- Los datos se cargarán dinámicamente -->
         </tbody>
     </table>
     <div id="resumen-totales">

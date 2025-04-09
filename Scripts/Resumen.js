@@ -141,13 +141,11 @@ function guardarCambios() {
     alert('Cambios guardados correctamente.');
 }
 
-// Función para calcular el volumen de un tronco (igual que en contadosTroncos.js)
 function calcularVolumen(diametro) {
     return Math.PI * Math.pow(diametro / 2, 2) * 1; // Volumen de un cilindro con altura 1
 }
 
 function volverAlFormulario() {
-    // Intentar diferentes métodos de redirección
     try {
         window.location.href = 'contartrozos.aspx';
     } catch (e) {

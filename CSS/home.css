@@ -1,30 +1,52 @@
-/* Contenedor deslizante */
-.slider-container {
-    display: flex;
-    overflow-x: scroll; /* Permite desplazamiento horizontal */
-    scroll-snap-type: x mandatory; /* Desplazamiento suave entre pantallas */
-    width: 100vw;
-    height: 100vh;
-}
 
-.slider-screen {
-    flex: 0 0 100%; /* Cada pantalla ocupa el 100% del ancho */
-    scroll-snap-align: start; /* Alinea cada pantalla al inicio */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-/* General */
-body {
-    font-family: Arial, sans-serif;
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    width: 100%; 
+    padding: 10px;
+}
+
+.header-left {
+    flex: 1;
+    text-align: left;
+}
+
+    .header-left span {
+        display: block; 
+        margin: 5px 0; 
+    }
+
+.header-right {
+    flex: 1;
+    display: flex; 
+    justify-content: flex-end; 
+}
+
+#Resta-1, #Resta-2 {
+    width: 100%;
+    height: 100%; 
+    padding: 10px; 
+    background-color: #ff4444; 
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+    #Resta:hover {
+        background-color: #cc0000; 
+    }
 
 h1 {
     text-align: center;
@@ -32,74 +54,178 @@ h1 {
     margin: 20px 0;
 }
 
-/* Contenedor de botones con CSS Grid */
+.slider-container {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    width: 100vw;
+    height: 100vh;
+    scroll-behavior: smooth;
+}
+
+.slider-screen {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Botones responsivos */
-    grid-auto-rows: 1fr; /* Las filas se ajustan automáticamente */
-    gap: 10px; /* Espaciado entre los botones */
-    width: 100vw; /* Ocupa todo el ancho de la ventana */
-    height: 100vh; /* Ocupa todo el alto de la ventana */
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    width: 100%;
+    height: 100vh;
     padding: 10px;
-    box-sizing: border-box;
     background-color: #f9f9f9;
 }
 
-    /* Botones */
     .grid-container button {
         display: flex;
         justify-content: center;
         align-items: center;
-        text-align: center;
-        font-size: 16px;
-        background-color: #007BFF;
+        padding: 10px;
         color: white;
         border: none;
         border-radius: 10px;
         cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-        padding: 10px;
+        transition: all 0.2s ease;
+        font-size: 16px;
     }
 
         .grid-container button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+            transform: scale(1.05);
         }
 
-/* Totales */
+    .grid-container [id^="btn-1"],
+    .grid-container [id^="btn-2"],
+    #btn-16, #btn-18, #btn-20, #btn-22 {
+        background-color: #B3E5FC;
+    }
+
+        .grid-container [id^="btn-1"]:hover,
+        .grid-container [id^="btn-2"]:hover,
+        #btn-16:hover, #btn-18:hover, #btn-20:hover, #btn-22:hover {
+            background-color: #81D4FA;
+        }
+
+#btn-24, #btn-26, #btn-28 {
+    background-color: #FFF9C4;
+}
+
+    #btn-24:hover, #btn-26:hover, #btn-28:hover {
+        background-color: #FFE082;
+    }
+
+#btn-30, #btn-32, #btn-34, #btn-36, #btn-38, #btn-40, #btn-42, #btn-44, #btn-46, #btn-48 {
+    background-color: #F8BBD0;
+}
+
+    #btn-30:hover, #btn-32:hover, #btn-34:hover, #btn-36:hover, #btn-38:hover, #btn-40:hover, #btn-42:hover, #btn-44:hover, #btn-46:hover, #btn-48:hover {
+        background-color: #F48FB1;
+    }
+
 #total-display, #volumen-display {
     text-align: center;
     font-size: 18px;
     margin: 10px 0;
-}
-
-/* Botón de Reset y Resumen */
-button {
-    padding: 10px 15px;
-    font-size: 16px;
-    background-color: #FF5733;
+    background-color: #007BFF;
+    border-radius: 10px;
+    padding: 15px;
     color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 10px;
+    border: 2px solid #0056b3;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    width: 80%;
+    max-width: 500px;
 }
 
-    button:hover {
+button[type="reset"],
+button[type="submit"],
+#btn-resumen,
+#btn-resta {
+    padding: 12px 18px;
+    background-color: #FF5733;
+    margin: 10px;
+    color: white;
+    font-weight: bold;
+    border: 2px solid #C13C1A;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+    button[type="reset"]:hover,
+    button[type="submit"]:hover,
+    #btn-resumen:hover,
+    #btn-resta:hover {
         background-color: #C13C1A;
+        transform: scale(1.05);
     }
 
-.grid-container button {
-    padding: 10px;
-    font-size: 14px;
-    background-color: #FF5733;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 5px;
+#btn-resta {
+    background-color: #E74C3C;
+    border-color: #C0392B;
 }
 
-    .grid-container button:hover {
-        background-color: #C13C1A;
+    #btn-resta:hover {
+        background-color: #C0392B;
+    }
+
+#btn-resumen {
+    background-color: #3498DB;
+    border-color: #2980B9;
+}
+
+    #btn-resumen:hover {
+        background-color: #2980B9;
+    }
+
+.footer {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; 
+    padding: 10px;
+}
+
+.footer-left {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start; 
+}
+
+.footer-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#resetearContador-1, #resetearContador-2 {
+    width: 100%;
+    padding: 10px;
+    background-color: #FFB300;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+    #resetearContador-1, #resetearContador-2:hover {
+        background-color: #F57C00;
+    }
+
+#irResumen-1, #irResumen-2 {
+    width: 100%; 
+    padding: 10px;
+    background-color: #4CAF50; 
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+    #irResumen-1, #irResumen-2:hover {
+        background-color: #45a049;
     }

@@ -1,20 +1,16 @@
-﻿// Inicializar variables globales
-let contadorTotal = 0;
+﻿let contadorTotal = 0;
 let volumenTotal = 0;
-let modoResta = false; // Flag para determinar si el siguiente clic debe restar
+let modoResta = false;
 
-// Recuperar datos de localStorage al cargar la página
 const datosResumen = JSON.parse(localStorage.getItem('datosResumen')) || {
     total: 0,
     volumen: 0,
     contadores: {}
 };
 
-// Inicializar contadorTotal y volumenTotal con los datos de localStorage
 contadorTotal = datosResumen.total;
 volumenTotal = datosResumen.volumen;
 
-// Función para manejar clics en los botones de diámetro
 function manejarClick(id, event) {
     event.preventDefault();
     const btn = document.getElementById(id);
@@ -27,7 +23,7 @@ function manejarClick(id, event) {
     }
 
     if (modoResta) {
-        // Modo resta: disminuir el contador y actualizar totales
+      
         if (count > 0) {
             count--;
             contadorTotal--;
@@ -35,29 +31,27 @@ function manejarClick(id, event) {
         } else {
             alert(`El contador para el diámetro ${diametro} ya está en 0.`);
         }
-        modoResta = false; // Desactivar el modo resta después de un uso
+        modoResta = false;
     } else {
-        // Modo normal: incrementar el contador y actualizar totales
+       
         count++;
         contadorTotal++;
         volumenTotal += calcularVolumen(diametro);
     }
 
-    // Actualizar el botón
+   
     btn.dataset.count = count;
     btn.innerText = `Diámetro ${diametro} | Contador: ${count}`;
 
-    // Guardar los datos en localStorage
+  
     guardarDatosEnLocalStorage();
     actualizarTotales();
 }
 
-// Función para calcular el volumen de un tronco
 function calcularVolumen(diametro) {
-    return Math.PI * Math.pow(diametro / 2, 2) * 1; // Volumen de un cilindro con altura 1
+    return (diametro * diametro)* 3.2 / 10000;
 }
 
-// Función para guardar los datos en localStorage
 function guardarDatosEnLocalStorage() {
     const botones = document.querySelectorAll('.grid-container button');
     const datosResumen = {
@@ -77,7 +71,6 @@ function guardarDatosEnLocalStorage() {
     localStorage.setItem('datosResumen', JSON.stringify(datosResumen));
 }
 
-// Función para actualizar los totales en la interfaz
 function actualizarTotales() {
     const totalDisplay = document.querySelectorAll('[id^="total-display"]');
     totalDisplay.forEach((display) => {
@@ -90,14 +83,11 @@ function actualizarTotales() {
     });
 }
 
-// Función para activar el modo resta
 function activarModoResta(event) {
     event.preventDefault();
-    modoResta = true; // Activar el flag para restar en el siguiente clic
-    alert('Modo resta activado. El siguiente botón presionado restará.');
+    modoResta = true;
 }
 
-// Función para resetear los contadores
 function resetearContadores(event) {
     event.preventDefault();
     contadorTotal = 0;
@@ -114,17 +104,14 @@ function resetearContadores(event) {
     actualizarTotales();
 }
 
-// Función para redirigir al resumen
 function irAlResumen(event) {
     event.preventDefault();
     window.location.href = 'Resumen.aspx';
 }
 
-// Inicializar la interfaz con los datos de localStorage
 document.addEventListener('DOMContentLoaded', () => {
     const botones = document.querySelectorAll('.grid-container button');
 
-    // Cargar los valores de los botones desde localStorage
     botones.forEach((btn) => {
         const diametro = btn.id.split('-')[1];
         const count = datosResumen.contadores[diametro] || 0;
@@ -132,6 +119,5 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.innerText = `Diámetro ${diametro} | Contador: ${count}`;
     });
 
-    // Actualizar los totales en la interfaz
     actualizarTotales();
 });
