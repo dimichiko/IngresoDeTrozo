@@ -10,6 +10,10 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <div >
+              <select class="form-control custom-select" id="select_prueba"> 
+                                     </select>
+        </div>
         <div class="slider-container">
             <div class="slider-screen">
                  <div class="header">
@@ -73,7 +77,10 @@
             </div>
         </div>
     </form>
+    <script src="/scripts/jquery-3.7.1.js"></script>
     <script src="/Scripts/contadosTroncos.js"></script>
+    <script src="/js/comun.js"></script>
+    <script src="/js/contartrozos.js"></script>
 </body>
 </html>
 
