@@ -73,6 +73,7 @@
             </div>
         </div>
     </form>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/Scripts/contadosTroncos.js"></script>
 </body>
 </html>

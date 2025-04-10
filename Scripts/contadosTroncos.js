@@ -29,7 +29,11 @@ function manejarClick(id, event) {
             contadorTotal--;
             volumenTotal -= calcularVolumen(diametro);
         } else {
-            alert(`El contador para el diámetro ${diametro} ya está en 0.`);
+            Swal.fire({
+                title: "Correcion",
+                text: "El contador para el diámetro ya está en 0.",
+                icon: "question"
+            });
         }
         modoResta = false;
     } else {
