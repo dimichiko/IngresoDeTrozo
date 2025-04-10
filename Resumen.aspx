@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Resumen de Troncos</title>
-    <script src="/Scripts/Resumen.js"></script>
+    <link rel="stylesheet" type="text/css" href="/CSS/Resumen.css" />
 </head>
 <body>
     <h1>Resumen de Troncos</h1>
@@ -25,5 +25,9 @@
     <button onclick="habilitarEdicion()">Habilitar Edición</button>
     <button onclick="guardarCambios()">Guardar Cambios</button>
     <button onclick="volverAlFormulario()">Volver al Formulario</button>
+    <button onclick="terminarProceso()">Finalizar el Proceso</button>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/Scripts/Resumen.js"></script>
 </body>
 </html>

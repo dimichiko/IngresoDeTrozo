@@ -30,7 +30,7 @@ function manejarClick(id, event) {
             volumenTotal -= calcularVolumen(diametro);
         } else {
             Swal.fire({
-                title: "Correcion",
+                title: "Correción",
                 text: "El contador para el diámetro ya está en 0.",
                 icon: "question"
             });
@@ -64,14 +64,12 @@ function guardarDatosEnLocalStorage() {
         contadores: {}
     };
 
-    // Guardar los contadores por diámetro
     botones.forEach((btn) => {
         const diametro = btn.id.split('-')[1];
         const count = parseInt(btn.dataset.count || 0);
         datosResumen.contadores[diametro] = count;
     });
 
-    // Guardar el objeto completo en localStorage
     localStorage.setItem('datosResumen', JSON.stringify(datosResumen));
 }
 
@@ -103,7 +101,6 @@ function resetearContadores(event) {
         const diametro = btn.id.split('-')[1];
         btn.innerText = `Diámetro ${diametro} | Contador: 0`;
     });
-
     guardarDatosEnLocalStorage();
     actualizarTotales();
 }

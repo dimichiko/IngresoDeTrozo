@@ -6,7 +6,6 @@
         return;
     }
 
-    // Almacenar el total original para referencia
     window.totalOriginal = datosResumen.total;
     window.volumenOriginal = datosResumen.volumen;
 
@@ -26,10 +25,9 @@
         }
     }
 
-    // Añadir elementos para la visualización del total actual durante la edición
     const infoEdicion = document.createElement('div');
     infoEdicion.id = 'edicion-info';
-    infoEdicion.style.display = 'none'; // Oculto por defecto
+    infoEdicion.style.display = 'none';
     infoEdicion.innerHTML = `
         <p>Total actual: <span id="total-actual">${datosResumen.total}</span> / 
                           <span id="total-requerido">${datosResumen.total}</span></p>
@@ -45,15 +43,10 @@ function habilitarEdicion() {
     const inputs = document.querySelectorAll('.contador-input');
     inputs.forEach(input => {
         input.disabled = false;
-        // Agregar evento para validar en tiempo real
         input.addEventListener('input', validarTotal);
     });
 
-    // Mostrar información de edición
     document.getElementById('edicion-info').style.display = 'block';
-
-    // Mostrar mensaje informativo al usuario
-    alert('Puede editar los contadores. Recuerde que el total de troncos debe mantenerse en ' + window.totalOriginal);
 }
 
 function validarTotal() {
@@ -66,10 +59,8 @@ function validarTotal() {
         totalActual += parseInt(input.value) || 0;
     });
 
-    // Actualizar contador visual
     document.getElementById('total-actual').innerText = totalActual;
 
-    // Mostrar visualmente si el total es correcto
     const diferencia = totalActual - window.totalOriginal;
     if (diferencia !== 0) {
         document.getElementById('alerta-total').innerText =
@@ -100,39 +91,29 @@ function guardarCambios() {
         nuevosContadores[diametro] = nuevoValor;
     });
 
-    // Verificar que el total no ha cambiado
     if (totalContadoresEditados !== window.totalOriginal) {
         alert(`Error: el total de troncos debe ser exactamente ${window.totalOriginal}. Actualmente suman ${totalContadoresEditados}.`);
         return;
     }
 
-    // Guardar los nuevos contadores pero mantener el total original
     datosResumen.contadores = nuevosContadores;
-    datosResumen.total = window.totalOriginal; // Asegurar que el total sigue siendo el mismo
-
-    // Recalcular el volumen total
+    datosResumen.total = window.totalOriginal; 
     let nuevoVolumen = 0;
     for (const [diametro, contador] of Object.entries(nuevosContadores)) {
         if (contador > 0) {
-            // Usar la misma función de cálculo que en el contador original
             nuevoVolumen += calcularVolumen(parseInt(diametro)) * contador;
         }
     }
 
-    // Actualizar el volumen en los datos
     datosResumen.volumen = nuevoVolumen;
 
-    // Guardar en localStorage
     localStorage.setItem('datosResumen', JSON.stringify(datosResumen));
 
-    // Actualizar la interfaz
     document.getElementById('total-troncos').innerText = `Total de Troncos: ${window.totalOriginal}`;
     document.getElementById('volumen-total').innerText = `Volumen Total: ${nuevoVolumen.toFixed(2)}`;
 
-    // Ocultar la información de edición
     document.getElementById('edicion-info').style.display = 'none';
 
-    // Deshabilitar la edición
     inputs.forEach(input => {
         input.disabled = true;
         input.removeEventListener('input', validarTotal);
@@ -142,7 +123,7 @@ function guardarCambios() {
 }
 
 function calcularVolumen(diametro) {
-    return Math.PI * Math.pow(diametro / 2, 2) * 1; // Volumen de un cilindro con altura 1
+    return (diametro * diametro) * 3.2 / 10000;
 }
 
 function volverAlFormulario() {
@@ -155,12 +136,22 @@ function volverAlFormulario() {
         } catch (e2) {
             console.error("Error al redirigir usando location=:", e2);
             try {
-                // Intentar con una ruta absoluta
                 const baseUrl = window.location.origin;
                 window.location.href = `${baseUrl}/contartrozos.aspx`;
             } catch (e3) {
                 alert("Error al redirigir. Por favor, intente volver manualmente.");
             }
         }
+    }
+}
+
+function terminarProceso() {
+    try {
+        localStorage.clear();
+
+        window.location.href = 'contartrozos.aspx';
+    } catch (e) {
+        console.error("Error al finalizar proceso:", e);
+        alert("Error al finalizar el proceso. Por favor, intente nuevamente.");
     }
 }
