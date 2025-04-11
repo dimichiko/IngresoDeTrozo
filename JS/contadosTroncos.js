@@ -23,11 +23,20 @@ function manejarClick(id, event) {
     }
 
     if (modoResta) {
-      
         if (count > 0) {
             count--;
             contadorTotal--;
             volumenTotal -= calcularVolumen(diametro);
+
+            modoResta = false;
+            document.getElementById("Resta-1").innerText = "Activar Modo Resta";
+
+            for (let i = 16; i <= 48; i += 2) {
+                const boton = document.getElementById(`btn-${i}`);
+                if (boton) boton.classList.remove("borde-rojo");
+            }
+
+            console.log("✅ Resta realizada. Modo Resta DESACTIVADO.");
         } else {
             Swal.fire({
                 title: "Correción",
@@ -35,19 +44,15 @@ function manejarClick(id, event) {
                 icon: "question"
             });
         }
-        modoResta = false;
     } else {
-       
         count++;
         contadorTotal++;
         volumenTotal += calcularVolumen(diametro);
     }
 
-   
     btn.dataset.count = count;
     btn.innerText = `Diámetro ${diametro} | Contador: ${count}`;
 
-  
     guardarDatosEnLocalStorage();
     actualizarTotales();
 }
@@ -72,7 +77,6 @@ function guardarDatosEnLocalStorage() {
 
     localStorage.setItem('datosResumen', JSON.stringify(datosResumen));
 }
-
 function actualizarTotales() {
     const totalDisplay = document.querySelectorAll('[id^="total-display"]');
     totalDisplay.forEach((display) => {
@@ -85,9 +89,22 @@ function actualizarTotales() {
     });
 }
 
-function activarModoResta(event) {
+function toggleModoResta(event) {
     event.preventDefault();
-    modoResta = true;
+
+    modoResta = !modoResta;
+
+    const btnModo = document.getElementById("Resta-1");
+    btnModo.innerText = modoResta ? "Modo Resta Activado" : "Activar Modo Resta";
+
+    for (let i = 16; i <= 48; i += 2) {
+        const boton = document.getElementById(`btn-${i}`);
+        if (boton) {
+            boton.classList.toggle("borde-rojo", modoResta);
+        }
+    }
+
+    console.log(`🌀 Estado cambiado → Modo Resta: ${modoResta ? "ACTIVADO" : "DESACTIVADO"}`);
 }
 
 function resetearContadores(event) {

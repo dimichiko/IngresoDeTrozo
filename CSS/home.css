@@ -20,6 +20,7 @@ body {
 .header-left {
     flex: 1;
     text-align: left;
+    margin-right: 10px;
 }
 
     .header-left span {
@@ -34,19 +35,23 @@ body {
 }
 
 #Resta-1, #Resta-2 {
-    width: 100%;
-    height: 100%; 
-    padding: 10px; 
-    background-color: #ff4444; 
+    width: 500px;
+    height: auto;
+    padding: 10px;
+    background-color: #ff4444;
     color: white;
     border: none;
     cursor: pointer;
     font-size: 16px;
 }
 
-    #Resta:hover {
-        background-color: #cc0000; 
+    #Resta-1:hover, #Resta-2:hover {
+        background-color: #cc0000;
     }
+
+.borde-rojo {
+    border: 2px solid red !important;
+}
 
 h1 {
     text-align: center;
@@ -73,7 +78,7 @@ h1 {
     padding: 20px;
 }
 
-.grid-container {
+.grid-container-1 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 10px;
@@ -83,7 +88,7 @@ h1 {
     background-color: #f9f9f9;
 }
 
-    .grid-container button {
+    .grid-container-1 button {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -96,21 +101,48 @@ h1 {
         font-size: 16px;
     }
 
-        .grid-container button:hover {
+        .grid-container-1 button:hover {
             transform: scale(1.05);
         }
 
-    .grid-container [id^="btn-1"],
-    .grid-container [id^="btn-2"],
-    #btn-16, #btn-18, #btn-20, #btn-22 {
-        background-color: #B3E5FC;
+.grid-container-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    width: 100%;
+    height: 100vh;
+    padding: 10px;
+    background-color: #f0f0f0;
+}
+
+    .grid-container-2 button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        color: #000000;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 16px;
     }
 
-        .grid-container [id^="btn-1"]:hover,
-        .grid-container [id^="btn-2"]:hover,
-        #btn-16:hover, #btn-18:hover, #btn-20:hover, #btn-22:hover {
-            background-color: #81D4FA;
+        .grid-container-2 button:hover {
+            transform: scale(1.05);
         }
+
+.grid-container-1 [id^="btn-1"],
+.grid-container-1 [id^="btn-2"],
+#btn-16, #btn-18, #btn-20, #btn-22 {
+    background-color: #B3E5FC;
+}
+
+    .grid-container-1 [id^="btn-1"]:hover,
+    .grid-container-1 [id^="btn-2"]:hover,
+    #btn-16:hover, #btn-18:hover, #btn-20:hover, #btn-22:hover {
+        background-color: #81D4FA;
+    }
 
 #btn-24, #btn-26, #btn-28 {
     background-color: #FFF9C4;
@@ -120,12 +152,20 @@ h1 {
         background-color: #FFE082;
     }
 
-#btn-30, #btn-32, #btn-34, #btn-36, #btn-38, #btn-40, #btn-42, #btn-44, #btn-46, #btn-48 {
+#btn-30, #btn-32, #btn-34, #btn-36, #btn-38 {
     background-color: #F8BBD0;
 }
 
-    #btn-30:hover, #btn-32:hover, #btn-34:hover, #btn-36:hover, #btn-38:hover, #btn-40:hover, #btn-42:hover, #btn-44:hover, #btn-46:hover, #btn-48:hover {
+    #btn-30:hover, #btn-32:hover, #btn-34:hover, #btn-36:hover, #btn-38:hover {
         background-color: #F48FB1;
+    }
+
+#btn-40, #btn-42, #btn-44, #btn-46, #btn-48 {
+    background-color: #D1C4E9;
+}
+
+    #btn-40:hover, #btn-42:hover, #btn-44:hover, #btn-46:hover, #btn-48:hover {
+        background-color: #B39DDB;
     }
 
 #total-display, #volumen-display {
@@ -162,15 +202,6 @@ button[type="submit"],
     #btn-resta:hover {
         background-color: #C13C1A;
         transform: scale(1.05);
-    }
-
-#btn-resta {
-    background-color: #E74C3C;
-    border-color: #C0392B;
-}
-
-    #btn-resta:hover {
-        background-color: #C0392B;
     }
 
 #btn-resumen {
@@ -229,3 +260,39 @@ button[type="submit"],
     #irResumen-1, #irResumen-2:hover {
         background-color: #45a049;
     }
+
+@media (max-width: 1440px) {
+    #Resta-1, #Resta-2 {
+        width: 700px;
+        padding: 30px;
+    }
+}
+
+@media (max-width: 1024px) {
+    #Resta-1, #Resta-2 {
+        width: 600px;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    #Resta-1, #Resta-2 {
+        width: 500px;
+        font-size: 14px; 
+    }
+}
+
+@media (max-width: 550px) {
+    #Resta-1, #Resta-2 {
+        width: 200px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 400px) {
+    #Resta-1, #Resta-2 {
+        width: 150px;
+        padding: 8px; 
+        font-size: 12px; 
+    }
+}

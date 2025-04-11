@@ -21,11 +21,9 @@
                    <span id="total-display-1">Total: 0</span>
                    <span id="volumen-display-1">Volumen Total: 0 </span>
                 </div>
-                <div class="header-right">
-                   <button id="Resta-1" type="button" onclick="activarModoResta(event)">Modo Resta</button>
+               <button id="Resta-1" type="button" onclick="toggleModoResta(event)">Activar Modo Resta</button>
                </div>
-               </div>
-                <div class="grid-container">
+                <div class="grid-container-1">
                     <button id="btn-16" onclick="manejarClick('btn-16', event)" data-count="0">Diámetro 16</button>
                     <button id="btn-18" onclick="manejarClick('btn-18', event)" data-count="0">Diámetro 18</button>
                     <button id="btn-20" onclick="manejarClick('btn-20', event)" data-count="0">Diámetro 20</button>
@@ -56,10 +54,10 @@
                         <span id="volumen-display-2">Volumen Total: 0 </span>
                 </div>
                 <div class="header-right">
-                    <button id="Resta-2" type="button" onclick="activarModoResta(event)">Modo Resta</button>
+                    <button id="Resta-2" type="button" onclick="toggleModoResta(event)">Modo Resta</button>
                 </div>
                 </div>
-                <div class="grid-container">
+                <div class="grid-container-2">
                     <button id="btn-40" onclick="manejarClick('btn-40', event)" data-count="0">Diámetro 40</button>
                     <button id="btn-42" onclick="manejarClick('btn-42', event)" data-count="0">Diámetro 42</button>
                     <button id="btn-44" onclick="manejarClick('btn-44', event)" data-count="0">Diámetro 44</button>
@@ -78,9 +76,10 @@
         </div>
     </form>
     <script src="/scripts/jquery-3.7.1.js"></script>
-    <script src="/Scripts/contadosTroncos.js"></script>
-    <script src="/js/comun.js"></script>
-    <script src="/js/contartrozos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/JS/contadosTroncos.js"></script>
+    <script src="/JS/comun.js"></script>
+    <script src="/JS/contartrozos.js"></script>
 </body>
 </html>
 

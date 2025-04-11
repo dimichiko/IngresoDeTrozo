@@ -26,8 +26,7 @@
     <button onclick="guardarCambios()">Guardar Cambios</button>
     <button onclick="volverAlFormulario()">Volver al Formulario</button>
     <button onclick="terminarProceso()">Finalizar el Proceso</button>
-    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/Scripts/Resumen.js"></script>
+    <script src="/JS/Resumen.js"></script>
 </body>
 </html>
