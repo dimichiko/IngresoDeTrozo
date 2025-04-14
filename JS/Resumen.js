@@ -1,8 +1,11 @@
 ﻿window.onload = function () {
     const datosResumen = JSON.parse(localStorage.getItem('datosResumen'));
     if (!datosResumen) {
-        alert('No hay datos disponibles.');
-        window.location.href = 'contartrozos.aspx';
+        Swal.fire({
+            icon: 'error',
+            title: 'Sin datos',
+            text: 'No hay información para mostrar. Serás redirigido.'
+        }).then(() => window.location.href = 'contartrozos.aspx');
         return;
     }
 
@@ -12,10 +15,30 @@
     cargarTablaResumen(datosResumen.contadores);
     mostrarResumen(datosResumen);
     agregarInfoEdicion(datosResumen.total);
+
+    document.getElementById("editarTroncos").value = datosResumen.total;
 };
+
+document.addEventListener("DOMContentLoaded", function () {
+    const btnEditarMonto = document.getElementById("btnEditarMonto");
+    const btnGuardarEdicion = document.getElementById("btnGuardarEdicion");
+
+    if (btnEditarMonto) {
+        btnEditarMonto.addEventListener("click", function () {
+            habilitarEdicion();
+            btnGuardarEdicion.style.display = "inline-block";
+        });
+    }
+
+    if (btnGuardarEdicion) {
+        btnGuardarEdicion.addEventListener("click", guardarCambios);
+    }
+});
 
 function cargarTablaResumen(contadores) {
     const tabla = document.getElementById('tabla-resumen');
+    tabla.innerHTML = "";
+
     Object.entries(contadores).forEach(([diametro, contador]) => {
         if (contador > 0) {
             const fila = document.createElement('tr');
@@ -37,14 +60,10 @@ function mostrarResumen(datos) {
 }
 
 function agregarInfoEdicion(total) {
-    const info = document.createElement('div');
-    info.id = 'edicion-info';
-    info.style.display = 'none';
-    info.innerHTML = `
-        <p>Total actual: <span id="total-actual">${total}</span> / 
-                         <span id="total-requerido">${total}</span></p>
-        <p id="alerta-total"></p>`;
-    document.body.appendChild(info);
+    const info = document.getElementById('edicion-info');
+    document.getElementById('total-actual').innerText = total;
+    document.getElementById('total-requerido').innerText = total;
+    info.style.display = 'block';
 }
 
 function obtenerInputsContadores() {
@@ -56,7 +75,14 @@ function habilitarEdicion() {
         input.disabled = false;
         input.addEventListener('input', validarTotal);
     });
+
     document.getElementById('edicion-info').style.display = 'block';
+
+    const guardarBtn = document.getElementById("btnGuardarEdicion");
+    if (guardarBtn) guardarBtn.style.display = "inline-block";
+
+    const editarBtn = document.getElementById("btnEditarMonto");
+    if (editarBtn) editarBtn.style.display = "none"; 
 }
 
 function validarTotal() {
@@ -70,6 +96,7 @@ function validarTotal() {
     document.getElementById('total-actual').innerText = total;
     const diferencia = total - window.totalOriginal;
     const alerta = document.getElementById('alerta-total');
+
     if (diferencia !== 0) {
         alerta.innerText = `Diferencia: ${diferencia} (${diferencia > 0 ? 'sobran' : 'faltan'} troncos)`;
         alerta.style.color = 'red';
@@ -93,7 +120,11 @@ function guardarCambios() {
     });
 
     if (totalEditado !== window.totalOriginal) {
-        alert(`El total debe ser ${window.totalOriginal}. Actualmente suman ${totalEditado}.`);
+        Swal.fire({
+            icon: 'error',
+            title: 'Total incorrecto',
+            text: `El total debe ser ${window.totalOriginal}. Actualmente suman ${totalEditado}.`
+        });
         return;
     }
 
@@ -111,7 +142,16 @@ function guardarCambios() {
         i.removeEventListener('input', validarTotal);
     });
 
-    alert('Cambios guardados.');
+    Swal.fire({
+        icon: 'success',
+        title: 'Guardado',
+        text: 'Cambios guardados correctamente.'
+    });
+    const guardarBtn = document.getElementById("btnGuardarEdicion");
+    if (guardarBtn) guardarBtn.style.display = "none";
+
+    const editarBtn = document.getElementById("btnEditarMonto");
+    if (editarBtn) editarBtn.style.display = "inline-block";
 }
 
 function calcularVolumen(diametro) {
@@ -135,9 +175,50 @@ function terminarProceso() {
     }).then(result => {
         if (result.isConfirmed) {
             localStorage.removeItem('datosResumen');
-            const path = window.location.pathname.replace(/\/[^\/]*$/, '/contartrozos.aspx');
-            window.location.href = path;
+
+            const elementos = [
+                "btnEditarMonto",
+                "btnGuardarEdicion",
+                "edicion-info",
+                "tabla-resumen",
+                "edicionTroncos"
+            ];
+
+            elementos.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = "none";
+            });
+
+            const resumen = document.getElementById("resumenCompleto");
+            if (resumen) {
+                document.getElementById("proveedor").textContent = sessionStorage.getItem("codigoProveedor") || "-";
+                document.getElementById("contrato").textContent = sessionStorage.getItem("nombreContrato") || "-";
+                document.getElementById("venta").textContent = sessionStorage.getItem("nombreVenta") || "-";
+                document.getElementById("oc").textContent = sessionStorage.getItem("oc") || "-";
+                document.getElementById("fecha").textContent = sessionStorage.getItem("fecha") || "-";
+                document.getElementById("producto").textContent = sessionStorage.getItem("producto") || "-";
+                document.getElementById("fsc").textContent = sessionStorage.getItem("fsc") || "-";
+                document.getElementById("destino").textContent = sessionStorage.getItem("destino") || "-";
+                document.getElementById("pila").textContent = sessionStorage.getItem("pila") || "-";
+                document.getElementById("predio").textContent = sessionStorage.getItem("predio") || "-";
+                document.getElementById("rol").textContent = sessionStorage.getItem("rol") || "-";
+                document.getElementById("comuna").textContent = sessionStorage.getItem("comuna") || "-";
+                document.getElementById("rodal").textContent = sessionStorage.getItem("rodal") || "-";
+
+                resumen.style.display = "block";
+            }
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Proceso finalizado',
+                text: 'La información se ha consolidado correctamente.'
+            });
         }
     });
 }
 
+function reiniciarProceso() {
+    sessionStorage.clear();
+    localStorage.removeItem("datosResumen");
+    window.location.href = "ingreso.aspx";
+}

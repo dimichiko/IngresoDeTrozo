@@ -113,10 +113,12 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="CSS\contartrozos.css" />
+    <Content Include="CSS\ingreso.css" />
     <Content Include="CSS\resumen.css" />
     <Content Include="Global.asax" />
     <Content Include="JS\comun.js" />
     <Content Include="JS\cargar-empresas.js" />
+    <Content Include="JS\ingreso.js" />
     <Content Include="Resumen.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -125,6 +127,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="JS\contartrozos.js" />
+    <Content Include="README.md" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -132,6 +135,7 @@
     <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
     <Content Include="JS\resumen.js" />
     <Content Include="Web.config" />
+    <Content Include="ingreso.aspx" />
     <Content Include="xml\Parametros.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +174,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="ingreso.aspx.designer.vb">
+      <DependentUpon>ingreso.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ingreso.aspx.vb">
+      <DependentUpon>ingreso.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>

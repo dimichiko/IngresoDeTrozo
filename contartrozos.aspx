@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Conteo de Troncos</title>
-    <link rel="stylesheet" href="/CSS/contartrozos.css?v=1" />
+    <link rel="stylesheet" type="text/css" href="CSS/contartrozos.css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -34,6 +34,9 @@
                     <div class="footer-left">
                         <button id="resetearContador-1" type="button" onclick="resetearContadores(event)">Reset</button>
                     </div>
+                    <div style="text-align:center; margin-top: 20px;">
+                    <button type="button" onclick="window.location.href='ingreso.aspx'">← Volver a ingreso</button>
+                    </div>
                     <div class="footer-right">
                         <button id="irResumen-1" type="button" onclick="irAlResumen(event)">Resumen</button>
                     </div>
@@ -56,10 +59,13 @@
                         Response.Write($"<button id='btn-{i}' onclick=""manejarClick('btn-{i}', event)"" data-count='0'>Diámetro {i}</button>")
                     Next %>
                 </div>
-
+           
                 <div class="footer">
                     <div class="footer-left">
                         <button id="resetearContador-2" type="button" onclick="resetearContadores(event)">Reset</button>
+                    </div>
+                    <div style="text-align:center; margin-top: 20px;">
+                    <button type="button" onclick="window.location.href='ingreso.aspx'">← Volver a ingreso</button>
                     </div>
                     <div class="footer-right">
                         <button id="irResumen-2" type="button" onclick="irAlResumen(event)">Resumen</button>
@@ -71,9 +77,9 @@
 
     <script src="/scripts/jquery-3.7.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/JS/comun.js?v=1"></script>
+    <script src="/JS/comun.js?v=2"></script>
     <script src="/JS/cargar-empresas.js?v=1"></script>
-    <script src="/JS/contartrozos.js?v=1"></script>
+    <script src="/JS/contartrozos.js?v=2"></script>
 </body>
 </html>
 

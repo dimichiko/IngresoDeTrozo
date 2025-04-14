@@ -133,7 +133,7 @@ button[type="submit"] {
     flex-direction: row;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     scroll-behavior: smooth;
 }
@@ -228,6 +228,48 @@ button[type="submit"] {
     #btn-40:hover, #btn-42:hover, #btn-44:hover, #btn-46:hover, #btn-48:hover {
         background-color: #B39DDB;
     }
+.contador {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    font-size: 2rem;
+    margin: 40px 0;
+}
+
+    .contador button {
+        font-size: 1.5rem;
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+        .contador button:hover {
+            background-color: #0069d9;
+        }
+
+.botones {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+    .botones button {
+        padding: 10px 20px;
+        font-weight: 500;
+        border: none;
+        border-radius: 5px;
+        background-color: #6c757d;
+        color: white;
+        cursor: pointer;
+    }
+
+        .botones button:hover {
+            background-color: #5a6268;
+        }
 
 @media (max-width: 1440px) {
     #Resta-1, #Resta-2 {

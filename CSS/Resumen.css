@@ -99,6 +99,62 @@ button {
         background-color: #0069d9;
     }
 
+#resumenCompleto {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-top: 20px;
+}
+
+    #resumenCompleto h3 {
+        margin-top: 0;
+        color: #2c3e50;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 5px;
+    }
+
+    #resumenCompleto p {
+        margin: 10px 0;
+        font-size: 16px;
+    }
+
+.botones {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#edicionTroncos {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+    #edicionTroncos input[type="number"] {
+        width: 80px;
+        padding: 8px;
+        font-size: 14px;
+        text-align: center;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    #edicionTroncos button {
+        padding: 8px 16px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+        #edicionTroncos button:hover {
+            background-color: #0056b3;
+        }
+
 @media (max-width: 768px) {
     body {
         padding: 5px;
@@ -169,4 +225,28 @@ button {
         padding: 12px;
         font-size: 1rem;
     }
+}
+
+@media (max-width: 480px) {
+    #resumenCompleto p {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    .botones button {
+        font-size: 14px;
+    }
+
+    #edicionTroncos {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+        #edicionTroncos button {
+            width: 100%;
+            margin-top: 5px;
+        }
 }
