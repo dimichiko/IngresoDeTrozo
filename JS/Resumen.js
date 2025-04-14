@@ -16,7 +16,8 @@
     mostrarResumen(datosResumen);
     agregarInfoEdicion(datosResumen.total);
 
-    document.getElementById("editarTroncos").value = datosResumen.total;
+    const inputEditar = document.getElementById("editarTroncos");
+    if (inputEditar) inputEditar.value = datosResumen.total;
 };
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -82,7 +83,7 @@ function habilitarEdicion() {
     if (guardarBtn) guardarBtn.style.display = "inline-block";
 
     const editarBtn = document.getElementById("btnEditarMonto");
-    if (editarBtn) editarBtn.style.display = "none"; 
+    if (editarBtn) editarBtn.style.display = "none";
 }
 
 function validarTotal() {
@@ -147,6 +148,7 @@ function guardarCambios() {
         title: 'Guardado',
         text: 'Cambios guardados correctamente.'
     });
+
     const guardarBtn = document.getElementById("btnGuardarEdicion");
     if (guardarBtn) guardarBtn.style.display = "none";
 
@@ -191,19 +193,33 @@ function terminarProceso() {
 
             const resumen = document.getElementById("resumenCompleto");
             if (resumen) {
-                document.getElementById("proveedor").textContent = sessionStorage.getItem("codigoProveedor") || "-";
-                document.getElementById("contrato").textContent = sessionStorage.getItem("nombreContrato") || "-";
-                document.getElementById("venta").textContent = sessionStorage.getItem("nombreVenta") || "-";
-                document.getElementById("oc").textContent = sessionStorage.getItem("oc") || "-";
-                document.getElementById("fecha").textContent = sessionStorage.getItem("fecha") || "-";
-                document.getElementById("producto").textContent = sessionStorage.getItem("producto") || "-";
-                document.getElementById("fsc").textContent = sessionStorage.getItem("fsc") || "-";
-                document.getElementById("destino").textContent = sessionStorage.getItem("destino") || "-";
-                document.getElementById("pila").textContent = sessionStorage.getItem("pila") || "-";
-                document.getElementById("predio").textContent = sessionStorage.getItem("predio") || "-";
-                document.getElementById("rol").textContent = sessionStorage.getItem("rol") || "-";
-                document.getElementById("comuna").textContent = sessionStorage.getItem("comuna") || "-";
-                document.getElementById("rodal").textContent = sessionStorage.getItem("rodal") || "-";
+                const ids = {
+                    proveedor: "txtCodigoProveedor",
+                    contrato: "txtNombreContrato",
+                    venta: "txtNombreVenta",
+                    oc: "txtOC",
+                    fecha: "txtFechaRecepcion",
+                    producto: "txtProducto",
+                    fsc: "txtFSC",
+                    destino: "txtDestino",
+                    pila: "txtPila",
+                    predio: "txtPredio",
+                    rol: "txtRol",
+                    comuna: "txtComuna",
+                    rodal: "txtRodal",
+                    despachador: "txtDespachador",
+                    transportista: "txtTransportista",
+                    rutDespachador: "txtRUTDespachador",
+                    conductor: "txtConductor",
+                    rutConductor: "txtRUTConductor",
+                    patenteCamion: "txtPatenteCamion",
+                    patenteCarro: "txtPatenteCarro"
+                };
+
+                Object.entries(ids).forEach(([htmlId, storageKey]) => {
+                    const el = document.getElementById(htmlId);
+                    if (el) el.textContent = sessionStorage.getItem(storageKey) || "-";
+                });
 
                 resumen.style.display = "block";
             }

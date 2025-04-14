@@ -83,6 +83,43 @@
                 </div>
             </fieldset>
 
+            <fieldset>
+                <legend>Información Transporte</legend>
+
+                <div class="fila">
+                    <label for="txtDespachador">Despachador:</label>
+                    <input type="text" id="txtDespachador" />
+               </div>
+
+                <div class="fila">
+                    <label for="txtTransportista">Transportista:</label>
+                    <input type="text" id="txtTransportista" />
+                </div>
+
+               <div class="fila">
+                   <label for="txtRUTDespachador">RUT Despachador:</label>
+                   <input type="text" id="txtRUTDespachador" />
+               </div>
+ 
+               <div class="fila">
+                   <label for="txtConductor">Conductor:</label>
+                   <input type="text" id="txtConductor" />
+               </div>
+
+                <div class="fila">
+                    <label for="txtRUTConductor">RUT Conductor:</label>
+                    <input type="text" id="txtRUTConductor" />
+               </div>
+                <div class="fila">
+                    <label for="txtPatenteCamion">PatenteCamion:</label>
+                    <input type="text" id="txtPatenteCamion" />
+                 </div>
+                <div class="fila">
+                    <label for="txtPatenteCarro">PatenteCarro:</label>
+                    <input type="text" id="txtPatenteCarro" />
+                </div>
+            </fieldset>
+
             <div class="botones">
                 <button type="button" id="btnIrContar">Ir a contar troncos</button>
             </div>
