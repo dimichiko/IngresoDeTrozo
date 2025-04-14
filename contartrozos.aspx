@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Conteo de Troncos</title>
-    <link rel="stylesheet" type="text/css" href="CSS/home.css" />
+    <link rel="stylesheet" href="/CSS/contartrozos.css?v=1" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -52,7 +52,6 @@
                 </div>
 
                 <div class="grid-container-2">
-                    <%-- Botones de diámetro 40 a 48 --%>
                     <% For i = 40 To 48 Step 2
                         Response.Write($"<button id='btn-{i}' onclick=""manejarClick('btn-{i}', event)"" data-count='0'>Diámetro {i}</button>")
                     Next %>
@@ -72,9 +71,9 @@
 
     <script src="/scripts/jquery-3.7.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/JS/contadosTroncos.js?v=1"></script>
-    <script src="/JS/comun.js"></script>
-    <script src="/JS/contartrozos.js"></script>
+    <script src="/JS/comun.js?v=1"></script>
+    <script src="/JS/cargar-empresas.js?v=1"></script>
+    <script src="/JS/contartrozos.js?v=1"></script>
 </body>
 </html>
 

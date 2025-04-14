@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resumen de Troncos</title>
-    <link rel="stylesheet" type="text/css" href="/CSS/Resumen.css" />
+    <link rel="stylesheet" href="/CSS/resumen.css?v=1" />
 </head>
 <body>
     <h1>Resumen de Troncos</h1>
@@ -25,7 +25,7 @@
         <p id="volumen-total"></p>
     </div>
 
-    <div id="botones-accion">
+    <div>
         <button onclick="habilitarEdicion()">Habilitar Edición</button>
         <button onclick="guardarCambios()">Guardar Cambios</button>
         <button onclick="volverAlFormulario()">Volver al Formulario</button>
@@ -33,6 +33,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/JS/Resumen.js?v=2"></script>
+    <script src="/JS/resumen.js?v=1"></script>
 </body>
 </html>

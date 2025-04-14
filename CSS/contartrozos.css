@@ -39,7 +39,6 @@ h1 {
     justify-content: flex-end;
 }
 
-/* Botones principales */
 button,
 #Resta-1, #Resta-2,
 #resetearContador-1, #resetearContador-2,
@@ -55,7 +54,6 @@ button[type="reset"] {
     transition: all 0.2s ease;
 }
 
-/* Estilos específicos de botones */
 #Resta-1, #Resta-2 {
     background-color: #ff4444;
     color: white;
@@ -112,7 +110,6 @@ button[type="submit"] {
         transform: scale(1.05);
     }
 
-/* Visualización */
 #total-display, #volumen-display {
     text-align: center;
     font-size: 18px;
@@ -131,7 +128,6 @@ button[type="submit"] {
     border: 2px solid red !important;
 }
 
-/* Slider */
 .slider-container {
     display: flex;
     flex-direction: row;
@@ -161,7 +157,6 @@ button[type="submit"] {
     padding: 20px;
 }
 
-/* Grids */
 .grid-container-1, .grid-container-2 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -198,7 +193,6 @@ button[type="submit"] {
             transform: scale(1.05);
         }
 
-/* Colores específicos */
 .grid-container-1 [id^="btn-1"],
 .grid-container-1 [id^="btn-2"],
 #btn-16, #btn-18, #btn-20, #btn-22 {
@@ -235,7 +229,6 @@ button[type="submit"] {
         background-color: #B39DDB;
     }
 
-/* Media Queries */
 @media (max-width: 1440px) {
     #Resta-1, #Resta-2 {
         width: 700px;
