@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -9,64 +8,148 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-    width: 100%; 
-    padding: 10px;
-}
-
-.header-left {
-    flex: 1;
-    text-align: left;
-    margin-right: 10px;
-}
-
-    .header-left span {
-        display: block; 
-        margin: 5px 0; 
-    }
-
-.header-right {
-    flex: 1;
-    display: flex; 
-    justify-content: flex-end; 
-}
-
-#Resta-1, #Resta-2 {
-    width: 500px;
-    height: auto;
-    padding: 10px;
-    background-color: #ff4444;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-    #Resta-1:hover, #Resta-2:hover {
-        background-color: #cc0000;
-    }
-
-.borde-rojo {
-    border: 2px solid red !important;
-}
-
 h1 {
     text-align: center;
     font-size: 24px;
     margin: 20px 0;
 }
 
+.header, .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.header-left, .footer-left {
+    flex: 1;
+    text-align: left;
+    margin-right: 10px;
+}
+
+    .header-left span {
+        display: block;
+        margin: 5px 0;
+    }
+
+.header-right, .footer-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Botones principales */
+button,
+#Resta-1, #Resta-2,
+#resetearContador-1, #resetearContador-2,
+#irResumen-1, #irResumen-2,
+#btn-resumen, #btn-resta,
+button[type="submit"],
+button[type="reset"] {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Estilos específicos de botones */
+#Resta-1, #Resta-2 {
+    background-color: #ff4444;
+    color: white;
+}
+
+    #Resta-1:hover, #Resta-2:hover {
+        background-color: #cc0000;
+    }
+
+#resetearContador-1, #resetearContador-2 {
+    background-color: #FFB300;
+    color: white;
+}
+
+    #resetearContador-1:hover, #resetearContador-2:hover {
+        background-color: #F57C00;
+    }
+
+#irResumen-1, #irResumen-2 {
+    background-color: #4CAF50;
+    color: white;
+}
+
+    #irResumen-1:hover, #irResumen-2:hover {
+        background-color: #45a049;
+    }
+
+#btn-resumen {
+    background-color: #3498DB;
+    border: 2px solid #2980B9;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+    #btn-resumen:hover {
+        background-color: #2980B9;
+    }
+
+#btn-resta,
+button[type="reset"],
+button[type="submit"] {
+    background-color: #FF5733;
+    border: 2px solid #C13C1A;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+    #btn-resta:hover,
+    button[type="reset"]:hover,
+    button[type="submit"]:hover {
+        background-color: #C13C1A;
+        transform: scale(1.05);
+    }
+
+/* Visualización */
+#total-display, #volumen-display {
+    text-align: center;
+    font-size: 18px;
+    margin: 10px 0;
+    background-color: #007BFF;
+    border: 2px solid #0056b3;
+    border-radius: 10px;
+    padding: 15px;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    width: 80%;
+    max-width: 500px;
+}
+
+.borde-rojo {
+    border: 2px solid red !important;
+}
+
+/* Slider */
 .slider-container {
     display: flex;
-    overflow-x: scroll;
+    flex-direction: row;
+    overflow-x: auto;
     scroll-snap-type: x mandatory;
     width: 100vw;
     height: 100vh;
     scroll-behavior: smooth;
 }
+
+    .slider-container::-webkit-scrollbar {
+        height: 12px;
+    }
+
+    .slider-container::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 6px;
+    }
 
 .slider-screen {
     flex: 0 0 100%;
@@ -78,60 +161,44 @@ h1 {
     padding: 20px;
 }
 
-.grid-container-1 {
+/* Grids */
+.grid-container-1, .grid-container-2 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 10px;
     width: 100%;
     height: 100vh;
     padding: 10px;
+}
+
+.grid-container-1 {
     background-color: #f9f9f9;
 }
 
-    .grid-container-1 button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 10px;
-        color: #000000;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        font-size: 16px;
-    }
-
-        .grid-container-1 button:hover {
-            transform: scale(1.05);
-        }
-
 .grid-container-2 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 10px;
-    width: 100%;
-    height: 100vh;
-    padding: 10px;
     background-color: #f0f0f0;
 }
 
+    .grid-container-1 button,
     .grid-container-2 button {
         display: flex;
         justify-content: center;
         align-items: center;
         padding: 10px;
-        color: #000000;
+        font-size: 16px;
         border: none;
         border-radius: 10px;
         cursor: pointer;
         transition: all 0.2s ease;
-        font-size: 16px;
+        color: #000;
     }
 
+        .grid-container-1 button:hover,
         .grid-container-2 button:hover {
             transform: scale(1.05);
         }
 
+/* Colores específicos */
 .grid-container-1 [id^="btn-1"],
 .grid-container-1 [id^="btn-2"],
 #btn-16, #btn-18, #btn-20, #btn-22 {
@@ -168,99 +235,7 @@ h1 {
         background-color: #B39DDB;
     }
 
-#total-display, #volumen-display {
-    text-align: center;
-    font-size: 18px;
-    margin: 10px 0;
-    background-color: #007BFF;
-    border-radius: 10px;
-    padding: 15px;
-    color: white;
-    border: 2px solid #0056b3;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    width: 80%;
-    max-width: 500px;
-}
-
-button[type="reset"],
-button[type="submit"],
-#btn-resumen,
-#btn-resta {
-    padding: 12px 18px;
-    background-color: #FF5733;
-    margin: 10px;
-    color: white;
-    font-weight: bold;
-    border: 2px solid #C13C1A;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-    button[type="reset"]:hover,
-    button[type="submit"]:hover,
-    #btn-resumen:hover,
-    #btn-resta:hover {
-        background-color: #C13C1A;
-        transform: scale(1.05);
-    }
-
-#btn-resumen {
-    background-color: #3498DB;
-    border-color: #2980B9;
-}
-
-    #btn-resumen:hover {
-        background-color: #2980B9;
-    }
-
-.footer {
-    display: flex; 
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; 
-    padding: 10px;
-}
-
-.footer-left {
-    flex: 1;
-    display: flex;
-    justify-content: flex-start; 
-}
-
-.footer-right {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-}
-
-#resetearContador-1, #resetearContador-2 {
-    width: 100%;
-    padding: 10px;
-    background-color: #FFB300;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-    #resetearContador-1, #resetearContador-2:hover {
-        background-color: #F57C00;
-    }
-
-#irResumen-1, #irResumen-2 {
-    width: 100%; 
-    padding: 10px;
-    background-color: #4CAF50; 
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-    #irResumen-1, #irResumen-2:hover {
-        background-color: #45a049;
-    }
-
+/* Media Queries */
 @media (max-width: 1440px) {
     #Resta-1, #Resta-2 {
         width: 700px;
@@ -278,7 +253,7 @@ button[type="submit"],
 @media (max-width: 768px) {
     #Resta-1, #Resta-2 {
         width: 500px;
-        font-size: 14px; 
+        font-size: 14px;
     }
 }
 
@@ -292,7 +267,7 @@ button[type="submit"],
 @media (max-width: 400px) {
     #Resta-1, #Resta-2 {
         width: 150px;
-        padding: 8px; 
-        font-size: 12px; 
+        padding: 8px;
+        font-size: 12px;
     }
 }

@@ -9,117 +9,109 @@
     window.totalOriginal = datosResumen.total;
     window.volumenOriginal = datosResumen.volumen;
 
-    const tablaResumen = document.getElementById('tabla-resumen');
-    for (const [diametro, contador] of Object.entries(datosResumen.contadores)) {
+    cargarTablaResumen(datosResumen.contadores);
+    mostrarResumen(datosResumen);
+    agregarInfoEdicion(datosResumen.total);
+};
+
+function cargarTablaResumen(contadores) {
+    const tabla = document.getElementById('tabla-resumen');
+    Object.entries(contadores).forEach(([diametro, contador]) => {
         if (contador > 0) {
             const fila = document.createElement('tr');
             fila.innerHTML = `
-                <td>${diametro}</td>
-                <td>
+                <td data-label="Diámetro">${diametro}</td>
+                <td data-label="Contador">
                     <input type="number" class="contador-input" id="input-${diametro}" 
                            value="${contador}" min="0" data-diametro="${diametro}" 
                            data-valor-original="${contador}" disabled />
-                </td>
-            `;
-            tablaResumen.appendChild(fila);
+                </td>`;
+            tabla.appendChild(fila);
         }
-    }
+    });
+}
 
-    const infoEdicion = document.createElement('div');
-    infoEdicion.id = 'edicion-info';
-    infoEdicion.style.display = 'none';
-    infoEdicion.innerHTML = `
-        <p>Total actual: <span id="total-actual">${datosResumen.total}</span> / 
-                          <span id="total-requerido">${datosResumen.total}</span></p>
-        <p id="alerta-total"></p>
-    `;
-    document.body.appendChild(infoEdicion);
+function mostrarResumen(datos) {
+    document.getElementById('total-troncos').innerText = `Total de Troncos: ${datos.total}`;
+    document.getElementById('volumen-total').innerText = `Volumen Total: ${datos.volumen.toFixed(2)}`;
+}
 
-    document.getElementById('total-troncos').innerText = `Total de Troncos: ${datosResumen.total}`;
-    document.getElementById('volumen-total').innerText = `Volumen Total: ${datosResumen.volumen.toFixed(2)}`;
-};
+function agregarInfoEdicion(total) {
+    const info = document.createElement('div');
+    info.id = 'edicion-info';
+    info.style.display = 'none';
+    info.innerHTML = `
+        <p>Total actual: <span id="total-actual">${total}</span> / 
+                         <span id="total-requerido">${total}</span></p>
+        <p id="alerta-total"></p>`;
+    document.body.appendChild(info);
+}
+
+function obtenerInputsContadores() {
+    return document.querySelectorAll('.contador-input');
+}
 
 function habilitarEdicion() {
-    const inputs = document.querySelectorAll('.contador-input');
-    inputs.forEach(input => {
+    obtenerInputsContadores().forEach(input => {
         input.disabled = false;
         input.addEventListener('input', validarTotal);
     });
-
     document.getElementById('edicion-info').style.display = 'block';
 }
 
 function validarTotal() {
-    const inputs = document.querySelectorAll('.contador-input');
-    let totalActual = 0;
-
-    inputs.forEach(input => {
-        const valor = parseInt(input.value) || 0;
-        if (valor < 0) input.value = 0;
-        totalActual += parseInt(input.value) || 0;
+    let total = 0;
+    obtenerInputsContadores().forEach(input => {
+        const valor = Math.max(0, parseInt(input.value) || 0);
+        input.value = valor;
+        total += valor;
     });
 
-    document.getElementById('total-actual').innerText = totalActual;
-
-    const diferencia = totalActual - window.totalOriginal;
+    document.getElementById('total-actual').innerText = total;
+    const diferencia = total - window.totalOriginal;
+    const alerta = document.getElementById('alerta-total');
     if (diferencia !== 0) {
-        document.getElementById('alerta-total').innerText =
-            `Diferencia: ${diferencia} (${diferencia > 0 ? 'sobran' : 'faltan'} troncos)`;
-        document.getElementById('alerta-total').style.color = 'red';
+        alerta.innerText = `Diferencia: ${diferencia} (${diferencia > 0 ? 'sobran' : 'faltan'} troncos)`;
+        alerta.style.color = 'red';
     } else {
-        document.getElementById('alerta-total').innerText = 'Total correcto';
-        document.getElementById('alerta-total').style.color = 'green';
+        alerta.innerText = 'Total correcto';
+        alerta.style.color = 'green';
     }
 }
 
 function guardarCambios() {
     const datosResumen = JSON.parse(localStorage.getItem('datosResumen'));
-    const inputs = document.querySelectorAll('.contador-input');
-    let totalContadoresEditados = 0;
-    const nuevosContadores = {};
+    const inputs = obtenerInputsContadores();
+    let totalEditado = 0;
+    const nuevos = {};
 
     inputs.forEach(input => {
-        const diametro = input.dataset.diametro;
-        const nuevoValor = parseInt(input.value) || 0;
-
-        if (nuevoValor < 0) {
-            alert(`El contador para el diámetro ${diametro} no puede ser menor que 0.`);
-            return;
-        }
-
-        totalContadoresEditados += nuevoValor;
-        nuevosContadores[diametro] = nuevoValor;
+        const d = input.dataset.diametro;
+        const v = Math.max(0, parseInt(input.value) || 0);
+        totalEditado += v;
+        nuevos[d] = v;
     });
 
-    if (totalContadoresEditados !== window.totalOriginal) {
-        alert(`Error: el total de troncos debe ser exactamente ${window.totalOriginal}. Actualmente suman ${totalContadoresEditados}.`);
+    if (totalEditado !== window.totalOriginal) {
+        alert(`El total debe ser ${window.totalOriginal}. Actualmente suman ${totalEditado}.`);
         return;
     }
 
-    datosResumen.contadores = nuevosContadores;
-    datosResumen.total = window.totalOriginal; 
-    let nuevoVolumen = 0;
-    for (const [diametro, contador] of Object.entries(nuevosContadores)) {
-        if (contador > 0) {
-            nuevoVolumen += calcularVolumen(parseInt(diametro)) * contador;
-        }
-    }
-
-    datosResumen.volumen = nuevoVolumen;
+    datosResumen.contadores = nuevos;
+    datosResumen.total = window.totalOriginal;
+    datosResumen.volumen = Object.entries(nuevos).reduce((sum, [d, c]) =>
+        sum + calcularVolumen(parseInt(d)) * c, 0);
 
     localStorage.setItem('datosResumen', JSON.stringify(datosResumen));
-
-    document.getElementById('total-troncos').innerText = `Total de Troncos: ${window.totalOriginal}`;
-    document.getElementById('volumen-total').innerText = `Volumen Total: ${nuevoVolumen.toFixed(2)}`;
+    mostrarResumen(datosResumen);
 
     document.getElementById('edicion-info').style.display = 'none';
-
-    inputs.forEach(input => {
-        input.disabled = true;
-        input.removeEventListener('input', validarTotal);
+    inputs.forEach(i => {
+        i.disabled = true;
+        i.removeEventListener('input', validarTotal);
     });
 
-    alert('Cambios guardados correctamente.');
+    alert('Cambios guardados.');
 }
 
 function calcularVolumen(diametro) {
@@ -127,31 +119,24 @@ function calcularVolumen(diametro) {
 }
 
 function volverAlFormulario() {
-    try {
-        window.location.href = 'contartrozos.aspx';
-    } catch (e) {
-        console.error("Error al redirigir usando href:", e);
-        try {
-            window.location = 'contartrozos.aspx';
-        } catch (e2) {
-            console.error("Error al redirigir usando location=:", e2);
-            try {
-                const baseUrl = window.location.origin;
-                window.location.href = `${baseUrl}/contartrozos.aspx`;
-            } catch (e3) {
-                alert("Error al redirigir. Por favor, intente volver manualmente.");
-            }
-        }
-    }
+    window.location.href = 'contartrozos.aspx';
 }
 
 function terminarProceso() {
-    try {
-        localStorage.clear();
-
-        window.location.href = 'contartrozos.aspx';
-    } catch (e) {
-        console.error("Error al finalizar proceso:", e);
-        alert("Error al finalizar el proceso. Por favor, intente nuevamente.");
-    }
+    Swal.fire({
+        title: '¿Finalizar proceso?',
+        text: "Esto enviará los datos y no podrá modificarlos después.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, finalizar',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33'
+    }).then(result => {
+        if (result.isConfirmed) {
+            localStorage.removeItem('datosResumen');
+            const path = window.location.pathname.replace(/\/[^\/]*$/, '/contartrozos.aspx');
+            window.location.href = path;
+        }
+    });
 }
