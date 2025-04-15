@@ -1,4 +1,5 @@
 ﻿const btn = document.getElementById("btnIrContar");
+
 btn.addEventListener("click", function () {
     const campos = [
         "txtCodigoProveedor", "txtNombreContrato", "txtNombreVenta", "txtOC", "txtFechaRecepcion",
@@ -28,4 +29,28 @@ btn.addEventListener("click", function () {
     });
 
     window.location.href = "contartrozos.aspx";
+});
+
+$(function () {
+    $("#acordeon").accordion({
+        heightStyle: "content",
+        collapsible: true
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const campos = [
+        "txtCodigoProveedor", "txtNombreContrato", "txtNombreVenta", "txtOC", "txtFechaRecepcion",
+        "txtProducto", "txtFSC", "txtDestino", "txtPila", "txtPredio", "txtRol", "txtComuna", "txtRodal",
+        "txtDespachador", "txtTransportista", "txtRUTDespachador", "txtConductor",
+        "txtRUTConductor", "txtPatenteCamion", "txtPatenteCarro"
+    ];
+
+    campos.forEach(id => {
+        const valorGuardado = sessionStorage.getItem(id);
+        if (valorGuardado) {
+            const input = document.getElementById(id);
+            if (input) input.value = valorGuardado;
+        }
+    });
 });

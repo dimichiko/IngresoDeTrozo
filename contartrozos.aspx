@@ -50,14 +50,14 @@
                         <span id="volumen-display-2">Volumen Total: 0</span>
                     </div>
                     <div class="header-right">
-                        <button id="Resta-2" type="button" onclick="toggleModoResta(event)">Modo Resta</button>
+                        <button id="Resta-2" type="button" onclick="toggleModoResta(event)">Activar Modo Resta</button>
                     </div>
                 </div>
 
                 <div class="grid-container-2">
-                    <% For i = 40 To 48 Step 2
-                        Response.Write($"<button id='btn-{i}' onclick=""manejarClick('btn-{i}', event)"" data-count='0'>Diámetro {i}</button>")
-                    Next %>
+                    <% For i = 40 To 54 Step 2
+                            Response.Write($"<button id='btn-{i}' onclick=""manejarClick('btn-{i}', event)"" data-count='0'>Diámetro {i}</button>")
+                        Next %>
                 </div>
            
                 <div class="footer">

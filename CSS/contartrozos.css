@@ -6,12 +6,13 @@
 
 body {
     font-family: Arial, sans-serif;
+    overflow-y: hidden; /* Evita el scroll vertical */
 }
 
 h1 {
     text-align: center;
     font-size: 24px;
-    margin: 20px 0;
+    margin: 10px 0;
 }
 
 .header, .footer {
@@ -25,7 +26,6 @@ h1 {
 .header-left, .footer-left {
     flex: 1;
     text-align: left;
-    margin-right: 10px;
 }
 
     .header-left span {
@@ -57,6 +57,9 @@ button[type="reset"] {
 #Resta-1, #Resta-2 {
     background-color: #ff4444;
     color: white;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
 }
 
     #Resta-1:hover, #Resta-2:hover {
@@ -86,7 +89,6 @@ button[type="reset"] {
     border: 2px solid #2980B9;
     color: white;
     font-weight: bold;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
     #btn-resumen:hover {
@@ -100,27 +102,24 @@ button[type="submit"] {
     border: 2px solid #C13C1A;
     color: white;
     font-weight: bold;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
     #btn-resta:hover,
     button[type="reset"]:hover,
     button[type="submit"]:hover {
         background-color: #C13C1A;
-        transform: scale(1.05);
     }
 
 #total-display, #volumen-display {
     text-align: center;
     font-size: 18px;
-    margin: 10px 0;
+    margin: 10px auto;
     background-color: #007BFF;
     border: 2px solid #0056b3;
     border-radius: 10px;
     padding: 15px;
     color: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    width: 80%;
+    width: 90%;
     max-width: 500px;
 }
 
@@ -128,19 +127,20 @@ button[type="submit"] {
     border: 2px solid red !important;
 }
 
+/* Contenedor principal con deslizamiento horizontal */
 .slider-container {
     display: flex;
     flex-direction: row;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     width: 100%;
-    height: 92vh;
+    height: 90vh;
     scroll-behavior: smooth;
-    padding-bottom: 10px;
 }
 
+    /* Barra de desplazamiento horizontal mejorada */
     .slider-container::-webkit-scrollbar {
-        height: 12px;
+        height: 8px;
     }
 
     .slider-container::-webkit-scrollbar-thumb {
@@ -155,16 +155,42 @@ button[type="submit"] {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 10px;
+    width: 100vw;
+    height: 100%;
 }
 
 .grid-container-1, .grid-container-2 {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 10px;
     width: 100%;
-    height: 100vh;
+    height: 85%;
     padding: 10px;
+}
+
+/* Grids responsivos y adaptables */
+@media (min-width: 1200px) {
+    .grid-container-1, .grid-container-2 {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .grid-container-1, .grid-container-2 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+    .grid-container-1, .grid-container-2 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 575px) {
+    .grid-container-1, .grid-container-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .grid-container-1 {
@@ -175,18 +201,24 @@ button[type="submit"] {
     background-color: #f0f0f0;
 }
 
+    /* Botones de diámetros más grandes con colores originales */
     .grid-container-1 button,
     .grid-container-2 button {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 10px;
+        padding: 15px;
         font-size: 16px;
+        font-weight: 600;
         border: none;
         border-radius: 10px;
         cursor: pointer;
         transition: all 0.2s ease;
+        width: 100%;
+        height: 100%;
+        min-height: 80px;
         color: #000;
+        text-align: center;
     }
 
         .grid-container-1 button:hover,
@@ -194,6 +226,7 @@ button[type="submit"] {
             transform: scale(1.05);
         }
 
+/* Colores originales para los distintos tipos de botones */
 .grid-container-1 [id^="btn-1"],
 .grid-container-1 [id^="btn-2"],
 #btn-16, #btn-18, #btn-20, #btn-22 {
@@ -222,20 +255,23 @@ button[type="submit"] {
         background-color: #F48FB1;
     }
 
-#btn-40, #btn-42, #btn-44, #btn-46, #btn-48 {
+#btn-40, #btn-42, #btn-44, #btn-46, #btn-48,
+#btn-50, #btn-52, #btn-54 {
     background-color: #D1C4E9;
 }
 
-    #btn-40:hover, #btn-42:hover, #btn-44:hover, #btn-46:hover, #btn-48:hover {
+    #btn-40:hover, #btn-42:hover, #btn-44:hover, #btn-46:hover, #btn-48:hover,
+    #btn-50:hover, #btn-52:hover, #btn-54:hover {
         background-color: #B39DDB;
     }
+
 .contador {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
     font-size: 2rem;
-    margin: 40px 0;
+    margin: 20px 0;
 }
 
     .contador button {
@@ -255,10 +291,13 @@ button[type="submit"] {
 .botones {
     display: flex;
     justify-content: space-between;
-    margin-top: 30px;
+    margin-top: 20px;
+    gap: 10px;
+    width: 100%;
 }
 
     .botones button {
+        flex: 1;
         padding: 10px 20px;
         font-weight: 500;
         border: none;
@@ -272,38 +311,31 @@ button[type="submit"] {
             background-color: #5a6268;
         }
 
-@media (max-width: 1440px) {
-    #Resta-1, #Resta-2 {
-        width: 700px;
-        padding: 30px;
+/* Ajustes para dispositivos pequeños */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 20px;
     }
+
+    .grid-container-1 button,
+    .grid-container-2 button {
+        font-size: 14px;
+        min-height: 70px;
+    }
+
+    .contador {
+        font-size: 1.5rem;
+        gap: 10px;
+    }
+
+        .contador button {
+            font-size: 1.2rem;
+        }
 }
 
-@media (max-width: 1024px) {
-    #Resta-1, #Resta-2 {
-        width: 600px;
-        padding: 20px;
-    }
-}
-
+/* Mantener el botón de Resta con buen tamaño */
 @media (max-width: 768px) {
     #Resta-1, #Resta-2 {
-        width: 500px;
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 550px) {
-    #Resta-1, #Resta-2 {
-        width: 200px;
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 400px) {
-    #Resta-1, #Resta-2 {
-        width: 150px;
-        padding: 8px;
-        font-size: 12px;
+        max-width: 90%;
     }
 }

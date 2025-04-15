@@ -70,9 +70,14 @@ function actualizarTotales() {
 function toggleModoResta(event) {
     event.preventDefault();
     modoResta = !modoResta;
-    document.getElementById("Resta-1").innerText = modoResta ? "Modo Resta Activado" : "Activar Modo Resta";
 
-    for (let i = 16; i <= 48; i += 2) {
+    const btn1 = document.getElementById("Resta-1");
+    const btn2 = document.getElementById("Resta-2");
+
+    if (btn1) btn1.innerText = modoResta ? "Modo Resta Activado" : "Activar Modo Resta";
+    if (btn2) btn2.innerText = modoResta ? "Modo Resta Activado" : "Activar Modo Resta";
+
+    for (let i = 16; i <= 54; i += 2) {
         const b = document.getElementById(`btn-${i}`);
         if (b) b.classList.toggle("borde-rojo", modoResta);
     }
@@ -80,8 +85,14 @@ function toggleModoResta(event) {
 
 function desactivarModoResta() {
     modoResta = false;
-    document.getElementById("Resta-1").innerText = "Activar Modo Resta";
-    for (let i = 16; i <= 48; i += 2) {
+
+    const btn1 = document.getElementById("Resta-1");
+    const btn2 = document.getElementById("Resta-2");
+
+    if (btn1) btn1.innerText = "Activar Modo Resta";
+    if (btn2) btn2.innerText = "Activar Modo Resta";
+
+    for (let i = 16; i <= 54; i += 2) {
         const b = document.getElementById(`btn-${i}`);
         if (b) b.classList.remove("borde-rojo");
     }
@@ -156,3 +167,9 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("volumen-display-2").textContent = `Volumen Total: ${volumen.toFixed(2)}`;
     }
 });
+
+function moverSlider(direccion) {
+    const container = document.querySelector(".slider-container");
+    const ancho = container.clientWidth;
+    container.scrollLeft += direccion * ancho;
+}

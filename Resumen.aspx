@@ -57,6 +57,7 @@
                 <p id="total-troncos">Total de Troncos: 0</p>
                 <p id="volumen-total">Volumen Total: 0</p>
 
+                 <button type="button" onclick="Imprimir">Imprimir</button>
                  <button type="button" onclick="reiniciarProceso()">Empezar nuevo conteo</button>
             </div>
         </div>
