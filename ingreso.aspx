@@ -47,7 +47,22 @@
                     <div class="fila"><label for="txtPatenteCarro">Patente Carro:</label><input type="text" id="txtPatenteCarro" /></div>
                 </div>
             </div>
-
+           <div class="fila">
+               <label for="txtCantidadBancos">Cantidad de Bancos:</label>
+               <select id="txtCantidadBancos" required>
+                      <option value=""></option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+              </select>
+            </div>
             <div class="botones">
                 <button type="button" id="btnIrContar">Ir a contar troncos</button>
             </div>

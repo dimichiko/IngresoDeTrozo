@@ -5,7 +5,7 @@ btn.addEventListener("click", function () {
         "txtCodigoProveedor", "txtNombreContrato", "txtNombreVenta", "txtOC", "txtFechaRecepcion",
         "txtProducto", "txtFSC", "txtDestino", "txtPila", "txtPredio", "txtRol", "txtComuna", "txtRodal",
         "txtDespachador", "txtTransportista", "txtRUTDespachador", "txtConductor",
-        "txtRUTConductor", "txtPatenteCamion", "txtPatenteCarro"
+        "txtRUTConductor", "txtPatenteCamion", "txtPatenteCarro", "txtCantidadBancos"
     ];
 
     let incompletos = [];
