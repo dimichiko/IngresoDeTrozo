@@ -5,7 +5,6 @@ Proyecto ASP.NET Web Forms para registrar y gestionar el ingreso de troncos en u
 <pre>
 ## 📦 Estructura del Proyecto
 
-```
 Ingresodetrozo/
 ├── contartrozos.aspx          # Página para contar troncos
 ├── Resumen.aspx               # Página para editar y ver resumen
@@ -27,7 +26,7 @@ Ingresodetrozo/
 
 ├── /Content                   # Imágenes o archivos estáticos
 ├── /xml                       # Datos o configuraciones en XML (opcional)
-```
+
 </pre>
 
 ## 🧪 Funcionalidad
