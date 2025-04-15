@@ -5,7 +5,9 @@
 <head runat="server">
     <title>Resumen Final</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="CSS/resumen.css" rel="stylesheet" type="text/css" />
+    <link href="CSS/mobile_fixes.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>

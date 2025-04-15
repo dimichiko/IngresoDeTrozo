@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Conteo de Troncos</title>
     <link rel="stylesheet" type="text/css" href="CSS/contartrozos.css" />
+    <link href="CSS/mobile_fixes.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -35,7 +36,7 @@
                         <button id="resetearContador-1" type="button" onclick="resetearContadores(event)">Reset</button>
                     </div>
                     <div style="text-align:center; margin-top: 20px;">
-                    <button type="button" onclick="window.location.href='ingreso.aspx'">← Volver a ingreso</button>
+                        <button type="button" onclick="window.location.href='ingreso.aspx'">← Volver a ingreso</button>
                     </div>
                     <div class="footer-right">
                         <button id="irResumen-1" type="button" onclick="irAlResumen(event)">Resumen</button>
@@ -56,16 +57,16 @@
 
                 <div class="grid-container-2">
                     <% For i = 40 To 54 Step 2
-                            Response.Write($"<button id='btn-{i}' onclick=""manejarClick('btn-{i}', event)"" data-count='0'>Diámetro {i}</button>")
-                        Next %>
+                        Response.Write($"<button id='btn-{i}' onclick=""manejarClick('btn-{i}', event)"" data-count='0'>Diámetro {i}</button>")
+                    Next %>
                 </div>
-           
+
                 <div class="footer">
                     <div class="footer-left">
                         <button id="resetearContador-2" type="button" onclick="resetearContadores(event)">Reset</button>
                     </div>
                     <div style="text-align:center; margin-top: 20px;">
-                    <button type="button" onclick="window.location.href='ingreso.aspx'">← Volver a ingreso</button>
+                        <button type="button" onclick="window.location.href='ingreso.aspx'">← Volver a ingreso</button>
                     </div>
                     <div class="footer-right">
                         <button id="irResumen-2" type="button" onclick="irAlResumen(event)">Resumen</button>
@@ -82,8 +83,6 @@
     <script src="/JS/contartrozos.js?v=2"></script>
 </body>
 </html>
-
-
 
 
 

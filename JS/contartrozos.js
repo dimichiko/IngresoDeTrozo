@@ -2,15 +2,6 @@
 let volumenTotal = 0;
 let modoResta = false;
 
-const datosGuardados = JSON.parse(localStorage.getItem('datosResumen')) || {
-    total: 0,
-    volumen: 0,
-    contadores: {}
-};
-
-contadorTotal = datosGuardados.total;
-volumenTotal = datosGuardados.volumen;
-
 function manejarClick(id, event) {
     event.preventDefault();
     const btn = document.getElementById(id);
@@ -41,7 +32,7 @@ function manejarClick(id, event) {
 }
 
 function calcularVolumen(diametro) {
-    return (diametro * diametro) * 3.2 / 10000;
+    return (diametro * diametro * 3.2) / 10000;
 }
 
 function guardarDatosEnLocalStorage() {
@@ -143,10 +134,6 @@ function irAlResumen(event) {
     window.location.href = "resumen.aspx";
 }
 
-function calcularVolumen(diametro) {
-    return (diametro * diametro * 3.2) / 10000;
-}
-
 document.addEventListener("DOMContentLoaded", function () {
     const datosGuardados = JSON.parse(localStorage.getItem("datosResumen"));
     if (datosGuardados && datosGuardados.contadores) {
@@ -154,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const btn = document.getElementById(`btn-${diametro}`);
             if (btn) {
                 btn.setAttribute("data-count", cantidad);
-                btn.textContent = `Diámetro ${diametro} (${cantidad})`; 
+                btn.textContent = `Diámetro ${diametro} (${cantidad})`;
             }
         });
 
