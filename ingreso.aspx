@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -22,7 +23,7 @@
                   <h1>Ingreso Información Camión</h1>
              </div>
             <div class="boton-salida">
-                <button type="button" onclick="window.location.href='index.aspx'">Salir</button>
+                <button type="button" onclick="window.location.href='inicio.aspx'">Salir</button>
            </div>
           </div>
             <div id="acordeon">

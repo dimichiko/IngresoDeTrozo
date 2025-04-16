@@ -115,11 +115,18 @@
     <Content Include="Content\LOGO_ALTO_HORIZONTE-SIN-FONDO.png" />
     <Content Include="CSS\contartrozos.css" />
     <Content Include="CSS\ingreso.css" />
+    <Content Include="CSS\inicio.css" />
+    <Content Include="CSS\login.css" />
     <Content Include="CSS\resumen.css" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="inicio.aspx" />
     <Content Include="JS\comun.js" />
     <Content Include="JS\cargar-empresas.js" />
     <Content Include="JS\ingreso.js" />
+    <Content Include="JS\inicio.js" />
+    <Content Include="JS\login.js" />
+    <Content Include="login.aspx" />
     <Content Include="Resumen.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -129,6 +136,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="JS\contartrozos.js" />
     <Content Include="README.md" />
+    <Content Include="favicon_io.zip" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -140,6 +148,20 @@
     <Content Include="xml\Parametros.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="inicio.aspx.designer.vb">
+      <DependentUpon>inicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="inicio.aspx.vb">
+      <DependentUpon>inicio.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="login.aspx.designer.vb">
+      <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="login.aspx.vb">
+      <DependentUpon>login.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Resumen.aspx.designer.vb">
       <DependentUpon>Resumen.aspx</DependentUpon>
     </Compile>

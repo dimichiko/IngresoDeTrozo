@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="CSS/resumen.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
 </head>
 <body>
     <form id="form1" runat="server">
