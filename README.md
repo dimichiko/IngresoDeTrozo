@@ -2,24 +2,38 @@
 
 Proyecto ASP.NET Web Forms para registrar y gestionar el ingreso de troncos en una empresa forestal.
 
-<pre>
+---
+
+## 🚦 Flujo General
+
+`login.aspx` → `inicio.aspx` → `ingreso.aspx` → `contartrozos.aspx` → `resumen.aspx`
+
+---
+
 ## 📦 Estructura del Proyecto
 
 Ingresodetrozo/
-├── ingreso.aspx               # Página para ingresar datos del camión
-├── contartrozos.aspx          # Página para contar troncos
-├── Resumen.aspx               # Página para editar y ver resumen
+├── login.aspx                 # Página de acceso con validación
+├── inicio.aspx                # Página de inicio con acceso a módulos
+├── ingreso.aspx               # Registro de datos del camión
+├── contartrozos.aspx          # Conteo de troncos por diámetro
+├── resumen.aspx               # Edición y resumen de los datos
 ├── Web.config                 # Configuración general del proyecto
 ├── Global.asax                # Configuración global ASP.NET
+├── favicon.ico                # Ícono de la empresa en pestaña del navegador
 
-├── /JS                        # Lógica frontend por página
-│   ├── ingreso.js             # Validación y guardado de datos de ingreso
-│   ├── contartrozos.js        # Función de conteo y eventos de botones
-│   ├── cargar-empresas.js     # Carga empresas desde servicio web
-│   ├── resumen.js             # Validación y edición del resumen
-│   └── comun.js               # Funciones reutilizables (ej: Obtener_Parametros)
+├── /JS
+│   ├── login.js               # Validación de login
+│   ├── inicio.js              # (Vacío, reservado para lógica futura)
+│   ├── ingreso.js             # Validación y sessionStorage
+│   ├── contartrozos.js        # Lógica de conteo
+│   ├── resumen.js             # Edición y validación final
+│   ├── cargar-empresas.js     # Lógica para cargar proveedores
+│   └── comun.js               # Funciones reutilizables
 
-├── /CSS                       # Estilos separados por página
+├── /CSS
+│   ├── login.css
+│   ├── inicio.css
 │   ├── ingreso.css
 │   ├── contartrozos.css
 │   └── resumen.css
@@ -27,38 +41,51 @@ Ingresodetrozo/
 ├── /Scripts                   # Librerías externas (ej: jQuery)
 │   └── jquery-3.7.1.js
 
-├── /Content                   # Imágenes o archivos estáticos
-├── /xml                       # Datos o configuraciones en XML
+├── /Content                   # Logo e imágenes estáticas
+├── /xml                       # Configuraciones o datos en XML
 
 </pre>
 
+---
+
 ## 🧪 Funcionalidad
 
-### 1. `ingreso.aspx`
-- Formulario para registrar proveedor, predio y transporte.
-- Valida campos obligatorios.
-- Guarda en `sessionStorage` para continuar el flujo.
+### 1. `login.aspx`
+- Campo de usuario y contraseña con validación.
+- Simulación o conexión real con base de datos.
+- Redirige a `inicio.aspx` tras validación exitosa.
 
-### 2. `contartrozos.aspx`
-- Cuenta troncos por diámetro.
-- Permite sumar/restar unidades.
-- Calcula volumen total automáticamente.
-- Guarda datos temporalmente en `sessionStorage`.
+### 2. `inicio.aspx`
+- Muestra logo corporativo.
+- Dos botones: acceso a "Contador de Trozos" y "Almacén".
+- Botón de "Salir" que vuelve a `login.aspx`.
 
-### 3. `Resumen.aspx`
-- Muestra los datos ingresados.
-- Permite editar cantidades de cada diámetro.
-- Valida que el total sea consistente antes de cerrar.
+### 3. `ingreso.aspx`
+- Formulario dividido en acordeón.
+- Registra proveedor, origen y transporte.
+- Valida campos requeridos.
+- Guarda en `sessionStorage`.
 
-### 4. Web Service
-- `comun.js` usa un servicio remoto para obtener datos de empresas.
+### 4. `contartrozos.aspx`
+- Registro y suma de troncos por diámetro.
+- Cálculo de volumen total.
+- Edición rápida.
+
+### 5. `resumen.aspx`
+- Vista consolidada de todos los datos.
+- Edición del conteo.
+- Validación antes de finalizar.
+
+---
 
 ## ✅ Recomendaciones
 
-- Usar `Ctrl+Shift+R` para evitar caché de JS en desarrollo.
-- Cambiar versión de script: `<script src="archivo.js?v=2">`
-- Evitar `async: false` cuando sea posible.
+- Usar `Ctrl+Shift+R` para evitar caché de JS.
+- Puedes cambiar versión de script: `<script src="archivo.js?v=2">`
+- Asegurar favicon con: `<link rel="icon" href="favicon.ico">`
+
+---
 
 ## ✍️ Autor
 
-Dimitris — Práctica profesional en Alto Horizonte
+**Dimitris** — Práctica profesional en *Alto Horizonte*
