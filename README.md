@@ -46,8 +46,6 @@ Ingresodetrozo/
 
 </pre>
 
----
-
 ## 🧪 Funcionalidad
 
 ### 1. `login.aspx`
