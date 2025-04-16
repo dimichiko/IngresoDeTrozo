@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Conteo de Troncos</title>
     <link rel="stylesheet" type="text/css" href="CSS/contartrozos.css" />
-    <link href="CSS/mobile_fixes.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -17,12 +16,14 @@
 
         <div class="slider-container">
             <div class="slider-screen">
-                <div class="header">
-                    <div class="header-left">
-                        <span id="total-display-1">Total: 0</span>
-                        <span id="volumen-display-1">Volumen Total: 0</span>
+             <div class="header">
+               <div class="header-left">
+                 <span id="total-display-1">Total: 0</span>
+                   <span id="volumen-display-1">Volumen Total: 0</span>
                     </div>
-                    <button id="Resta-1" type="button" onclick="toggleModoResta(event)">Activar Modo Resta</button>
+                        <div class="header-right">
+                        <button id="Resta-1" type="button" onclick="toggleModoResta(event)">Activar Modo Resta</button>
+                   </div>
                 </div>
 
                 <div class="grid-container-1">

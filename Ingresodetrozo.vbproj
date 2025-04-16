@@ -114,7 +114,6 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="CSS\contartrozos.css" />
     <Content Include="CSS\ingreso.css" />
-    <Content Include="CSS\mobiles.css" />
     <Content Include="CSS\resumen.css" />
     <Content Include="Global.asax" />
     <Content Include="JS\comun.js" />

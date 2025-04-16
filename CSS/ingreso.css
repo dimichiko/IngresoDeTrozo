@@ -151,6 +151,18 @@ select {
     margin-top: 10px;
 }
 
+.error-rut {
+    color: red;
+    font-size: 0.9em;
+    display: block;
+    margin-top: 4px;
+}
+
+.input-error {
+    border: 1px solid red;
+}
+
+
 @media (min-width: 1536px) {
     body {
         font-size: 19px;
@@ -341,3 +353,4 @@ select {
         padding: 8px;
     }
 }
+

@@ -6,7 +6,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    overflow-y: hidden; /* Evita el scroll vertical */
+    overflow-y: hidden; 
 }
 
 h1 {
@@ -127,7 +127,6 @@ button[type="submit"] {
     border: 2px solid red !important;
 }
 
-/* Contenedor principal con deslizamiento horizontal */
 .slider-container {
     display: flex;
     flex-direction: row;
@@ -137,8 +136,6 @@ button[type="submit"] {
     height: 90vh;
     scroll-behavior: smooth;
 }
-
-    /* Barra de desplazamiento horizontal mejorada */
     .slider-container::-webkit-scrollbar {
         height: 8px;
     }
@@ -168,7 +165,6 @@ button[type="submit"] {
     padding: 10px;
 }
 
-/* Grids responsivos y adaptables */
 @media (min-width: 1200px) {
     .grid-container-1, .grid-container-2 {
         grid-template-columns: repeat(5, 1fr);
@@ -201,7 +197,6 @@ button[type="submit"] {
     background-color: #f0f0f0;
 }
 
-    /* Botones de diámetros más grandes con colores originales */
     .grid-container-1 button,
     .grid-container-2 button {
         display: flex;
@@ -226,7 +221,6 @@ button[type="submit"] {
             transform: scale(1.05);
         }
 
-/* Colores originales para los distintos tipos de botones */
 .grid-container-1 [id^="btn-1"],
 .grid-container-1 [id^="btn-2"],
 #btn-16, #btn-18, #btn-20, #btn-22 {
@@ -311,7 +305,6 @@ button[type="submit"] {
             background-color: #5a6268;
         }
 
-/* Ajustes para dispositivos pequeños */
 @media (max-width: 480px) {
     h1 {
         font-size: 20px;
@@ -333,7 +326,6 @@ button[type="submit"] {
         }
 }
 
-/* Mantener el botón de Resta con buen tamaño */
 @media (max-width: 768px) {
     #Resta-1, #Resta-2 {
         max-width: 90%;
