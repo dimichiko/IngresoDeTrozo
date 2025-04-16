@@ -2,13 +2,9 @@
 
 Proyecto ASP.NET Web Forms para registrar y gestionar el ingreso de troncos en una empresa forestal.
 
----
-
 ## 🚦 Flujo General
 
 `login.aspx` → `inicio.aspx` → `ingreso.aspx` → `contartrozos.aspx` → `resumen.aspx`
-
----
 
 ## 📦 Estructura del Proyecto
 <pre>
