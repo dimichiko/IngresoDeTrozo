@@ -11,7 +11,7 @@ Proyecto ASP.NET Web Forms para registrar y gestionar el ingreso de troncos en u
 ---
 
 ## 📦 Estructura del Proyecto
-
+<pre>
 Ingresodetrozo/
 ├── login.aspx                 # Página de acceso con validación
 ├── inicio.aspx                # Página de inicio con acceso a módulos
