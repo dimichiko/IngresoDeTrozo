@@ -112,6 +112,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\LOGO_ALTO_HORIZONTE-SIN-FONDO.png" />
     <Content Include="CSS\contartrozos.css" />
     <Content Include="CSS\ingreso.css" />
     <Content Include="CSS\resumen.css" />

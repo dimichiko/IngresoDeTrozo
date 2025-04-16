@@ -14,8 +14,17 @@
 <body>
     <form id="form1" runat="server">
         <div class="contenedor">
-            <h1>Ingreso Información Camión</h1>
-
+            <div class="header-contenedor">
+                <div class="logo-izquierdo">
+                <img src="Content/LOGO_ALTO_HORIZONTE-SIN-FONDO.png" alt="Logo Empresa" />
+            </div>
+             <div class="titulo-header">
+                  <h1>Ingreso Información Camión</h1>
+             </div>
+            <div class="boton-salida">
+                <button type="button" onclick="window.location.href='index.aspx'">Salir</button>
+           </div>
+          </div>
             <div id="acordeon">
                 <h3>Información Proveedor</h3>
                 <div>
