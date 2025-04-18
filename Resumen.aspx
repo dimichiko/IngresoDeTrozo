@@ -11,7 +11,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="form1"    runat="server">
         <div class="contenedor">
             <h1>Resumen del Proceso</h1>
 
