@@ -26,29 +26,11 @@ function manejarClick(id, event) {
 
     btn.dataset.count = count;
     btn.innerText = `Diámetro ${diametro} | Contador: ${count}`;
-
-    guardarDatosEnLocalStorage();
     actualizarTotales();
 }
 
 function calcularVolumen(diametro) {
     return (diametro * diametro * 3.2) / 10000;
-}
-
-function guardarDatosEnLocalStorage() {
-    const datos = {
-        total: contadorTotal,
-        volumen: volumenTotal,
-        contadores: {}
-    };
-
-    document.querySelectorAll('.grid-container-1 button, .grid-container-2 button')
-        .forEach(btn => {
-            const d = btn.id.split('-')[1];
-            datos.contadores[d] = parseInt(btn.dataset.count || 0);
-        });
-
-    localStorage.setItem('datosResumen', JSON.stringify(datos));
 }
 
 function actualizarTotales() {
@@ -68,7 +50,7 @@ function toggleModoResta(event) {
     if (btn1) btn1.innerText = modoResta ? "Modo Resta Activado" : "Activar Modo Resta";
     if (btn2) btn2.innerText = modoResta ? "Modo Resta Activado" : "Activar Modo Resta";
 
-    for (let i = 16; i <= 54; i += 2) {
+    for (let i = 16; i <= 60; i += 2) {
         const b = document.getElementById(`btn-${i}`);
         if (b) b.classList.toggle("borde-rojo", modoResta);
     }
@@ -83,7 +65,7 @@ function desactivarModoResta() {
     if (btn1) btn1.innerText = "Activar Modo Resta";
     if (btn2) btn2.innerText = "Activar Modo Resta";
 
-    for (let i = 16; i <= 54; i += 2) {
+    for (let i = 16; i <= 60; i += 2) {
         const b = document.getElementById(`btn-${i}`);
         if (b) b.classList.remove("borde-rojo");
     }
@@ -94,19 +76,20 @@ function resetearContadores(event) {
     contadorTotal = 0;
     volumenTotal = 0;
 
-    document.querySelectorAll('.grid-container-1 button, .grid-container-2 button')
-        .forEach(btn => {
-            const d = btn.id.split('-')[1];
-            btn.dataset.count = 0;
-            btn.innerText = `Diámetro ${d} | Contador: 0`;
-        });
+    document.querySelectorAll("button[id^='btn-']").forEach(btn => {
+        const d = btn.id.split('-')[1];
+        btn.dataset.count = 0;
+        btn.innerText = `Diámetro ${d} | Contador: 0`;
+    });
 
-    guardarDatosEnLocalStorage();
     actualizarTotales();
 }
 
 function irAlResumen(event) {
     event.preventDefault();
+
+    const cantidadBancos = parseInt(localStorage.getItem("cantidadBancos") || 1);
+    let bancoActual = parseInt(localStorage.getItem("bancoActual") || 1);
 
     let total = 0;
     let volumen = 0;
@@ -123,40 +106,50 @@ function irAlResumen(event) {
         }
     });
 
-    const datosResumen = {
+    const datosActuales = {
+        banco: bancoActual,
         total,
         volumen,
         contadores
     };
 
-    localStorage.setItem("datosResumen", JSON.stringify(datosResumen));
+    let datosBancos = JSON.parse(localStorage.getItem("datosBancos")) || [];
+    datosBancos = datosBancos.filter(b => b.banco !== bancoActual);
+    datosBancos.push(datosActuales);
+    datosBancos.sort((a, b) => a.banco - b.banco);
 
-    window.location.href = "resumen.aspx";
+    localStorage.setItem("datosBancos", JSON.stringify(datosBancos));
+
+    if (bancoActual < cantidadBancos) {
+        localStorage.setItem("bancoActual", bancoActual + 1);
+        window.location.href = "contartrozos.aspx";
+    } else {
+        window.location.href = "resumen.aspx";
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const datosGuardados = JSON.parse(localStorage.getItem("datosResumen"));
-    if (datosGuardados && datosGuardados.contadores) {
-        Object.entries(datosGuardados.contadores).forEach(([diametro, cantidad]) => {
+    const bancoActual = parseInt(localStorage.getItem("bancoActual") || 1);
+    const cantidadBancos = parseInt(localStorage.getItem("cantidadBancos") || 1);
+    const bancoInfo = document.getElementById("banco-info");
+    if (bancoInfo) {
+        bancoInfo.innerText = `Banco ${bancoActual} de ${cantidadBancos}`;
+    }
+
+    const datosBancos = JSON.parse(localStorage.getItem("datosBancos") || "[]");
+    const datos = datosBancos.find(d => d.banco === bancoActual);
+
+    if (datos) {
+        Object.entries(datos.contadores).forEach(([diametro, cantidad]) => {
             const btn = document.getElementById(`btn-${diametro}`);
             if (btn) {
                 btn.setAttribute("data-count", cantidad);
-                btn.textContent = `Diámetro ${diametro} (${cantidad})`;
+                btn.textContent = `Diámetro ${diametro} | Contador: ${cantidad}`;
             }
         });
 
-        const total = datosGuardados.total || 0;
-        const volumen = datosGuardados.volumen || 0;
-
-        document.getElementById("total-display-1").textContent = `Total: ${total}`;
-        document.getElementById("total-display-2").textContent = `Total: ${total}`;
-        document.getElementById("volumen-display-1").textContent = `Volumen Total: ${volumen.toFixed(2)}`;
-        document.getElementById("volumen-display-2").textContent = `Volumen Total: ${volumen.toFixed(2)}`;
+        contadorTotal = datos.total || 0;
+        volumenTotal = datos.volumen || 0;
+        actualizarTotales();
     }
 });
-
-function moverSlider(direccion) {
-    const container = document.querySelector(".slider-container");
-    const ancho = container.clientWidth;
-    container.scrollLeft += direccion * ancho;
-}

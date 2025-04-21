@@ -1,5 +1,4 @@
-﻿
-document.addEventListener("DOMContentLoaded", function () {
+﻿document.addEventListener("DOMContentLoaded", function () {
     $("#acordeon").accordion({
         heightStyle: "content",
         collapsible: true
@@ -95,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!rutValido) return;
 
         if (incompletos.length > 0) {
-            console.log("Campos incompletos:", incompletos); // 👈 Esto muestra los campos vacíos
+            console.log("Campos incompletos:", incompletos);
             Swal.fire({
                 icon: 'warning',
                 title: 'Campos incompletos',
@@ -104,9 +103,18 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+        const cantidad = document.getElementById("selectBancos").value;
+        if (!cantidad) {
+            Swal.fire("Debes seleccionar la cantidad de bancos");
+            return;
+        }
+
         campos.forEach(id => {
             sessionStorage.setItem(id, document.getElementById(id).value);
         });
+
+        localStorage.setItem("cantidadBancos", cantidad);
+        localStorage.setItem("bancoActual", 1); 
 
         window.location.href = "contartrozos.aspx";
     });

@@ -134,3 +134,17 @@ button, #edicionTroncos button {
     #edicionTroncos input[type="number"] {
         width: 80px;
     }
+
+.banco-bloque {
+    background-color: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+    .banco-bloque legend {
+        font-weight: bold;
+        color: #007BFF;
+        padding: 0 10px;
+    }

@@ -95,6 +95,7 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="almacen.aspx" />
     <Content Include="contartrozos.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -113,12 +114,13 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\LOGO_ALTO_HORIZONTE-SIN-FONDO.png" />
+    <Content Include="CSS\almacen.css" />
     <Content Include="CSS\contartrozos.css" />
     <Content Include="CSS\ingreso.css" />
     <Content Include="CSS\inicio.css" />
     <Content Include="CSS\login.css" />
     <Content Include="CSS\resumen.css" />
-    <Content Include="favicon.ico" />
+    <Content Include="Content\favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="inicio.aspx" />
     <Content Include="JS\comun.js" />
@@ -136,7 +138,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="JS\contartrozos.js" />
     <Content Include="README.md" />
-    <Content Include="favicon_io.zip" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -148,6 +149,13 @@
     <Content Include="xml\Parametros.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="almacen.aspx.designer.vb">
+      <DependentUpon>almacen.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="almacen.aspx.vb">
+      <DependentUpon>almacen.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="inicio.aspx.designer.vb">
       <DependentUpon>inicio.aspx</DependentUpon>
     </Compile>

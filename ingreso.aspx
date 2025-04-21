@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="Content/favicon.ico" type="image/x-icon" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -89,6 +89,16 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                       <label for="selectBancos">Cantidad de bancos:</label>
+                       <select id="selectBancos" class="form-control">
+                           <option value="" disabled selected>Selecciona</option>
+                           <option value="1">1 banco</option>
+                           <option value="2">2 bancos</option>
+                           <option value="3">3 bancos</option>
+                           <option value="4">4 bancos</option>
+                      </select>
+            </div>
             <div class="botones">
                 <button type="button" id="btnIrContar">Ir a contar troncos</button>
             </div>
