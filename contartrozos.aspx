@@ -35,16 +35,16 @@
                     </div>
 
                     <div class="footer">
-                        <div class="footer-left">
-                            <button id="resetearContador-1" type="button" onclick="resetearContadores(event)">Reset</button>
-                        </div>
-                        <div style="text-align:center; margin-top: 20px;">
-                            <button type="button" onclick="window.location.href='ingreso.aspx'">← Volver a ingreso</button>
-                        </div>
-                        <div class="footer-right">
-                            <button id="irResumen-1" type="button" onclick="irAlResumen(event)">Resumen</button>
-                        </div>
-                    </div>
+                       <div class="footer-left">
+                           <button id="resetearContador-1" type="button" onclick="resetearContadores(event)">Reset</button>
+                         </div>
+                         <div style="text-align:center; margin-top: 20px;">
+                            <button class="btnVolver" type="button">← Volver</button>
+                         </div>
+                         <div class="footer-right">
+                           <button id="btnSiguiente" type="button" onclick="irAlResumen(event)">Resumen</button>
+                       </div>
+                   </div>
                 </div>
 
                 <div class="slider-screen">
@@ -64,17 +64,17 @@
                         Next %>
                     </div>
 
-                    <div class="footer">
-                        <div class="footer-left">
-                            <button id="resetearContador-2" type="button" onclick="resetearContadores(event)">Reset</button>
-                        </div>
-                        <div style="text-align:center; margin-top: 20px;">
-                            <button type="button" onclick="window.location.href='ingreso.aspx'">← Volver a ingreso</button>
-                        </div>
-                        <div class="footer-right">
-                            <button id="irResumen-2" type="button" onclick="irAlResumen(event)">Resumen</button>
-                        </div>
-                    </div>
+                   <div class="footer">
+                       <div class="footer-left">
+                          <button id="resetearContador-2" type="button" onclick="resetearContadores(event)">Reset</button>
+                      </div>
+                      <div style="text-align:center; margin-top: 20px;">
+                         <button class="btnVolver" type="button">← Volver</button>
+                      </div>
+                      <div class="footer-right">
+                        <button id="btnSiguiente" type="button" onclick="irAlResumen(event)">Resumen</button>
+                     </div>
+                  </div>
                 </div>
             </div>
         </div>

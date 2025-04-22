@@ -151,5 +151,34 @@ document.addEventListener("DOMContentLoaded", function () {
         contadorTotal = datos.total || 0;
         volumenTotal = datos.volumen || 0;
         actualizarTotales();
+        actualizarTextoBotones();
     }
+});
+
+function actualizarTextoBotones() {
+    const btnVolver = document.querySelector(".btnVolver");
+    const btnSiguiente = document.getElementById("btnSiguiente");
+
+    const bancoActual = parseInt(localStorage.getItem("bancoActual") || 1);
+    const cantidadBancos = parseInt(localStorage.getItem("cantidadBancos") || 1);
+
+    if (btnVolver) {
+        btnVolver.textContent = bancoActual === 1 ? "← Volver a ingreso" : "← Volver al banco anterior";
+        btnVolver.onclick = function () {
+            if (bancoActual === 1) {
+                window.location.href = "ingreso.aspx";
+            } else {
+                localStorage.setItem("bancoActual", bancoActual - 1);
+                window.location.href = "contartrozos.aspx";
+            }
+        };
+    }
+
+    if (btnSiguiente) {
+        btnSiguiente.textContent = bancoActual === cantidadBancos ? "Ir a resumen" : "Siguiente banco";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    actualizarTextoBotones();
 });

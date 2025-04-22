@@ -20,12 +20,17 @@
             </div>
 
             <div class="botones-inicio">
-                <button type="button" onclick="window.location.href='ingreso.aspx'">Ingreso de Trozos</button>
+                <button type="button" onclick="limpiarCacheYRedirigir('ingreso.aspx')">Ingreso de Trozos</button>
                 <button type="button" onclick="window.location.href='almacen.aspx'">Almacén</button>
             </div>
         </div>
     </form>
-
+    <script>
+        function limpiarCacheYRedirigir(pagina) {
+          sessionStorage.clear();
+          window.location.href = pagina;
+        }
+    </script>
     <script src="JS/inicio.js"></script>
 </body>
 </html>
