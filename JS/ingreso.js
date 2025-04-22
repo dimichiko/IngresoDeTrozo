@@ -114,7 +114,8 @@
         });
 
         localStorage.setItem("cantidadBancos", cantidad);
-        localStorage.setItem("bancoActual", 1); 
+        localStorage.setItem("bancoActual", 1);
+        localStorage.removeItem("datosBancos");
 
         window.location.href = "contartrozos.aspx";
     });
