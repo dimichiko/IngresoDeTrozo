@@ -30,18 +30,20 @@ function renderizarResumen(bancos) {
         const tabla = Object.entries(contadores)
             .filter(([_, c]) => c > 0)
             .map(([d, c]) => `
-        <tr>
-            <td>${d}</td>
-            <td>
-                <input type="number" min="0" class="contador-input banco-${index}" data-diametro="${d}" value="${c}" disabled />
-            </td>
-        </tr>
-    `).join("");
+                <tr>
+                    <td>${d}</td>
+                    <td>
+                        <input type="number" min="0" class="contador-input banco-${index}" data-diametro="${d}" value="${c}" disabled />
+                    </td>
+                </tr>
+            `).join("");
 
         bloque.innerHTML = `
-            <h3>Banco ${banco}</h3>
-            <p><strong>Total:</strong> <span id="total-banco-${index}">${total}</span></p>
-            <p><strong>Volumen:</strong> <span id="volumen-banco-${index}">${volumen.toFixed(2)}</span></p>
+            <div class="banco-encabezado">
+                <h3>Banco ${banco}</h3>
+                <strong>Total:</strong> <span id="total-banco-${index}">${total}</span>
+                <strong>Volumen:</strong> <span id="volumen-banco-${index}">${volumen.toFixed(2)} m³</span>
+            </div>
             <table>
                 <thead><tr><th>Diámetro</th><th>Contador</th></tr></thead>
                 <tbody>${tabla}</tbody>
@@ -53,7 +55,7 @@ function renderizarResumen(bancos) {
     });
 
     document.getElementById("total-troncos").textContent = `Total de Troncos: ${totalGlobal}`;
-    document.getElementById("volumen-total").textContent = `Volumen Total: ${volumenGlobal.toFixed(2)}`;
+    document.getElementById("volumen-total").textContent = `Volumen Total: ${volumenGlobal.toFixed(2)} m³`;
 
     mostrarResumenIngreso();
 
@@ -199,7 +201,8 @@ function mostrarPantallaFinal() {
     document.getElementById("pantalla-final").style.display = "block";
 
     document.getElementById("resumen-final-troncos").textContent = document.getElementById("total-troncos").textContent.replace("Total de Troncos: ", "");
-    document.getElementById("resumen-final-volumen").textContent = document.getElementById("volumen-total").textContent.replace("Volumen Total: ", "");
+    const volumenFinalTexto = document.getElementById("volumen-total").textContent.replace("Volumen Total: ", "");
+    document.getElementById("resumen-final-volumen").textContent = volumenFinalTexto;
 
     const now = new Date();
     const fecha = now.toLocaleDateString();

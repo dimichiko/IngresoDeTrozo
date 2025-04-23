@@ -13,7 +13,8 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div class="contenedor">
+        <div>
+          <div class="contenedor">
 
             <div id="pantalla-bancos">
                 <h1>Resumen Conteo de Troncos</h1>
@@ -21,9 +22,10 @@
                 <div id="bloques-bancos"></div>
 
                 <div id="totales-globales">
-                    <h3>Total Global</h3>
-                    <p id="total-troncos">Total de Troncos: 0</p>
-                    <p id="volumen-total">Volumen Total: 0</p>
+                    <span class="totales-label">Total Global</span>
+                    <span id="total-troncos">Total de Troncos: 0</span>
+                    <span id="volumen-total">Volumen Total: 0</span>
+               </div>
 
                     <div class="botones no-print">
                         <button type="button" onclick="mostrarPantallaFinal()">→ Ver resumen final</button>
@@ -73,7 +75,7 @@
                 <hr />
 
                 <p><strong>Total de Troncos:</strong> <span id="resumen-final-troncos">0</span></p>
-                <p><strong>Volumen Total:</strong> <span id="resumen-final-volumen">0</span></p>
+                <p><strong>Volumen Total:</strong> <span id="resumen-final-volumen">0 m³</span></p>
                 <p><strong>Fecha de impresión:</strong> <span id="fecha-impresion">-</span></p>
 
                 <div class="botones no-print">

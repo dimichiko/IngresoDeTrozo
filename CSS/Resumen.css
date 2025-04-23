@@ -148,3 +148,27 @@ button, #edicionTroncos button {
         color: #007BFF;
         padding: 0 10px;
     }
+
+#totales-globales {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+    #totales-globales span {
+        background-color: #f1f1f1;
+        padding: 8px 16px;
+        border-radius: 8px;
+    }
+
+.banco-encabezado {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}

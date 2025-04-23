@@ -58,8 +58,8 @@
                     </div>
                     <div class="form-group">
                         <label for="Destino">Destino:</label>
-                        <select id="Destino" name="Destino">
-                             <option value="San Carlos">San Carlos</option>
+                        <select id="txtDestino" name="Destino">
+                           <option value="San Carlos">San Carlos</option>
                         </select>
                     </div>
                 </div>
