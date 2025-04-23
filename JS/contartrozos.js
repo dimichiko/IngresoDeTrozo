@@ -37,7 +37,7 @@ function actualizarTotales() {
     document.querySelectorAll('[id^="total-display"]').forEach(el =>
         el.innerText = `Total: ${contadorTotal}`);
     document.querySelectorAll('[id^="volumen-display"]').forEach(el =>
-        el.innerText = `Volumen Total: ${volumenTotal.toFixed(2)}`);
+        el.innerHTML = `Volumen Total: ${volumenTotal.toFixed(2)} m<sup>3</sup>`);
 }
 
 function toggleModoResta(event) {
