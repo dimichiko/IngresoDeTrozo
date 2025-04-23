@@ -195,6 +195,10 @@ select {
         background-color: #990000;
     }
 
+.form-group {
+    margin-top: 20px;
+}
+
 @media (min-width: 1536px) {
     body {
         font-size: 19px;

@@ -15,6 +15,17 @@ h1 {
     margin: 10px 0;
 }
 
+#banco-info {
+    display: inline-block;
+    padding: 4px 10px;
+    background-color: #007BFF;
+    color: white !important;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 6px;
+    margin: 10px auto;
+}
+
 .header, .footer {
     display: flex;
     justify-content: space-between;
@@ -23,15 +34,34 @@ h1 {
     padding: 10px;
 }
 
-.header-left, .footer-left {
-    flex: 1;
-    text-align: left;
+.header-left-box {
+    display: inline-block;
+    background-color: #007BFF;
+    padding: 6px 12px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 10px auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
     .header-left span {
         display: block;
         margin: 5px 0;
     }
+
+.header-left-box {
+    display: inline-block;
+    background-color: #007BFF;
+    padding: 6px 12px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 10px auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
 .header-right, .footer-right {
     flex: 1;
@@ -67,12 +97,12 @@ button[type="reset"] {
     }
 
 #resetearContador-1, #resetearContador-2 {
-    background-color: #FFB300;
+    background-color: #ff4444;
     color: white;
 }
 
     #resetearContador-1:hover, #resetearContador-2:hover {
-        background-color: #F57C00;
+        background-color: #cc0000;
     }
 
 #irResumen-1, #irResumen-2 {
@@ -288,6 +318,44 @@ button[type="submit"] {
     margin-bottom: 20px;
     color: #333;
 }
+
+.footer-center {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btnVolver {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+    .btnVolver:hover {
+        background-color: #F57C00;
+    }
+
+#btnSiguiente {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+    #btnSiguiente:hover {
+        background-color: #0056b3;
+    }
 
 @media (min-width: 1200px) {
     .grid-container-1, .grid-container-2 {

@@ -12,16 +12,20 @@
 <body>
     <form id="form1" runat="server">
         <div class="contenedor-contar">
-            <div id="banco-info" style="text-align:center; font-weight:bold; font-size:18px; margin-bottom:20px;">
-                Banco X de Y
+            <div style="text-align:center;">
+                  <div id="banco-info">
+                       Banco X de Y
+                  </div>
             </div>
 
             <div class="slider-container">
                 <div class="slider-screen">
                     <div class="header">
-                        <div class="header-left">
-                            <span id="total-display-1">Total: 0</span>
-                            <span id="volumen-display-1">Volumen Total: 0</span>
+                        <div>
+                             <div class="header-left-box">
+                                  <span id="total-display-1">Total: 0</span>
+                                  <span id="volumen-display-1">Volumen Total: 0</span>
+                             </div>
                         </div>
                         <div class="header-right">
                             <button id="Resta-1" type="button" onclick="toggleModoResta(event)">Activar Modo Resta</button>
@@ -30,15 +34,15 @@
 
                     <div class="grid-container-1">
                         <% For i = 16 To 38 Step 2
-                            Response.Write($"<button id='btn-{i}' onclick=""manejarClick('btn-{i}', event)"" data-count='0'>Diámetro {i}</button>")
-                        Next %>
+                                Response.Write($"<button id='btn-{i}' onclick=""manejarClick('btn-{i}', event)"" data-count='0'>Diámetro {i}</button>")
+                            Next %>
                     </div>
 
                     <div class="footer">
                        <div class="footer-left">
                            <button id="resetearContador-1" type="button" onclick="resetearContadores(event)">Reset</button>
                          </div>
-                         <div style="text-align:center; margin-top: 20px;">
+                         <div class="footer-center">
                             <button class="btnVolver" type="button">← Volver</button>
                          </div>
                          <div class="footer-right">
@@ -48,11 +52,13 @@
                 </div>
 
                 <div class="slider-screen">
-                    <div class="header">
-                        <div class="header-left">
-                            <span id="total-display-2">Total: 0</span>
-                            <span id="volumen-display-2">Volumen Total: 0</span>
-                        </div>
+                   <div class="header">
+                       <div>
+                          <div class="header-left-box">
+                              <span id="total-display-2">Total: 0</span>
+                              <span id="volumen-display-2">Volumen Total: 0</span>
+                          </div>
+                       </div>
                         <div class="header-right">
                             <button id="Resta-2" type="button" onclick="toggleModoResta(event)">Activar Modo Resta</button>
                         </div>
@@ -60,16 +66,16 @@
 
                     <div class="grid-container-2">
                         <% For i = 40 To 60 Step 2
-                            Response.Write($"<button id='btn-{i}' onclick=""manejarClick('btn-{i}', event)"" data-count='0'>Diámetro {i}</button>")
-                        Next %>
+                                Response.Write($"<button id='btn-{i}' onclick=""manejarClick('btn-{i}', event)"" data-count='0'>Diámetro {i}</button>")
+                            Next %>
                     </div>
 
                    <div class="footer">
                        <div class="footer-left">
                           <button id="resetearContador-2" type="button" onclick="resetearContadores(event)">Reset</button>
                       </div>
-                      <div style="text-align:center; margin-top: 20px;">
-                         <button class="btnVolver" type="button">← Volver</button>
+                      <div class="footer-center">
+                           <button class="btnVolver" type="button">← Volver</button>
                       </div>
                       <div class="footer-right">
                         <button id="btnSiguiente" type="button" onclick="irAlResumen(event)">Resumen</button>

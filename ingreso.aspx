@@ -47,12 +47,21 @@
                             <option value="No Certificada">No Certificada</option>
                         </select>
                     </div>
-                    <div class="fila">
-                        <label for="txtDestino">Destino:</label>
-                        <select id="txtDestino">
-                           <option value="San Carlos">San Carlos</option>
+                    <div class="form-group">
+                        <label for="selectBancos">Cantidad de bancos:</label>
+                        <select id="selectBancos" class="form-control">
+                               <option value="1">1 banco</option>
+                               <option value="2">2 bancos</option>
+                               <option value="3">3 bancos</option>
+                               <option value="4">4 bancos</option>
+                       </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Destino">Destino:</label>
+                        <select id="Destino" name="Destino">
+                             <option value="San Carlos">San Carlos</option>
                         </select>
-                   </div>
+                    </div>
                 </div>
 
                 <h3>Información Origen</h3>
@@ -87,17 +96,6 @@
                     <div class="fila"><label for="txtConductor">Conductor:</label><input type="text" id="txtConductor" /></div>
                     <div class="fila"><label for="txtRUTConductor">RUT Conductor:</label><input type="text" id="txtRUTConductor" placeholder="12345678-9" /><span id="errorRUTConductor" class="error-rut"></span></div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                       <label for="selectBancos">Cantidad de bancos:</label>
-                       <select id="selectBancos" class="form-control">
-                           <option value="" disabled selected>Selecciona</option>
-                           <option value="1">1 banco</option>
-                           <option value="2">2 bancos</option>
-                           <option value="3">3 bancos</option>
-                           <option value="4">4 bancos</option>
-                      </select>
             </div>
             <div class="botones">
                 <button type="button" id="btnIrContar">Ir a contar troncos</button>
