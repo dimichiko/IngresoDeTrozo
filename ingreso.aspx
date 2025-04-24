@@ -28,7 +28,7 @@
           </div>
             <div id="acordeon">
                 <h3>Información Proveedor</h3>
-                <div>
+                    <div>
                     <div class="fila"><label for="txtCodigoProveedor">Código Proveedor:</label><input type="text" id="txtCodigoProveedor" /></div>
                     <div class="fila"><label for="txtNombreContrato">Nombre Contrato:</label><input type="text" id="txtNombreContrato" /></div>
                     <div class="fila"><label for="txtNombreVenta">Nombre Venta:</label><input type="text" id="txtNombreVenta" /></div>
@@ -37,10 +37,9 @@
                        <input type="date" id="txtFechaRecepcion" max='<%= DateTime.Now.ToString("yyyy-MM-dd") %>' value='<%= DateTime.Now.ToString("yyyy-MM-dd") %>' readonly="readonly" />
                     </div>
                     <div class="fila"><label for="txtProducto">Producto:</label><input type="text" id="txtProducto" /></div>
-                    <div class="fila">
+                    <div class="form-group">
                         <label for="txtFSC">FSC:</label>
                         <select id="txtFSC">
-                            <option value="" selected="selected" disabled="disabled">Seleccione FSC</option>
                             <option value="100%FSC">100%FSC</option>
                             <option value="Mixto FSC">Mixto FSC</option>
                             <option value="CW FSC">CW FSC</option>
@@ -60,6 +59,15 @@
                         <label for="Destino">Destino:</label>
                         <select id="txtDestino" name="Destino">
                            <option value="San Carlos">San Carlos</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Largo">Largo:</label>
+                        <select id="LargoTroncos" name="Largo">
+                           <option value="2.50M">2.50M</option>
+                           <option value="3.10M">3.10M</option>
+                           <option value="3.30M">3.30M</option>
+                           <option value="4.00M">4.00M</option>
                         </select>
                     </div>
                 </div>

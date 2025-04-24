@@ -31,10 +31,6 @@
                         <button type="button" onclick="mostrarPantallaFinal()">→ Ver resumen final</button>
                     </div>
                 </div>
-
-                <div class="botones no-print">
-                    <button type="button" onclick="volverAlFormulario()">← Volver al contador</button>
-                </div>
             </div>
 
             <div id="pantalla-final" style="display: none;">
@@ -48,9 +44,9 @@
                 <p><strong>Fecha Recepción:</strong> <span id="res-fecha">-</span></p>
                 <p><strong>Producto:</strong> <span id="res-producto">-</span></p>
                 <p><strong>FSC:</strong> <span id="res-fsc">-</span></p>
+                <p><strong>Numero Bancos:</strong> <span id="res-bancos">-</span></p>
                 <p><strong>Destino:</strong> <span id="res-destino">-</span></p>
-
-                <hr />
+                <p><strong>Largo Troncos:</strong> <span id="res-largo">-</span></p>
 
                 <h3>Información Origen</h3>
                 <p><strong>Rol:</strong> <span id="res-rol">-</span></p>
@@ -59,20 +55,12 @@
                 <p><strong>Rodal:</strong> <span id="res-rodal">-</span></p>
                 <p><strong>Coordenadas:</strong> <span id="res-coordenadas">-</span></p>
 
-                <hr />
-
                 <h3>Información Transporte</h3>
                 <p><strong>Despachador:</strong> <span id="res-despachador">-</span></p>
                 <p><strong>Transportista:</strong> <span id="res-transportista">-</span></p>
                 <p><strong>RUT Despachador:</strong> <span id="res-rutdespachador">-</span></p>
                 <p><strong>Conductor:</strong> <span id="res-conductor">-</span></p>
                 <p><strong>RUT Conductor:</strong> <span id="res-rutconductor">-</span></p>
-
-                <hr />
-
-                <p><strong>Cantidad de Bancos:</strong> <span id="res-bancos">-</span></p>
-
-                <hr />
 
                 <p><strong>Total de Troncos:</strong> <span id="resumen-final-troncos">0</span></p>
                 <p><strong>Volumen Total:</strong> <span id="resumen-final-volumen">0 m³</span></p>

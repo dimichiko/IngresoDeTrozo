@@ -56,39 +56,38 @@ function renderizarResumen(bancos) {
 
     document.getElementById("total-troncos").textContent = `Total de Troncos: ${totalGlobal}`;
     document.getElementById("volumen-total").textContent = `Volumen Total: ${volumenGlobal.toFixed(2)} m³`;
-
-    mostrarResumenIngreso();
-
-    function mostrarResumenIngreso() {
-        const campos = {
-            "res-proveedor": "txtCodigoProveedor",
-            "res-contrato": "txtNombreContrato",
-            "res-venta": "txtNombreVenta",
-            "res-oc": "txtOC",
-            "res-fecha": "txtFechaRecepcion",
-            "res-producto": "txtProducto",
-            "res-fsc": "txtFSC",
-            "res-destino": "txtDestino",
-            "res-rol": "txtRol",
-            "res-predio": "txtPredio",
-            "res-comuna": "txtComuna",
-            "res-rodal": "txtRodal",
-            "res-coordenadas": "txtCoordenadas",
-            "res-despachador": "txtDespachador",
-            "res-transportista": "txtTransportista",
-            "res-rutdespachador": "txtRUTDespachador",
-            "res-conductor": "txtConductor",
-            "res-rutconductor": "txtRUTConductor",
-            "res-bancos": "selectBancos"
-        };
-
-        Object.entries(campos).forEach(([htmlId, sessionKey]) => {
-            const el = document.getElementById(htmlId);
-            if (el) el.textContent = sessionStorage.getItem(sessionKey) || "-";
-        });
-    }
 }
 
+function mostrarResumenIngreso() {
+    const campos = {
+        "res-proveedor": "txtCodigoProveedor",
+        "res-contrato": "txtNombreContrato",
+        "res-venta": "txtNombreVenta",
+        "res-oc": "txtOC",
+        "res-fecha": "txtFechaRecepcion",
+        "res-producto": "txtProducto",
+        "res-fsc": "txtFSC",
+        "res-bancos": "selectBancos",
+        "res-destino": "txtDestino",
+        "res-largo": "LargoTroncos",
+        "res-rol": "txtRol",
+        "res-predio": "txtPredio",
+        "res-comuna": "txtComuna",
+        "res-rodal": "txtRodal",
+        "res-coordenadas": "txtCoordenadas",
+        "res-despachador": "txtDespachador",
+        "res-transportista": "txtTransportista",
+        "res-rutdespachador": "txtRUTDespachador",
+        "res-conductor": "txtConductor",
+        "res-rutconductor": "txtRUTConductor",
+        "res-bancos": "selectBancos"
+    };
+
+    Object.entries(campos).forEach(([htmlId, sessionKey]) => {
+        const el = document.getElementById(htmlId);
+        if (el) el.textContent = sessionStorage.getItem(sessionKey) || "-";
+    });
+}
 function toggleEdicion(index) {
     const inputs = document.querySelectorAll(`.banco-${index}`);
     const btn = document.getElementById(`btn-editar-${index}`);
@@ -200,6 +199,8 @@ function mostrarPantallaFinal() {
     document.getElementById("pantalla-bancos").style.display = "none";
     document.getElementById("pantalla-final").style.display = "block";
 
+    mostrarResumenIngreso();
+
     document.getElementById("resumen-final-troncos").textContent = document.getElementById("total-troncos").textContent.replace("Total de Troncos: ", "");
     const volumenFinalTexto = document.getElementById("volumen-total").textContent.replace("Volumen Total: ", "");
     document.getElementById("resumen-final-volumen").textContent = volumenFinalTexto;
@@ -208,8 +209,6 @@ function mostrarPantallaFinal() {
     const fecha = now.toLocaleDateString();
     const hora = now.toLocaleTimeString();
     document.getElementById("fecha-impresion").textContent = `${fecha} ${hora}`;
-
-    mostrarResumenIngreso(); 
 }
 
 function mostrarPantallaBancos() {

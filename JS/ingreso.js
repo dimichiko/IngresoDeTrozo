@@ -7,7 +7,7 @@
     const campos = [
         "txtCodigoProveedor", "txtNombreContrato", "txtNombreVenta", "txtOC", "txtFechaRecepcion",
         "txtProducto", "txtFSC", "txtDestino", "txtRol", "txtDespachador", "txtTransportista", "txtRUTDespachador", "txtConductor",
-        "txtRUTConductor"
+        "txtRUTConductor", "LargoTroncos", "selectBancos"
     ];
 
     campos.forEach(id => {
@@ -94,7 +94,12 @@
         if (!rutValido) return;
 
         if (incompletos.length > 0) {
-            console.log("Campos incompletos:", incompletos);
+            console.log("⚠️ Campos incompletos:");
+            incompletos.forEach(id => {
+                const el = document.getElementById(id);
+                const valor = el ? el.value : "[no encontrado]";
+                console.log(`• ${id} = "${valor}"`);
+            });
             Swal.fire({
                 icon: 'warning',
                 title: 'Campos incompletos',
