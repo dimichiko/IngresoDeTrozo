@@ -13,6 +13,7 @@ window.onload = function () {
     }
 
     renderizarResumen(bancos);
+    mostrarResumenIngreso();
 };
 
 function renderizarResumen(bancos) {
@@ -61,8 +62,47 @@ function renderizarResumen(bancos) {
     document.getElementById("volumen-total").textContent = `Volumen Total: ${volumenGlobal.toFixed(2)} m³`;
 }
 
+function mostrarResumenIngreso() {
+    const campos = {
+        "res-proveedor": "txtCodigoProveedor",
+        "res-contrato": "txtNombreContrato",
+        "res-venta": "txtNombreVenta",
+        "res-oc": "txtOC",
+        "res-fecha": "txtFechaRecepcion",
+        "res-producto": "txtProducto",
+        "res-fsc": "txtFSC",
+        "res-bancos": "selectBancos",
+        "res-destino": "txtDestino",
+        "res-largo": "LargoTroncos",
+        "res-rol": "txtRol",
+        "res-predio": "txtPredio",
+        "res-comuna": "txtComuna",
+        "res-rodal": "txtRodal",
+        "res-coordenadas": "txtCoordenadas",
+        "res-despachador": "txtDespachador",
+        "res-transportista": "txtTransportista",
+        "res-rutdespachador": "txtRUTDespachador",
+        "res-conductor": "txtConductor",
+        "res-rutconductor": "txtRUTConductor"
+    };
+
+    Object.entries(campos).forEach(([htmlId, sessionKey]) => {
+        const el = document.getElementById(htmlId);
+        if (el) el.textContent = sessionStorage.getItem(sessionKey) || "-";
+    });
+}
+
 function mostrarSelectorDiametro(index) {
     const bancos = JSON.parse(localStorage.getItem("datosBancos"));
+    if (!bancos || !bancos[index]) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se encontraron datos del banco.'
+        });
+        return;
+    }
+
     const usados = Object.keys(bancos[index].contadores).map(d => parseInt(d));
     const disponibles = diametrosDisponibles.filter(d => !usados.includes(d));
 
@@ -78,7 +118,7 @@ function mostrarSelectorDiametro(index) {
         inputPlaceholder: 'Selecciona un diámetro',
         showCancelButton: true
     }).then(result => {
-        if (result.isConfirmed) {
+        if (result.isConfirmed && result.value) {
             const diametro = result.value;
             bancos[index].contadores[diametro] = 0;
             localStorage.setItem("datosBancos", JSON.stringify(bancos));
@@ -88,62 +128,36 @@ function mostrarSelectorDiametro(index) {
     });
 }
 
-const selectHTML = `
-        <select id="selector-diametro" class="swal2-select" style="width:100%;padding:10px;font-size:16px;">
-            <option value="" disabled selected>Selecciona un diámetro</option>
-            ${disponibles.map(d => `<option value="${d}">${d} cm</option>`).join('')}
-        </select>
-    `;
-
-Swal.fire({
-    title: 'Agregar nuevo diámetro',
-    html: selectHTML,
-    confirmButtonText: 'Agregar',
-    showCancelButton: true,
-    preConfirm: () => {
-        const value = document.getElementById('selector-diametro').value;
-        if (!value) {
-            Swal.showValidationMessage('Debes seleccionar un diámetro');
-        }
-        return value;
-    }
-}).then(result => {
-    if (result.isConfirmed) {
-        const diametro = result.value;
-        bancos[index].contadores[diametro] = 0;
-        localStorage.setItem("datosBancos", JSON.stringify(bancos));
-        renderizarResumen(bancos);
-        setTimeout(() => toggleEdicion(index), 100);
-    }
-});
-
-Swal.fire({
-    title: 'Agregar nuevo diámetro',
-    input: 'select',
-    inputOptions: Object.fromEntries(disponibles.map(d => [d, `${d} cm`])),
-    inputPlaceholder: 'Selecciona un diámetro',
-    showCancelButton: true
-}).then(result => {
-    if (result.isConfirmed) {
-        const diametro = result.value;
-        bancos[index].contadores[diametro] = 0;
-        localStorage.setItem("datosBancos", JSON.stringify(bancos));
-        renderizarResumen(bancos);
-        setTimeout(() => toggleEdicion(index), 100);
-    }
-});
 function toggleEdicion(index) {
+    const bancos = JSON.parse(localStorage.getItem("datosBancos"));
+    if (!bancos || !bancos[index]) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se encontraron datos del banco.'
+        });
+        return;
+    }
+
     const inputs = document.querySelectorAll(`.banco-${index}`);
     const btn = document.getElementById(`btn-editar-${index}`);
     const btnAgregar = document.getElementById(`btn-agregar-${index}`);
     const modoEdicion = btn.innerText === "Editar monto";
 
-    inputs.forEach(input => input.disabled = !modoEdicion);
+    inputs.forEach(input => {
+        input.disabled = !modoEdicion;
+    });
+
     btnAgregar.style.display = modoEdicion ? "inline-block" : "none";
 
-    if (!modoEdicion) {
+    if (modoEdicion) {
+        // Cambiando a modo edición
+        btn.innerText = "Guardar edición";
+    } else {
+        // Guardando cambios
         const nuevos = {};
         let total = 0;
+
         inputs.forEach(i => {
             let val = Math.max(0, parseInt(i.value) || 0);
             i.value = val;
@@ -151,7 +165,6 @@ function toggleEdicion(index) {
             total += val;
         });
 
-        const bancos = JSON.parse(localStorage.getItem("datosBancos"));
         const original = bancos[index].total;
 
         if (total !== original) {
@@ -161,19 +174,29 @@ function toggleEdicion(index) {
                 text: `El total debe ser ${original}, pero suman ${total}.`
             });
 
+            // Mantener en modo edición
             inputs.forEach(i => i.disabled = false);
             btn.innerText = "Guardar edición";
+            btnAgregar.style.display = "inline-block";
             return;
         }
 
+        // Actualizar los datos
         bancos[index].contadores = nuevos;
         bancos[index].volumen = calcularVolumenBanco(nuevos);
         localStorage.setItem("datosBancos", JSON.stringify(bancos));
 
+        // Actualizar la visualización
         document.getElementById(`total-banco-${index}`).textContent = original;
-        document.getElementById(`volumen-banco-${index}`).textContent = bancos[index].volumen.toFixed(2);
+        document.getElementById(`volumen-banco-${index}`).textContent = `${bancos[index].volumen.toFixed(2)} m³`;
 
-        inputs.forEach(i => i.disabled = true);
+        // Recalcular total global
+        let volumenGlobal = 0;
+        bancos.forEach(b => volumenGlobal += b.volumen);
+        document.getElementById("volumen-total").textContent = `Volumen Total: ${volumenGlobal.toFixed(2)} m³`;
+
+        // Cambiar estado de botones
+        btn.innerText = "Editar monto";
 
         Swal.fire({
             icon: 'success',
@@ -181,8 +204,6 @@ function toggleEdicion(index) {
             text: 'Cambios aplicados correctamente.'
         });
     }
-
-    btn.innerText = modoEdicion ? "Guardar edición" : "Editar monto";
 }
 
 function calcularVolumenBanco(contadores) {
@@ -217,17 +238,32 @@ function terminarProceso() {
                 icon: 'success',
                 title: 'Proceso finalizado',
                 text: 'Los datos fueron consolidados correctamente.'
+            }).then(() => {
+                window.location.href = "inicio.aspx";
             });
         }
     });
 }
 
 function reiniciarProceso() {
-    sessionStorage.clear();
-    localStorage.removeItem("datosBancos");
-    localStorage.removeItem("bancoActual");
-    localStorage.removeItem("cantidadBancos");
-    window.location.href = "ingreso.aspx";
+    Swal.fire({
+        title: '¿Reiniciar proceso?',
+        text: "Esto borrará todos los datos ingresados.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, reiniciar',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33'
+    }).then(result => {
+        if (result.isConfirmed) {
+            sessionStorage.clear();
+            localStorage.removeItem("datosBancos");
+            localStorage.removeItem("bancoActual");
+            localStorage.removeItem("cantidadBancos");
+            window.location.href = "ingreso.aspx";
+        }
+    });
 }
 
 function mostrarPantallaFinal() {
@@ -252,7 +288,18 @@ function mostrarPantallaBancos() {
 }
 
 function irAlInicio() {
-    sessionStorage.clear();
-    localStorage.clear();
-    window.location.href = "inicio.aspx";
+    Swal.fire({
+        title: '¿Volver al inicio?',
+        text: "Se perderán los datos no guardados.",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, volver',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            sessionStorage.clear();
+            localStorage.clear();
+            window.location.href = "inicio.aspx";
+        }
+    });
 }

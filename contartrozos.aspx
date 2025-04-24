@@ -46,7 +46,7 @@
                             <button class="btnVolver" type="button">← Volver</button>
                          </div>
                          <div class="footer-right">
-                           <button id="btnSiguiente" type="button" onclick="irAlResumen(event)">Resumen</button>
+                           <button class="btnSiguiente" type="button" onclick="irAlResumen(event)">Resumen</button>
                        </div>
                    </div>
                 </div>
