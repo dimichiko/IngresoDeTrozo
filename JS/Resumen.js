@@ -1,4 +1,7 @@
-﻿window.onload = function () {
+﻿// Lista global de diámetros posibles
+const diametrosDisponibles = Array.from({ length: (60 - 16) / 2 + 1 }, (_, i) => 16 + i * 2);
+
+window.onload = function () {
     const bancos = JSON.parse(localStorage.getItem("datosBancos"));
     if (!bancos || !Array.isArray(bancos) || bancos.length === 0) {
         Swal.fire({
@@ -28,7 +31,6 @@ function renderizarResumen(bancos) {
         bloque.className = "banco-bloque";
 
         const tabla = Object.entries(contadores)
-            .filter(([_, c]) => c > 0)
             .map(([d, c]) => `
                 <tr>
                     <td>${d}</td>
@@ -46,9 +48,10 @@ function renderizarResumen(bancos) {
             </div>
             <table>
                 <thead><tr><th>Diámetro</th><th>Contador</th></tr></thead>
-                <tbody>${tabla}</tbody>
+                <tbody id="tabla-banco-${index}">${tabla}</tbody>
             </table>
             <button type="button" onclick="toggleEdicion(${index})" id="btn-editar-${index}">Editar monto</button>
+            <button type="button" onclick="mostrarSelectorDiametro(${index})" id="btn-agregar-${index}" style="display:none;">➕ Agregar diámetro</button>
         `;
 
         contenedor.appendChild(bloque);
@@ -58,42 +61,85 @@ function renderizarResumen(bancos) {
     document.getElementById("volumen-total").textContent = `Volumen Total: ${volumenGlobal.toFixed(2)} m³`;
 }
 
-function mostrarResumenIngreso() {
-    const campos = {
-        "res-proveedor": "txtCodigoProveedor",
-        "res-contrato": "txtNombreContrato",
-        "res-venta": "txtNombreVenta",
-        "res-oc": "txtOC",
-        "res-fecha": "txtFechaRecepcion",
-        "res-producto": "txtProducto",
-        "res-fsc": "txtFSC",
-        "res-bancos": "selectBancos",
-        "res-destino": "txtDestino",
-        "res-largo": "LargoTroncos",
-        "res-rol": "txtRol",
-        "res-predio": "txtPredio",
-        "res-comuna": "txtComuna",
-        "res-rodal": "txtRodal",
-        "res-coordenadas": "txtCoordenadas",
-        "res-despachador": "txtDespachador",
-        "res-transportista": "txtTransportista",
-        "res-rutdespachador": "txtRUTDespachador",
-        "res-conductor": "txtConductor",
-        "res-rutconductor": "txtRUTConductor",
-        "res-bancos": "selectBancos"
-    };
+function mostrarSelectorDiametro(index) {
+    const bancos = JSON.parse(localStorage.getItem("datosBancos"));
+    const usados = Object.keys(bancos[index].contadores).map(d => parseInt(d));
+    const disponibles = diametrosDisponibles.filter(d => !usados.includes(d));
 
-    Object.entries(campos).forEach(([htmlId, sessionKey]) => {
-        const el = document.getElementById(htmlId);
-        if (el) el.textContent = sessionStorage.getItem(sessionKey) || "-";
+    if (disponibles.length === 0) {
+        Swal.fire("No hay más diámetros para agregar a este banco");
+        return;
+    }
+
+    Swal.fire({
+        title: 'Agregar nuevo diámetro',
+        input: 'select',
+        inputOptions: Object.fromEntries(disponibles.map(d => [d, `${d} cm`])),
+        inputPlaceholder: 'Selecciona un diámetro',
+        showCancelButton: true
+    }).then(result => {
+        if (result.isConfirmed) {
+            const diametro = result.value;
+            bancos[index].contadores[diametro] = 0;
+            localStorage.setItem("datosBancos", JSON.stringify(bancos));
+            renderizarResumen(bancos);
+            setTimeout(() => toggleEdicion(index), 100);
+        }
     });
 }
+
+const selectHTML = `
+        <select id="selector-diametro" class="swal2-select" style="width:100%;padding:10px;font-size:16px;">
+            <option value="" disabled selected>Selecciona un diámetro</option>
+            ${disponibles.map(d => `<option value="${d}">${d} cm</option>`).join('')}
+        </select>
+    `;
+
+Swal.fire({
+    title: 'Agregar nuevo diámetro',
+    html: selectHTML,
+    confirmButtonText: 'Agregar',
+    showCancelButton: true,
+    preConfirm: () => {
+        const value = document.getElementById('selector-diametro').value;
+        if (!value) {
+            Swal.showValidationMessage('Debes seleccionar un diámetro');
+        }
+        return value;
+    }
+}).then(result => {
+    if (result.isConfirmed) {
+        const diametro = result.value;
+        bancos[index].contadores[diametro] = 0;
+        localStorage.setItem("datosBancos", JSON.stringify(bancos));
+        renderizarResumen(bancos);
+        setTimeout(() => toggleEdicion(index), 100);
+    }
+});
+
+Swal.fire({
+    title: 'Agregar nuevo diámetro',
+    input: 'select',
+    inputOptions: Object.fromEntries(disponibles.map(d => [d, `${d} cm`])),
+    inputPlaceholder: 'Selecciona un diámetro',
+    showCancelButton: true
+}).then(result => {
+    if (result.isConfirmed) {
+        const diametro = result.value;
+        bancos[index].contadores[diametro] = 0;
+        localStorage.setItem("datosBancos", JSON.stringify(bancos));
+        renderizarResumen(bancos);
+        setTimeout(() => toggleEdicion(index), 100);
+    }
+});
 function toggleEdicion(index) {
     const inputs = document.querySelectorAll(`.banco-${index}`);
     const btn = document.getElementById(`btn-editar-${index}`);
+    const btnAgregar = document.getElementById(`btn-agregar-${index}`);
     const modoEdicion = btn.innerText === "Editar monto";
 
     inputs.forEach(input => input.disabled = !modoEdicion);
+    btnAgregar.style.display = modoEdicion ? "inline-block" : "none";
 
     if (!modoEdicion) {
         const nuevos = {};
@@ -118,17 +164,6 @@ function toggleEdicion(index) {
             inputs.forEach(i => i.disabled = false);
             btn.innerText = "Guardar edición";
             return;
-        }
-
-        if (modoEdicion) {
-            inputs.forEach(input => {
-                input.disabled = false;
-
-                input.addEventListener("input", () => {
-                    const val = parseInt(input.value) || 0;
-                    if (val < 0) input.value = 0;
-                });
-            });
         }
 
         bancos[index].contadores = nuevos;
