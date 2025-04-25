@@ -42,10 +42,10 @@ function renderizarResumen(bancos) {
             `).join("");
 
         bloque.innerHTML = `
-            <div class="banco-encabezado">
-                <h3>Banco ${banco}</h3>
-                <strong>Total:</strong> <span id="total-banco-${index}">${total}</span>
-                <strong>Volumen:</strong> <span id="volumen-banco-${index}">${volumen.toFixed(2)} m³</span>
+            <div class="bloque-banco-horizontal">
+                <span class="banco-nombre">Banco ${banco}</span>
+                <span class="banco-total">Total: <span id="total-banco-${index}">${total}</span></span>
+                <span class="banco-volumen">Volumen: <span id="volumen-banco-${index}">${volumen.toFixed(2)} m³</span></span>
             </div>
             <table>
                 <thead><tr><th>Diámetro</th><th>Contador</th></tr></thead>

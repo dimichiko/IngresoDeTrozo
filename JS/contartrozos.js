@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function actualizarTextoBotones() {
     const btnVolver = document.querySelector(".btnVolver");
-    const btnSiguiente = document.getElementById("btnSiguiente");
+    const btnSiguiente = document.querySelector(".btnSiguiente");
 
     const bancoActual = parseInt(localStorage.getItem("bancoActual") || 1);
     const cantidadBancos = parseInt(localStorage.getItem("cantidadBancos") || 1);

@@ -22,56 +22,76 @@
                 <div id="bloques-bancos"></div>
 
                 <div id="totales-globales">
-                    <span class="totales-label">Total Global</span>
-                    <span id="total-troncos">Total de Troncos: 0</span>
-                    <span id="volumen-total">Volumen Total: 0</span>
-               </div>
+                    <div class="global-label">Total Global</div>
+                    <div class="global-datos">
+                        <span id="total-troncos">Total de Troncos: 0</span>
+                        <span id="volumen-total">Volumen Total: 0</span>
+                    </div>
+                </div>
 
                     <div class="botones no-print">
+                        <button type="button" onclick="contartrozos.js">← Volver</button>
                         <button type="button" onclick="mostrarPantallaFinal()">→ Ver resumen final</button>
                     </div>
                 </div>
             </div>
 
             <div id="pantalla-final" style="display: none;">
-                <h1>Resumen Final</h1>
+    <h1>Resumen Final</h1>
 
-                <h3>Información Proveedor</h3>
-                <p><strong>Proveedor:</strong> <span id="res-proveedor">-</span></p>
-                <p><strong>Contrato:</strong> <span id="res-contrato">-</span></p>
-                <p><strong>Venta:</strong> <span id="res-venta">-</span></p>
-                <p><strong>OC:</strong> <span id="res-oc">-</span></p>
-                <p><strong>Fecha Recepción:</strong> <span id="res-fecha">-</span></p>
-                <p><strong>Producto:</strong> <span id="res-producto">-</span></p>
-                <p><strong>FSC:</strong> <span id="res-fsc">-</span></p>
-                <p><strong>Numero Bancos:</strong> <span id="res-bancos">-</span></p>
-                <p><strong>Destino:</strong> <span id="res-destino">-</span></p>
-                <p><strong>Largo Troncos:</strong> <span id="res-largo">-</span></p>
+    <div class="seccion-final">
+        <h3>Información Proveedor</h3>
+        <table>
+            <tr><td><strong>Proveedor:</strong></td><td><span id="res-proveedor">-</span></td></tr>
+            <tr><td><strong>Contrato:</strong></td><td><span id="res-contrato">-</span></td></tr>
+            <tr><td><strong>Venta:</strong></td><td><span id="res-venta">-</span></td></tr>
+            <tr><td><strong>OC:</strong></td><td><span id="res-oc">-</span></td></tr>
+            <tr><td><strong>Fecha Recepción:</strong></td><td><span id="res-fecha">-</span></td></tr>
+            <tr><td><strong>Producto:</strong></td><td><span id="res-producto">-</span></td></tr>
+            <tr><td><strong>FSC:</strong></td><td><span id="res-fsc">-</span></td></tr>
+            <tr><td><strong>Número Bancos:</strong></td><td><span id="res-bancos">-</span></td></tr>
+            <tr><td><strong>Destino:</strong></td><td><span id="res-destino">-</span></td></tr>
+            <tr><td><strong>Largo Troncos:</strong></td><td><span id="res-largo">-</span></td></tr>
+        </table>
+    </div>
 
-                <h3>Información Origen</h3>
-                <p><strong>Rol:</strong> <span id="res-rol">-</span></p>
-                <p><strong>Predio:</strong> <span id="res-predio">-</span></p>
-                <p><strong>Comuna:</strong> <span id="res-comuna">-</span></p>
-                <p><strong>Rodal:</strong> <span id="res-rodal">-</span></p>
-                <p><strong>Coordenadas:</strong> <span id="res-coordenadas">-</span></p>
+    <div class="seccion-final">
+        <h3>Información Origen</h3>
+        <table>
+            <tr><td><strong>Rol:</strong></td><td><span id="res-rol">-</span></td></tr>
+            <tr><td><strong>Predio:</strong></td><td><span id="res-predio">-</span></td></tr>
+            <tr><td><strong>Comuna:</strong></td><td><span id="res-comuna">-</span></td></tr>
+            <tr><td><strong>Rodal:</strong></td><td><span id="res-rodal">-</span></td></tr>
+            <tr><td><strong>Coordenadas:</strong></td><td><span id="res-coordenadas">-</span></td></tr>
+        </table>
+    </div>
 
-                <h3>Información Transporte</h3>
-                <p><strong>Despachador:</strong> <span id="res-despachador">-</span></p>
-                <p><strong>Transportista:</strong> <span id="res-transportista">-</span></p>
-                <p><strong>RUT Despachador:</strong> <span id="res-rutdespachador">-</span></p>
-                <p><strong>Conductor:</strong> <span id="res-conductor">-</span></p>
-                <p><strong>RUT Conductor:</strong> <span id="res-rutconductor">-</span></p>
+    <div class="seccion-final">
+        <h3>Información Transporte</h3>
+        <table>
+            <tr><td><strong>Despachador:</strong></td><td><span id="res-despachador">-</span></td></tr>
+            <tr><td><strong>Transportista:</strong></td><td><span id="res-transportista">-</span></td></tr>
+            <tr><td><strong>RUT Despachador:</strong></td><td><span id="res-rutdespachador">-</span></td></tr>
+            <tr><td><strong>Conductor:</strong></td><td><span id="res-conductor">-</span></td></tr>
+            <tr><td><strong>RUT Conductor:</strong></td><td><span id="res-rutconductor">-</span></td></tr>
+        </table>
+    </div>
 
-                <p><strong>Total de Troncos:</strong> <span id="resumen-final-troncos">0</span></p>
-                <p><strong>Volumen Total:</strong> <span id="resumen-final-volumen">0 m³</span></p>
-                <p><strong>Fecha de impresión:</strong> <span id="fecha-impresion">-</span></p>
+    <div class="seccion-final">
+        <h3>Totales</h3>
+        <table>
+            <tr><td><strong>Total de Troncos:</strong></td><td><span id="resumen-final-troncos">0</span></td></tr>
+            <tr><td><strong>Volumen Total:</strong></td><td><span id="resumen-final-volumen">0 m³</span></td></tr>
+            <tr><td><strong>Fecha de impresión:</strong></td><td><span id="fecha-impresion">-</span></td></tr>
+        </table>
+    </div>
 
-                <div class="botones no-print">
-                    <button type="button" onclick="mostrarPantallaBancos()">← Volver</button>
-                    <button type="button" onclick="window.print()">Imprimir</button>
-                    <button type="button" onclick="irAlInicio()">Ir al inicio</button>
-                </div>
-            </div>
+    <div class="botones no-print">
+        <button type="button" onclick="mostrarPantallaBancos()">← Volver</button>
+        <button type="button" onclick="window.print()">Imprimir</button>
+        <button type="button" onclick="irAlInicio()">Ir al inicio</button>
+    </div>
+</div>
 
         </div>
     </form>
