@@ -94,12 +94,6 @@
         if (!rutValido) return;
 
         if (incompletos.length > 0) {
-            console.log("⚠️ Campos incompletos:");
-            incompletos.forEach(id => {
-                const el = document.getElementById(id);
-                const valor = el ? el.value : "[no encontrado]";
-                console.log(`• ${id} = "${valor}"`);
-            });
             Swal.fire({
                 icon: 'warning',
                 title: 'Campos incompletos',
@@ -114,13 +108,22 @@
             return;
         }
 
+        // Guardamos todos los campos en sessionStorage
         campos.forEach(id => {
             sessionStorage.setItem(id, document.getElementById(id).value);
         });
 
         localStorage.setItem("cantidadBancos", cantidad);
-        localStorage.setItem("bancoActual", 1);
-        localStorage.removeItem("datosBancos");
+
+        // ⚡ SOLO SI bancoActual NO existe, inicializar a 1
+        if (!localStorage.getItem("bancoActual")) {
+            localStorage.setItem("bancoActual", 1);
+        }
+
+        // ⚡ SOLO SI datosBancos NO existe, inicializarlo vacío
+        if (!localStorage.getItem("datosBancos")) {
+            localStorage.setItem("datosBancos", JSON.stringify([]));
+        }
 
         window.location.href = "contartrozos.aspx";
     });

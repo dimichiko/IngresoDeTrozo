@@ -125,6 +125,28 @@ button[type="reset"] {
         background-color: #2980B9;
     }
 
+.boton-diametro {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 12px 18px;
+    border: none;
+    margin: 5px;
+    min-width: 120px;
+    text-align: center;
+}
+
+#resumen-contador {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    background-color: #f0f0f0;
+    padding: 6px 10px;
+    border-radius: 6px;
+    display: inline-block;
+}
+
 #btn-resta,
 button[type="reset"],
 button[type="submit"] {
@@ -312,11 +334,10 @@ button[type="submit"] {
         }
 
 #banco-info {
-    text-align: center;
-    font-weight: bold;
-    font-size: 20px;
-    margin-bottom: 20px;
-    color: #333;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #004aad;
+    margin-bottom: 10px;
 }
 
 .footer-center {
@@ -356,6 +377,22 @@ button[type="submit"] {
     #btnSiguiente:hover {
         background-color: #0056b3;
     }
+
+#largo-troncos-box {
+    text-align: center;
+    margin: 15px auto 10px;
+}
+
+#largo-troncos {
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: #dceeff;
+    color: #004aad;
+    padding: 6px 12px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
 
 @media (min-width: 1200px) {
     .grid-container-1, .grid-container-2 {

@@ -30,7 +30,7 @@
                 </div>
 
                     <div class="botones no-print">
-                        <button type="button" onclick="contartrozos.js">← Volver</button>
+                        <button type="button" onclick="volverAContarTrozos()">← Volver al conteo</button>
                         <button type="button" onclick="mostrarPantallaFinal()">→ Ver resumen final</button>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
     <div class="botones no-print">
         <button type="button" onclick="mostrarPantallaBancos()">← Volver</button>
         <button type="button" onclick="window.print()">Imprimir</button>
-        <button type="button" onclick="irAlInicio()">Ir al inicio</button>
+        <button type="button" onclick="irAlInicio()">← Volver al inicio</button>
     </div>
 </div>
 

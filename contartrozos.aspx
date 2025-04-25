@@ -16,12 +16,16 @@
                   <div id="banco-info">
                        Banco X de Y
                   </div>
+
             </div>
 
             <div class="slider-container">
                 <div class="slider-screen">
                     <div class="header">
                         <div>
+                             <div id="largo-troncos-box">
+                                  <span id="largo-troncos"></span>
+                             </div>
                              <div class="header-left-box">
                                   <span id="total-display-1">Total: 0</span>
                                   <span id="volumen-display-1">Volumen Total: 0</span>

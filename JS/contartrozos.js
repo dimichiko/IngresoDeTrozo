@@ -27,6 +27,7 @@ function manejarClick(id, event) {
     btn.dataset.count = count;
     btn.innerText = `Diámetro ${diametro} | Contador: ${count}`;
     actualizarTotales();
+    guardarDatosContartrozos();
 }
 
 function calcularVolumen(diametro) {
@@ -181,4 +182,47 @@ function actualizarTextoBotones() {
 
 document.addEventListener("DOMContentLoaded", function () {
     actualizarTextoBotones();
+});
+
+function guardarDatosContartrozos() {
+    const cantidadBancos = parseInt(localStorage.getItem("cantidadBancos") || 1);
+    let bancoActual = parseInt(localStorage.getItem("bancoActual") || 1);
+
+    let total = 0;
+    let volumen = 0;
+    const contadores = {};
+
+    document.querySelectorAll("button[id^='btn-']").forEach(btn => {
+        const diametro = btn.id.replace("btn-", "");
+        const cantidad = parseInt(btn.getAttribute("data-count")) || 0;
+
+        if (cantidad > 0) {
+            contadores[diametro] = cantidad;
+            total += cantidad;
+            volumen += calcularVolumen(parseInt(diametro)) * cantidad;
+        }
+    });
+
+    const datosActuales = {
+        banco: bancoActual,
+        total,
+        volumen,
+        contadores
+    };
+
+    let datosBancos = JSON.parse(localStorage.getItem("datosBancos")) || [];
+    datosBancos = datosBancos.filter(b => b.banco !== bancoActual);
+    datosBancos.push(datosActuales);
+    datosBancos.sort((a, b) => a.banco - b.banco);
+
+    localStorage.setItem("datosBancos", JSON.stringify(datosBancos));
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const largo = sessionStorage.getItem("LargoTroncos") || "-";
+
+    const lugarLargo = document.getElementById("largo-troncos");
+    if (lugarLargo) {
+        lugarLargo.textContent = `Largo de troncos: ${largo}`;
+    }
 });

@@ -34,10 +34,10 @@ function renderizarResumen(bancos) {
         const tabla = Object.entries(contadores)
             .map(([d, c]) => `
                 <tr>
-                    <td>${d}</td>
-                    <td>
-                        <input type="number" min="0" class="contador-input banco-${index}" data-diametro="${d}" value="${c}" disabled />
-                    </td>
+                     <td>${d}</td>
+                     <td>
+                         <input type="number" min="0" class="contador-input banco-${index}" data-diametro="${d}" value="${c}" disabled />
+                     </td>
                 </tr>
             `).join("");
 
@@ -46,13 +46,14 @@ function renderizarResumen(bancos) {
                 <span class="banco-nombre">Banco ${banco}</span>
                 <span class="banco-total">Total: <span id="total-banco-${index}">${total}</span></span>
                 <span class="banco-volumen">Volumen: <span id="volumen-banco-${index}">${volumen.toFixed(2)} m³</span></span>
-            </div>
-            <table>
-                <thead><tr><th>Diámetro</th><th>Contador</th></tr></thead>
-                <tbody id="tabla-banco-${index}">${tabla}</tbody>
-            </table>
-            <button type="button" onclick="toggleEdicion(${index})" id="btn-editar-${index}">Editar monto</button>
-            <button type="button" onclick="mostrarSelectorDiametro(${index})" id="btn-agregar-${index}" style="display:none;">➕ Agregar diámetro</button>
+                <span class="banco-largo">Largo: ${sessionStorage.getItem("LargoTroncos") || "-"}</span>
+           </div>
+           <table>
+               <thead><tr><th>Diámetro</th><th>Contador</th></tr></thead>
+               <tbody id="tabla-banco-${index}">${tabla}</tbody>
+          </table>
+          <button type="button" onclick="toggleEdicion(${index})" id="btn-editar-${index}">Editar monto</button>
+          <button type="button" onclick="mostrarSelectorDiametro(${index})" id="btn-agregar-${index}" style="display:none;">➕ Agregar diámetro</button>
         `;
 
         contenedor.appendChild(bloque);
@@ -282,6 +283,10 @@ function mostrarPantallaFinal() {
     document.getElementById("fecha-impresion").textContent = `${fecha} ${hora}`;
 }
 
+function volverAContarTrozos() {
+    window.location.href = "contartrozos.aspx";
+}
+
 function mostrarPantallaBancos() {
     document.getElementById("pantalla-final").style.display = "none";
     document.getElementById("pantalla-bancos").style.display = "block";
@@ -290,15 +295,19 @@ function mostrarPantallaBancos() {
 function irAlInicio() {
     Swal.fire({
         title: '¿Volver al inicio?',
-        text: "Se perderán los datos no guardados.",
-        icon: 'question',
+        text: "Esto eliminará todos los datos ingresados.",
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Sí, volver',
-        cancelButtonText: 'Cancelar'
+        confirmButtonText: 'Sí, volver al inicio',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33'
     }).then((result) => {
         if (result.isConfirmed) {
             sessionStorage.clear();
-            localStorage.clear();
+            localStorage.removeItem("datosBancos");
+            localStorage.removeItem("bancoActual");
+            localStorage.removeItem("cantidadBancos");
             window.location.href = "inicio.aspx";
         }
     });
