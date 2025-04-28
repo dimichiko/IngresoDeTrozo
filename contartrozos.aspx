@@ -12,24 +12,22 @@
 <body>
     <form id="form1" runat="server">
         <div class="contenedor-contar">
-            <div style="text-align:center;">
-                  <div id="banco-info">
-                       Banco X de Y
-                  </div>
+            <div style="text-align: center;">
+                <div id="banco-info">
+                    Banco X de Y
+                </div>
 
             </div>
 
             <div class="slider-container">
                 <div class="slider-screen">
                     <div class="header">
-                        <div>
-                             <div id="largo-troncos-box">
-                                  <span id="largo-troncos"></span>
-                             </div>
-                             <div class="header-left-box">
-                                  <span id="total-display-1">Total: 0</span>
-                                  <span id="volumen-display-1">Volumen Total: 0</span>
-                             </div>
+                        <div class="header-left">
+                            <div class="totales">
+                                <div id="largo-troncos-1">Largo de troncos: 2.50M</div>
+                                <div id="total-display-1">Total: 0</div>
+                                <div id="volumen-display-1">Volumen Total: 0</div>
+                            </div>
                         </div>
                         <div class="header-right">
                             <button id="Resta-1" type="button" onclick="toggleModoResta(event)">Activar Modo Resta</button>
@@ -43,26 +41,27 @@
                     </div>
 
                     <div class="footer">
-                       <div class="footer-left">
-                           <button id="resetearContador-1" type="button" onclick="resetearContadores(event)">Reset</button>
-                         </div>
-                         <div class="footer-center">
+                        <div class="footer-left">
+                            <button id="resetearContador-1" type="button" onclick="resetearContadores(event)">Reset</button>
+                        </div>
+                        <div class="footer-center">
                             <button class="btnVolver" type="button">← Volver</button>
-                         </div>
-                         <div class="footer-right">
-                           <button class="btnSiguiente" type="button" onclick="irAlResumen(event)">Resumen</button>
-                       </div>
-                   </div>
+                        </div>
+                        <div class="footer-right">
+                            <button class="btnSiguiente" type="button" onclick="irAlResumen(event)">Resumen</button>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="slider-screen">
-                   <div class="header">
-                       <div>
-                          <div class="header-left-box">
-                              <span id="total-display-2">Total: 0</span>
-                              <span id="volumen-display-2">Volumen Total: 0</span>
-                          </div>
-                       </div>
+                    <div class="header">
+                        <div class="header-left">
+                            <div class="totales">
+                                <div id="largo-troncos-2">Largo de troncos: 2.50M</div>
+                                <div id="total-display-2">Total: 0</div>
+                                <div id="volumen-display-2">Volumen Total: 0</div>
+                            </div>
+                        </div>
                         <div class="header-right">
                             <button id="Resta-2" type="button" onclick="toggleModoResta(event)">Activar Modo Resta</button>
                         </div>
@@ -74,17 +73,17 @@
                             Next %>
                     </div>
 
-                   <div class="footer">
-                       <div class="footer-left">
-                          <button id="resetearContador-2" type="button" onclick="resetearContadores(event)">Reset</button>
-                      </div>
-                      <div class="footer-center">
-                           <button class="btnVolver" type="button">← Volver</button>
-                      </div>
-                      <div class="footer-right">
-                        <button id="btnSiguiente" type="button" onclick="irAlResumen(event)">Resumen</button>
-                     </div>
-                  </div>
+                    <div class="footer">
+                        <div class="footer-left">
+                            <button id="resetearContador-2" type="button" onclick="resetearContadores(event)">Reset</button>
+                        </div>
+                        <div class="footer-center">
+                            <button class="btnVolver" type="button">← Volver</button>
+                        </div>
+                        <div class="footer-right">
+                            <button class="btnSiguiente" type="button" onclick="irAlResumen(event)">Resumen</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

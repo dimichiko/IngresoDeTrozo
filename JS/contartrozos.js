@@ -129,33 +129,6 @@ function irAlResumen(event) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    const bancoActual = parseInt(localStorage.getItem("bancoActual") || 1);
-    const cantidadBancos = parseInt(localStorage.getItem("cantidadBancos") || 1);
-    const bancoInfo = document.getElementById("banco-info");
-    if (bancoInfo) {
-        bancoInfo.innerText = `Banco ${bancoActual} de ${cantidadBancos}`;
-    }
-
-    const datosBancos = JSON.parse(localStorage.getItem("datosBancos") || "[]");
-    const datos = datosBancos.find(d => d.banco === bancoActual);
-
-    if (datos) {
-        Object.entries(datos.contadores).forEach(([diametro, cantidad]) => {
-            const btn = document.getElementById(`btn-${diametro}`);
-            if (btn) {
-                btn.setAttribute("data-count", cantidad);
-                btn.textContent = `Diámetro ${diametro} | Contador: ${cantidad}`;
-            }
-        });
-
-        contadorTotal = datos.total || 0;
-        volumenTotal = datos.volumen || 0;
-        actualizarTotales();
-        actualizarTextoBotones();
-    }
-});
-
 function actualizarTextoBotones() {
     const btnVolver = document.querySelector(".btnVolver");
     const btnSiguiente = document.querySelector(".btnSiguiente");
@@ -165,7 +138,8 @@ function actualizarTextoBotones() {
 
     if (btnVolver) {
         btnVolver.textContent = bancoActual === 1 ? "← Volver a ingreso" : "← Volver al banco anterior";
-        btnVolver.onclick = function () {
+        btnVolver.onclick = function (e) {
+            e.preventDefault();
             if (bancoActual === 1) {
                 window.location.href = "ingreso.aspx";
             } else {
@@ -176,13 +150,13 @@ function actualizarTextoBotones() {
     }
 
     if (btnSiguiente) {
-        btnSiguiente.textContent = bancoActual === cantidadBancos ? "Ir a resumen" : "Siguiente banco";
+        if (bancoActual < cantidadBancos) {
+            btnSiguiente.textContent = "Siguiente banco";
+        } else {
+            btnSiguiente.textContent = "Ir a resumen";
+        }
     }
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-    actualizarTextoBotones();
-});
 
 function guardarDatosContartrozos() {
     const cantidadBancos = parseInt(localStorage.getItem("cantidadBancos") || 1);
@@ -218,11 +192,43 @@ function guardarDatosContartrozos() {
     localStorage.setItem("datosBancos", JSON.stringify(datosBancos));
 }
 
+function cargarDatosBanco(bancoActual) {
+    const datosBancos = JSON.parse(localStorage.getItem("datosBancos") || "[]");
+    const datos = datosBancos.find(d => d.banco === bancoActual);
+
+    if (datos) {
+        contadorTotal = datos.total || 0;
+        volumenTotal = datos.volumen || 0;
+
+        Object.entries(datos.contadores || {}).forEach(([diametro, cantidad]) => {
+            const btn = document.getElementById(`btn-${diametro}`);
+            if (btn) {
+                btn.setAttribute("data-count", cantidad);
+                btn.textContent = `Diámetro ${diametro}${cantidad > 0 ? ` | Contador: ${cantidad}` : ''}`;
+            }
+        });
+
+        actualizarTotales();
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+    actualizarTextoBotones();
+    cargarDatosBanco(parseInt(localStorage.getItem("bancoActual") || 1));
+
+    const bancoActual = parseInt(localStorage.getItem("bancoActual") || 1);
+    const cantidadBancos = parseInt(localStorage.getItem("cantidadBancos") || 1);
+
+    const bancoInfo = document.getElementById("banco-info");
+    if (bancoInfo) {
+        bancoInfo.innerText = `Banco ${bancoActual} de ${cantidadBancos}`;
+    }
+
     const largo = sessionStorage.getItem("LargoTroncos") || "-";
 
-    const lugarLargo = document.getElementById("largo-troncos");
-    if (lugarLargo) {
-        lugarLargo.textContent = `Largo de troncos: ${largo}`;
-    }
+    const lugarLargo1 = document.getElementById("largo-troncos-1");
+    const lugarLargo2 = document.getElementById("largo-troncos-2");
+
+    if (lugarLargo1) lugarLargo1.textContent = `Largo de troncos: ${largo}`;
+    if (lugarLargo2) lugarLargo2.textContent = `Largo de troncos: ${largo}`;
 });
