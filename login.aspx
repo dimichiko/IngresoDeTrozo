@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="login.aspx.vb" Inherits="login" %>
+﻿<%@ Page Language="VB" AutoEventWireup="true" Codebehind="login.aspx.vb" Inherits="Ingresodetrozo.login" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -17,7 +17,7 @@
             </div>
             <div class="login-form">
                 <input type="text" id="txtUsuario" placeholder="Nombre de usuario" autocomplete="current-username" />
-                <input type="password" id="txtClave" placeholder="Contraseña" utocomplete="current-password" />
+                <input type="password" id="txtClave" placeholder="Contraseña" autocomplete="current-password" />
                 <button type="button" id="btnLogin">Ingresar</button>
             </div>
         </div>

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="ingreso.aspx.vb" Inherits="ingreso" %>
+﻿<%@ Page Language="VB" AutoEventWireup="true" Codebehind="ingreso.aspx.vb" Inherits="Ingresodetrozo.ingreso" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -17,92 +17,169 @@
         <div class="contenedor">
             <div class="header-contenedor">
                 <div class="logo-izquierdo">
-                <img src="Content/LOGO_ALTO_HORIZONTE-SIN-FONDO.png" alt="Logo Empresa" />
+                    <img src="Content/LOGO_ALTO_HORIZONTE-SIN-FONDO.png" alt="Logo Empresa" />
+                </div>
+                <div class="titulo-header">
+                    <h1>Ingreso Información Camión</h1>
+                </div>
+                <div class="boton-salida">
+                    <button type="button" onclick="window.location.href='inicio.aspx'">Salir</button>
+                </div>
             </div>
-             <div class="titulo-header">
-                  <h1>Ingreso Información Camión</h1>
-             </div>
-            <div class="boton-salida">
-                <button type="button" onclick="window.location.href='inicio.aspx'">Salir</button>
-           </div>
-          </div>
             <div id="acordeon">
                 <h3>Información Proveedor</h3>
-                    <div>
-                    <div class="fila"><label for="txtCodigoProveedor">Código Proveedor:</label><input type="text" id="txtCodigoProveedor" /></div>
-                    <div class="fila"><label for="txtNombreContrato">Nombre Contrato:</label><input type="text" id="txtNombreContrato" /></div>
-                    <div class="fila"><label for="txtNombreVenta">Nombre Venta:</label><input type="text" id="txtNombreVenta" /></div>
-                    <div class="fila"><label for="txtOC">OC / Nº OC:</label><input type="number" id="txtOC" min="0" oninput="this.value = this.value.replace(/[^0-9]/g, '')" /></div>
-                    <div class="fila"><label for="txtFechaRecepcion">Fecha Recepción:</label>
-                       <input type="date" id="txtFechaRecepcion" max='<%= DateTime.Now.ToString("yyyy-MM-dd") %>' value='<%= DateTime.Now.ToString("yyyy-MM-dd") %>' readonly="readonly" />
+                <div>
+
+                    <div class="fila">
+                        <label for="txtCodProvPrefijo">Código Proveedor:</label>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <input type="text" id="txtCodProvPrefijo" maxlength="4" style="flex: none; width: 60px;" />
+                            <input type="text" id="txtCodProvAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
+                        </div>
                     </div>
-                    <div class="fila"><label for="txtProducto">Producto:</label><input type="text" id="txtProducto" /></div>
-                    <div class="form-group">
-                        <label for="txtFSC">FSC:</label>
-                        <select id="txtFSC">
-                            <option value="100%FSC">100%FSC</option>
-                            <option value="Mixto FSC">Mixto FSC</option>
-                            <option value="CW FSC">CW FSC</option>
-                            <option value="No Certificada">No Certificada</option>
-                        </select>
+
+                    <div class="fila">
+                        <label for="txtContratoPrefijo">Nota Compra:</label>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <input type="text" id="txtContratoPrefijo" maxlength="4" style="flex: none; width: 60px;" />
+                            <input type="text" id="txtContratoAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="selectBancos">Cantidad de bancos:</label>
-                        <select id="selectBancos" class="form-control">
-                               <option value="1">1 banco</option>
-                               <option value="2">2 bancos</option>
-                               <option value="3">3 bancos</option>
-                               <option value="4">4 bancos</option>
-                       </select>
+
+                    <div class="fila">
+                        <label for="txtVentaPrefijo">Nota Venta:</label>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <input type="text" id="txtVentaPrefijo" maxlength="4" style="flex: none; width: 60px;" />
+                            <input type="text" id="txtVentaAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="Destino">Destino:</label>
-                        <select id="txtDestino" name="Destino">
-                           <option value="San Carlos">San Carlos</option>
-                        </select>
+
+                    <div class="fila">
+                        <label for="txtOC">GDE:</label>
+                        <input type="text" id="txtOC" maxlength="4" style="width: 80px;" />
                     </div>
-                    <div class="form-group">
-                        <label for="Largo">Largo:</label>
-                        <select id="LargoTroncos" name="Largo">
-                           <option value="2.50M">2.50M</option>
-                           <option value="3.10M">3.10M</option>
-                           <option value="3.30M">3.30M</option>
-                           <option value="4.00M">4.00M</option>
-                        </select>
+
+                    <div class="fila">
+                        <label for="txtFechaRecepcion">Fecha Recepción:</label>
+                        <input type="date" id="txtFechaRecepcion"
+                            max='<%= DateTime.Now.ToString("yyyy-MM-dd") %>'
+                            value='<%= DateTime.Now.ToString("yyyy-MM-dd") %>'
+                            readonly="readonly" />
                     </div>
+
+                    <div class="fila">
+                        <label for="txtProducto">Producto:</label>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <input type="text" id="txtProducto" maxlength="4" style="flex: none; width: 60px;" />
+                            <input type="text" id="txtProducto" disabled="disabled" style="flex: 1; background-color: #eee;" />
+                        </div>
+                    </div>
+
+                    <table style="width: 100%; border-spacing: 10px 15px;">
+                        <tr>
+                            <td>
+                                <label for="txtFSC">FSC:</label></td>
+                            <td>
+                                <select id="txtFSC" style="width: 100%;">
+                                    <option value="100%FSC">100%FSC</option>
+                                    <option value="Mixto FSC">Mixto FSC</option>
+                                    <option value="CW FSC">CW FSC</option>
+                                    <option value="No Certificada">No Certificada</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label for="selectBancos">Cantidad de bancos:</label></td>
+                            <td>
+                                <select id="selectBancos" style="width: 100%;">
+                                    <option value="1">1 banco</option>
+                                    <option value="2">2 bancos</option>
+                                    <option value="3">3 bancos</option>
+                                    <option value="4">4 bancos</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label for="txtDestino">Destino:</label></td>
+                            <td>
+                                <select id="txtDestino" name="Destino" style="width: 100%;">
+                                    <option value="San Carlos">San Carlos</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label for="LargoTroncos">Largo:</label></td>
+                            <td>
+                                <select id="LargoTroncos" name="Largo" style="width: 100%;">
+                                    <option value="2.50M">2.50M</option>
+                                    <option value="3.10M">3.10M</option>
+                                    <option value="3.30M">3.30M</option>
+                                    <option value="4.00M">4.00M</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
 
                 <h3>Información Origen</h3>
                 <div>
-                 <div class="fila">
+                    <div class="fila">
                         <label for="txtRol">Rol:</label>
-                        <input type="text" id="txtRol" />
+                        <input type="text" id="txtRol" maxlength="7" placeholder="Ej: 123-456" />
                     </div>
-                   <div class="fila">
+                    <div class="fila">
                         <label for="txtPredio">Predio:</label>
                         <input type="text" id="txtPredio" disabled="disabled" />
-                   </div>
-                   <div class="fila">
-                       <label for="txtComuna">Comuna:</label>
-                       <input type="text" id="txtComuna" disabled="disabled" />
-                   </div>
-                   <div class="fila">
-                       <label for="txtRodal">Rodal:</label>
-                       <input type="text" id="txtRodal" disabled="disabled" />
-                  </div>
-                  <div class="fila">
-                       <label for="txtCoordenadas">Coordenadas:</label>
-                       <input type="text" id="txtCoordenadas" placeholder="-37.123456, -73.123456" disabled="disabled" />
-                  </div>
-               </div>
+                    </div>
+                    <div class="fila">
+                        <label for="txtComuna">Comuna:</label>
+                        <input type="text" id="txtComuna" disabled="disabled" />
+                    </div>
+                    <div class="fila">
+                        <label for="txtRodal">Rodal:</label>
+                        <input type="text" id="txtRodal" disabled="disabled" />
+                    </div>
+                    <div class="fila">
+                        <label for="txtCoordenadas">Coordenadas:</label>
+                        <input type="text" id="txtCoordenadas" placeholder="-37.123456, -73.123456" disabled="disabled" />
+                    </div>
+                </div>
 
                 <h3>Información Transporte</h3>
                 <div>
-                    <div class="fila"><label for="txtDespachador">Despachador:</label><input type="text" id="txtDespachador" /></div>
-                    <div class="fila"><label for="txtTransportista">Transportista:</label><input type="text" id="txtTransportista" /></div>
-                    <div class="fila"><label for="txtRUTDespachador">RUT Despachador:</label><input type="text" id="txtRUTDespachador" placeholder="12345678-9" /><span id="errorRUTDespachador" class="error-rut"></span></div>
-                    <div class="fila"><label for="txtConductor">Conductor:</label><input type="text" id="txtConductor" /></div>
-                    <div class="fila"><label for="txtRUTConductor">RUT Conductor:</label><input type="text" id="txtRUTConductor" placeholder="12345678-9" /><span id="errorRUTConductor" class="error-rut"></span></div>
+                    <div class="fila">
+                        <label for="txtDespachador">Despachador:</label>
+                        <input type="text" id="txtDespachador" maxlength="30" placeholder="Nombre y Apellido" />
+                    </div>
+
+                    <div class="fila">
+                        <label for="txtTransportista">Transportista:</label>
+                        <input type="text" id="txtTransportista" maxlength="30" placeholder="Nombre empresa" />
+                    </div>
+
+                    <div class="fila">
+                        <label for="txtRUTDespachador">RUT Despachador:</label>
+                        <input type="text" id="txtRUTDespachador" maxlength="12" placeholder="12345678-9" />
+                        <span id="errorRUTDespachador" class="error-rut"></span>
+                    </div>
+
+                    <div class="fila">
+                        <label for="txtConductor">Conductor:</label>
+                        <input type="text" id="txtConductor" maxlength="30" placeholder="Nombre y Apellido" />
+                    </div>
+
+                    <div class="fila">
+                        <label for="txtRUTConductor">RUT Conductor:</label>
+                        <input type="text" id="txtRUTConductor" maxlength="12" placeholder="12345678-9" />
+                        <span id="errorRUTConductor" class="error-rut"></span>
+                    </div>
                 </div>
             </div>
             <div class="botones">

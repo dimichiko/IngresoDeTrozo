@@ -143,6 +143,7 @@ button {
     margin: 20px auto;
 }
 
+.btnIrContar
 /* === HEADER CONTENEDOR === */
 .header-contenedor {
     display: flex;
@@ -167,9 +168,9 @@ button {
 
     .titulo-header h1 {
         margin: 0;
-        font-size: 1.3rem; /* ✅ Más pequeño para móviles */
+        font-size: 1.3rem; 
         color: #1a1a1a;
-        white-space: nowrap; /* ✅ Evitar cortes raros */
+        white-space: nowrap; 
         overflow: hidden;
         text-overflow: ellipsis;
     }
@@ -187,7 +188,7 @@ button {
         border-radius: 6px;
         font-size: 0.95rem;
         cursor: pointer;
-        min-width: 70px; /* ✅ Botón mínimo visible en celular */
+        min-width: 70px; 
         white-space: nowrap;
     }
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="inicio.aspx.vb" Inherits="inicio" %>
+﻿<%@ Page Language="VB" AutoEventWireup="true" Codebehind="inicio.aspx.vb" Inherits="Ingresodetrozo.inicio" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">

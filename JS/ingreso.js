@@ -5,9 +5,13 @@
     });
 
     const campos = [
-        "txtCodigoProveedor", "txtNombreContrato", "txtNombreVenta", "txtOC", "txtFechaRecepcion",
-        "txtProducto", "txtFSC", "txtDestino", "txtRol", "txtDespachador", "txtTransportista", "txtRUTDespachador", "txtConductor",
-        "txtRUTConductor", "LargoTroncos", "selectBancos"
+        "txtCodProvPrefijo",
+        "txtContratoPrefijo", 
+        "txtVentaPrefijo",
+        "txtOC", "txtFechaRecepcion",
+        "txtProducto", "txtFSC", "txtDestino", "txtRol",
+        "txtDespachador", "txtTransportista", "txtRUTDespachador",
+        "txtConductor", "txtRUTConductor", "LargoTroncos", "selectBancos"
     ];
 
     campos.forEach(id => {
@@ -51,6 +55,45 @@
         return dv === dvEsperado;
     }
 
+    document.getElementById("txtOC").addEventListener("input", function () {
+        this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);
+    });
+
+    document.getElementById("txtRol").addEventListener("input", function () {
+        let val = this.value.replace(/[^0-9]/g, "").slice(0, 6); 
+        if (val.length > 3) {
+            this.value = val.slice(0, 3) + "-" + val.slice(3);
+        } else {
+            this.value = val;
+        }
+    });
+
+    ["txtCodProvPrefijo", "txtProducto", "txtContratoPrefijo", "txtVentaPrefijo", "txtOC"].forEach(id => {
+
+    document.getElementById(id).addEventListener("input", function () {
+            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);
+        });
+    });
+
+    ["txtDespachador", "txtConductor"].forEach(id => {
+        document.getElementById(id).addEventListener("input", function () {
+            this.value = this.value
+                .replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "")
+                .replace(/\s{2,}/g, " ")                  
+                .trimStart();
+
+            const partes = this.value.split(" ");
+            if (partes.length > 2) {
+                this.value = partes.slice(0, 2).join(" ");
+            }
+
+            this.value = this.value
+                .split(" ")
+                .map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase())
+                .join(" ");
+        });
+    });
+
     const btn = document.getElementById("btnIrContar");
     btn.addEventListener("click", function () {
         let incompletos = [];
@@ -74,32 +117,61 @@
         let rutValido = true;
 
         if (!validarRutMod11(rutConductor)) {
-            errorRUTConductor.textContent = "RUT inválido";
-            rutConductorInput.classList.add("input-error");
-            rutValido = false;
-        } else {
-            errorRUTConductor.textContent = "";
-            rutConductorInput.classList.remove("input-error");
+            Swal.fire({
+                icon: 'error',
+                title: 'RUT del Conductor inválido',
+                text: 'Por favor, verifica el RUT del conductor.'
+            });
+            return;
         }
 
         if (!validarRutMod11(rutDespachador)) {
-            errorRUTDespachador.textContent = "RUT inválido";
-            rutDespachadorInput.classList.add("input-error");
-            rutValido = false;
-        } else {
-            errorRUTDespachador.textContent = "";
-            rutDespachadorInput.classList.remove("input-error");
+            Swal.fire({
+                icon: 'error',
+                title: 'RUT del Despachador inválido',
+                text: 'Por favor, verifica el RUT del despachador.'
+            });
+            return;
         }
 
-        if (!rutValido) return;
-
         if (incompletos.length > 0) {
+            const nombresAmigables = {
+                txtCodProvPrefijo: "Código Proveedor",
+                txtCodProvAuto: "Código Proveedor (Autocompletado)",
+                txtContratoPrefijo: "Nota Compra",
+                txtContratoAuto: "Nota Compra (Autocompletado)",
+                txtVentaPrefijo: "Nota Venta",
+                txtVentaAuto: "Nota Venta (Autocompletado)",
+                txtOC: "Orden de Compra",
+                txtFechaRecepcion: "Fecha de Recepción",
+                txtProducto: "Producto",
+                txtFSC: "FSC",
+                txtDestino: "Destino",
+                txtRol: "Rol",
+                txtDespachador: "Despachador",
+                txtTransportista: "Transportista",
+                txtRUTDespachador: "RUT Despachador",
+                txtConductor: "Conductor",
+                txtRUTConductor: "RUT Conductor",
+                LargoTroncos: "Largo de Troncos",
+                selectBancos: "Cantidad de Bancos"
+            };
+
+            const camposFaltantes = incompletos.map(id => `• ${nombresAmigables[id] || id}`).join('\n');
+
             Swal.fire({
                 icon: 'warning',
                 title: 'Campos incompletos',
-                text: 'Por favor completa todos los campos antes de continuar.'
+                html: `
+                    <div style="text-align: left; font-size: 16px;">
+                         <p>Por favor completa los siguientes campos:</p>
+                         <ul style="padding-left: 20px; line-height: 1.8;">
+                             ${incompletos.map(id => `<li><b>${nombresAmigables[id] || id}</b></li>`).join('')}
+                         </ul>
+                    </div>
+                `
             });
-            return;
+         return;
         }
 
         const cantidad = document.getElementById("selectBancos").value;
@@ -108,19 +180,16 @@
             return;
         }
 
-        // Guardamos todos los campos en sessionStorage
         campos.forEach(id => {
             sessionStorage.setItem(id, document.getElementById(id).value);
         });
 
         localStorage.setItem("cantidadBancos", cantidad);
 
-        // ⚡ SOLO SI bancoActual NO existe, inicializar a 1
         if (!localStorage.getItem("bancoActual")) {
             localStorage.setItem("bancoActual", 1);
         }
 
-        // ⚡ SOLO SI datosBancos NO existe, inicializarlo vacío
         if (!localStorage.getItem("datosBancos")) {
             localStorage.setItem("datosBancos", JSON.stringify([]));
         }

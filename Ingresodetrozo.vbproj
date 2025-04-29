@@ -129,7 +129,7 @@
     <Content Include="JS\inicio.js" />
     <Content Include="JS\login.js" />
     <Content Include="login.aspx" />
-    <Content Include="Resumen.aspx" />
+    <Content Include="resumen.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -170,11 +170,11 @@
       <DependentUpon>login.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="Resumen.aspx.designer.vb">
-      <DependentUpon>Resumen.aspx</DependentUpon>
+    <Compile Include="resumen.aspx.designer.vb">
+      <DependentUpon>resumen.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Resumen.aspx.vb">
-      <DependentUpon>Resumen.aspx</DependentUpon>
+    <Compile Include="resumen.aspx.vb">
+      <DependentUpon>resumen.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="contartrozos.aspx.designer.vb">
