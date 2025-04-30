@@ -75,10 +75,6 @@ fieldset {
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
         }
 
-input[type="date"] {
-    cursor: pointer;
-}
-
 .input-error {
     border: 1px solid red;
 }
@@ -95,11 +91,35 @@ input[type="date"] {
     margin: 0 auto;
 }
 
-input[type="text"], input[type="date"], input[type="number"] {
+input[type="number"] {
     width: 100%;
 }
 
-/* === SECCIONES Y COLLAPSABLES === */
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #333;
+}
+
+input[type="text"],
+select,
+input[type="date"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    font-size: 1rem;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* === SECCIONES Y COLAPSABLES === */
 .information-section {
     margin-bottom: 15px;
     border: 1px solid #d1d5db;
@@ -144,60 +164,99 @@ button {
 }
 
 .btnIrContar
+
 /* === HEADER CONTENEDOR === */
+
+.contenedor {
+    position: relative;
+    max-width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
 .header-contenedor {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 10px;
+    justify-content: flex-start;
+    position: relative;
     margin-bottom: 20px;
-    flex-wrap: nowrap; /* ✅ Nunca bajar de línea */
-    width: 100%;
-    overflow: hidden;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 15px;
+    padding-right: 80px; 
 }
 
-.logo-izquierdo img {
-    max-width: 80px; /* ✅ Más chico en general */
-    height: auto;
+.logo-izquierdo {
+    flex: 0 0 auto;
+    margin-right: 15px;
 }
+
+    .logo-izquierdo img {
+        height: 42px;
+        width: auto;
+        display: block;
+    }
 
 .titulo-header {
-    flex-grow: 1; /* ✅ Se adapta al ancho disponible */
+    flex: 1;
     text-align: center;
 }
 
     .titulo-header h1 {
         margin: 0;
-        font-size: 1.3rem; 
-        color: #1a1a1a;
-        white-space: nowrap; 
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-.boton-salida {
-    display: flex;
-    align-items: center;
-}
-
-    .boton-salida button {
-        padding: 8px 12px;
-        background-color: #cc0000;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        font-size: 0.95rem;
-        cursor: pointer;
-        min-width: 70px; 
+        font-size: 1.5rem;
+        color: #333;
+        font-weight: 600;
+        text-align: center;
+        display: inline-block;
         white-space: nowrap;
     }
 
+.boton-salida {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+}
+
+    .boton-salida button {
+        padding: 7px 16px;
+        background-color: #cc0000;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        transition: background-color 0.2s;
+    }
+
         .boton-salida button:hover {
-            background-color: #990000;
+            background-color: #b30000;
         }
 
+.panel-info {
+    border: 1px solid #2980b9;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.panel-header {
+    background-color: #2980b9;
+    color: white;
+    padding: 10px 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.panel-body {
+    padding: 15px;
+    background-color: #f9f9f9;
+}
 
 /* === MEDIA QUERIES (Responsive) === */
+
 @media (min-width: 1536px) {
     body {
         font-size: 19px;
@@ -235,6 +294,10 @@ button {
             margin-bottom: 8px;
         }
 
+    .titulo-header h1 {
+        font-size: 1.6rem;
+    }
+
     button {
         width: 100%;
         margin-bottom: 10px;
@@ -243,47 +306,93 @@ button {
 
 @media (max-width: 600px) {
     .header-contenedor {
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
+        padding-bottom: 10px;
+        padding-right: 70px; 
+    }
+
+    .titulo-header h1 {
+        font-size: 1.3rem;
     }
 
     .logo-izquierdo img {
-        max-width: 80px;
+        height: 38px;
     }
 
-    .boton-salida {
-        margin-top: 10px;
+    .boton-salida button {
+        padding: 6px 14px;
+        font-size: 0.9rem;
     }
 }
 
 @media (max-width: 550px) {
-    body {
-        padding: 12px;
-        font-size: 14px;
-    }
-
-    h1 {
-        font-size: 1.25rem;
-    }
-}
-
-@media (max-width: 400px) {
-    .logo-izquierdo img {
-        max-width: 60px;
+    .header-contenedor {
+        padding-top: 40px;
     }
 
     .titulo-header h1 {
         font-size: 1.1rem;
     }
 
+    .logo-izquierdo img {
+        max-height: 35px;   
+    }
+
     .boton-salida button {
-        padding: 6px 10px;
-        font-size: 0.85rem;
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-contenedor {
+        padding-right: 65px;
+    }
+
+    .titulo-header h1 {
+        font-size: 1.2rem;
+    }
+
+    .logo-izquierdo img {
+        height: 35px;
+    }
+
+    .boton-salida button {
+        padding: 6px 14px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .contenedor {
+        padding: 10px;
+    }
+
+    .header-contenedor {
+        padding-right: 60px;
+    }
+
+    .titulo-header h1 {
+        font-size: 1.1rem;
+    }
+
+    .logo-izquierdo img {
+        height: 32px;
     }
 }
 
 @media (max-width: 320px) {
     body {
         font-size: 12px;
+    }
+
+    .titulo-header h1 {
+        font-size: 1rem;
+    }
+
+    .boton-salida button {
+        font-size: 0.85rem;
+        padding: 6px 10px;
     }
 }
