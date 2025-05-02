@@ -2,6 +2,15 @@
 
 Todos los cambios notables del proyecto se registran aquí.
 
+
+## [1.2.0] - 2025-05-02
+### Mejorado
+- Se rediseñó visualmente el resumen final para que las secciones de Proveedor, Origen y Transporte usen acordeones desplegables.
+- Se mejoró la visualización de la sección Totales, manteniéndola visible y clara.
+- Se cambió el título de “Total Final” a “Total Troncos” para mayor consistencia.
+- Corrección de validaciones XHTML5: eliminados duplicados de id y etiquetas no permitidas dentro de <summary>.
+- Ajustes de estilo responsive para mejorar visualización en dispositivos móviles.
+
 ---
 
 ## [1.1.0] - 2025-05-02
