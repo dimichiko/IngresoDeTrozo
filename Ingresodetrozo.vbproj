@@ -138,6 +138,8 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="JS\contartrozos.js" />
     <Content Include="README.md" />
+    <Content Include="xml\version.xml" />
+    <Content Include="CHANGELOG.md" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

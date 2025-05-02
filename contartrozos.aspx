@@ -83,6 +83,9 @@
                         <div class="footer-right">
                             <button class="btnSiguiente" type="button" onclick="irAlResumen(event)">Resumen</button>
                         </div>
+                        <!--   <div
+                            id="footer-version" style="text-align:center; font-size:0.9rem; color:#888; margin-top:40px;">
+                            </div> -->
                     </div>
                 </div>
             </div>

@@ -130,15 +130,18 @@ function irAlResumen(event) {
 }
 
 function actualizarTextoBotones() {
-    const btnVolver = document.querySelector(".btnVolver");
-    const btnSiguiente = document.querySelector(".btnSiguiente");
+    const btnVolverList = document.querySelectorAll(".btnVolver");
+    const btnSiguientes = document.querySelectorAll(".btnSiguiente");
 
     const bancoActual = parseInt(localStorage.getItem("bancoActual") || 1);
     const cantidadBancos = parseInt(localStorage.getItem("cantidadBancos") || 1);
 
-    if (btnVolver) {
-        btnVolver.textContent = bancoActual === 1 ? "← Volver a ingreso" : "← Volver al banco anterior";
-        btnVolver.onclick = function (e) {
+    btnVolverList.forEach(btn => {
+        btn.textContent = bancoActual === 1
+            ? "← Volver a ingreso"
+            : "← Volver al banco anterior";
+
+        btn.onclick = function (e) {
             e.preventDefault();
             if (bancoActual === 1) {
                 window.location.href = "ingreso.aspx";
@@ -147,15 +150,23 @@ function actualizarTextoBotones() {
                 window.location.href = "contartrozos.aspx";
             }
         };
-    }
+    });
 
-    if (btnSiguiente) {
-        if (bancoActual < cantidadBancos) {
-            btnSiguiente.textContent = "Siguiente banco";
-        } else {
-            btnSiguiente.textContent = "Ir a resumen";
-        }
-    }
+    btnSiguientes.forEach(btn => {
+        btn.textContent = bancoActual < cantidadBancos
+            ? "Siguiente banco"
+            : "Ir a resumen";
+
+        btn.onclick = function (e) {
+            e.preventDefault();
+            if (bancoActual < cantidadBancos) {
+                localStorage.setItem("bancoActual", bancoActual + 1);
+                window.location.href = "contartrozos.aspx";
+            } else {
+                window.location.href = "resumen.aspx";
+            }
+        };
+    });
 }
 
 function guardarDatosContartrozos() {
@@ -232,3 +243,41 @@ document.addEventListener("DOMContentLoaded", function () {
     if (lugarLargo1) lugarLargo1.textContent = `Largo de troncos: ${largo}`;
     if (lugarLargo2) lugarLargo2.textContent = `Largo de troncos: ${largo}`;
 });
+
+function cargarVersion() {
+    fetch('xml/version.xml')
+        .then(response => {
+            if (!response.ok) throw new Error('No se pudo cargar version.xml');
+            return response.text();
+        })
+        .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+        .then(data => {
+            const numero = data.querySelector('number')?.textContent || 'desconocida';
+            const fecha = data.querySelector('fecha')?.textContent || '';
+            document.getElementById('footer-version').textContent = `Versión: ${numero} - ${fecha}`;
+        })
+        .catch(err => {
+            document.getElementById('footer-version').textContent = 'Versión: desconocida';
+            console.error(err);
+        });
+}
+
+/* function cargarVersion() {
+    fetch('xml/version.xml')
+        .then(response => {
+            if (!response.ok) throw new Error('No se pudo cargar version.xml');
+            return response.text();
+        })
+        .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+        .then(data => {
+            const numero = data.querySelector('number')?.textContent || 'desconocida';
+            const fecha = data.querySelector('fecha')?.textContent || '';
+            document.getElementById('footer-version').textContent = `Versión: ${numero} - ${fecha}`;
+        })
+        .catch(err => {
+            document.getElementById('footer-version').textContent = 'Versión: desconocida';
+            console.error(err);
+        });
+}
+
+document.addEventListener('DOMContentLoaded', cargarVersion); */
