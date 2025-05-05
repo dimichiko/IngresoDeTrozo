@@ -25,13 +25,13 @@ body {
 
 /* === INFO HEADER === */
 #banco-info {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-weight: 700;
     background: #007BFF;
     color: white;
-    padding: 4px 12px;
+    padding: 6px 16px;
     border-radius: 6px;
-    margin: 5px auto;
+    margin: 8px auto;
     display: inline-block;
 }
 
@@ -42,9 +42,9 @@ body {
     align-items: center;
     background: #f9f9f9;
     border-radius: 8px;
-    padding: 6px 12px;
-    margin-bottom: 6px;
-    gap: 8px;
+    padding: 10px 16px;
+    margin-bottom: 8px;
+    gap: 12px;
     max-height: 15vh;
 }
 
@@ -65,32 +65,42 @@ body {
         background: #FF4444;
         color: white;
         width: 100%;
-        padding: 8px;
-        font-size: 0.9rem;
-        border-radius: 6px;
+        padding: 12px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border-radius: 8px;
         border: none;
         cursor: pointer;
-        transition: background 0.2s;
+        transition: all 0.2s;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
         .header-right button:hover {
             background: #cc0000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-right button:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
 
 .totales {
     background: #007BFF;
     color: white;
-    padding: 8px;
-    border-radius: 6px;
-    font-size: 0.85rem;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
     font-weight: bold;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #largo-troncos-1, #largo-troncos-2 {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
 }
 
 /* === SLIDER === */
@@ -110,7 +120,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 6px;
+    padding: 8px;
     width: 100%;
     height: 100%;
 }
@@ -118,10 +128,10 @@ body {
 /* === BOTONES GRID === */
 .grid-container-1, .grid-container-2 {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
     width: 100%;
-    padding: 6px;
+    padding: 10px;
     overflow-y: auto;
     flex: 1;
     min-height: 0;
@@ -129,37 +139,72 @@ body {
 
     .grid-container-1 button, .grid-container-2 button {
         width: 100%;
-        min-height: 75px;
-        border-radius: 10px;
+        min-height: 100px;
+        border-radius: 12px;
         border: none;
-        font-size: 0.9rem;
+        font-size: 1.2rem;
+        font-weight: bold;
         text-align: center;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: transform 0.2s;
+        transition: all 0.2s;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        position: relative;
+        overflow: hidden;
     }
 
         .grid-container-1 button:hover, .grid-container-2 button:hover {
-            transform: scale(1.03);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .grid-container-1 button:active, .grid-container-2 button:active {
+            transform: scale(0.98);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Agregar efecto de click visual */
+        .grid-container-1 button::after, .grid-container-2 button::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.7);
+            opacity: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            transition: all 0.3s ease-out;
+        }
+
+        .grid-container-1 button:active::after, .grid-container-2 button:active::after {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(25);
+            transition: all 0.1s ease-out;
         }
 
 /* === COLORES BOTONES === */
 #btn-16, #btn-18, #btn-20, #btn-22 {
     background: #B3E5FC;
+    color: #01579B;
 }
 
 #btn-24, #btn-26, #btn-28 {
     background: #FFF9C4;
+    color: #F57F17;
 }
 
 #btn-30, #btn-32, #btn-34, #btn-36, #btn-38 {
     background: #F8BBD0;
+    color: #880E4F;
 }
 
 #btn-40, #btn-42, #btn-44, #btn-46, #btn-48, #btn-50, #btn-52, #btn-54, #btn-56, #btn-58, #btn-60 {
     background: #D1C4E9;
+    color: #4527A0;
 }
 
 /* === FOOTER === */
@@ -168,12 +213,12 @@ body {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    padding: 6px;
+    padding: 10px;
     width: 100%;
-    gap: 8px;
+    gap: 12px;
     background: #f9f9f9;
     border-radius: 8px;
-    margin-top: 6px;
+    margin-top: 8px;
     max-height: 15vh;
 }
 
@@ -186,12 +231,25 @@ body {
 .footer button {
     max-width: 160px;
     width: 100%;
-    padding: 8px;
-    font-size: 0.9rem;
+    padding: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
     border-radius: 8px;
     border: none;
     cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+    .footer button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .footer button:active {
+        transform: translateY(1px);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
 
 /* === ESTILOS BOTONES FOOTER === */
 #resetearContador-1, #resetearContador-2 {
@@ -209,8 +267,8 @@ body {
     font-weight: bold;
     border: none;
     border-radius: 8px;
-    padding: 8px;
-    transition: background-color 0.2s;
+    padding: 12px;
+    transition: all 0.2s;
 }
 
     .btnVolver:hover, .btnSiguiente:hover {
@@ -219,25 +277,32 @@ body {
 
 /* === MODO RESTA === */
 .borde-rojo {
-    border: 3px solid #FF4444 !important;
+    border: 4px solid #FF4444 !important;
+    box-shadow: 0 0 10px rgba(255, 68, 68, 0.5) !important;
 }
 
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
     .grid-container-1, .grid-container-2 {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
     }
+
+        .grid-container-1 button, .grid-container-2 button {
+            min-height: 80px;
+        }
 }
 
 @media (max-width: 575px) {
-    .grid-container-1, .grid-container-2 {
-        grid-template-columns: repeat(2, 1fr);
+    .grid-container-1 button, .grid-container-2 button {
+        min-height: 70px;
+        font-size: 1rem;
     }
 
     .footer button {
         max-width: none;
-        font-size: 0.8rem;
-        padding: 6px;
+        font-size: 0.9rem;
+        padding: 10px;
     }
 
     .header {
@@ -259,32 +324,32 @@ body {
 
         .header-right button {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             font-size: 0.9rem;
         }
 
     .totales {
         width: 100%;
         text-align: center;
-        padding: 6px 0;
+        padding: 8px;
         margin-top: 8px;
     }
 
     .footer {
-        gap: 6px;
+        gap: 8px;
         justify-content: space-between;
     }
 
         .footer button {
             flex: 1;
-            font-size: 0.8rem;
-            padding: 8px 4px;
+            font-size: 0.9rem;
+            padding: 10px;
             max-width: none;
         }
 }
 
 @media (min-width: 1400px) {
     .grid-container-1, .grid-container-2 {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 }

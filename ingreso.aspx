@@ -1,12 +1,12 @@
 ﻿<%@ Page Language="VB" AutoEventWireup="true" Codebehind="ingreso.aspx.vb" Inherits="Ingresodetrozo.ingreso" %>
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
 <head runat="server">
     <title>Ingreso de Información</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/CSS/ingreso.css?v=124" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="/CSS/ingreso.css?v=125" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
@@ -26,14 +26,14 @@
                     <button type="button" onclick="window.location.href='inicio.aspx'">Salir</button>
                 </div>
             </div>
+            
             <div id="acordeon">
                 <h3>Información Proveedor</h3>
                 <div>
-
                     <div class="fila">
                         <label for="txtCodProvPrefijo">Código Proveedor:</label>
                         <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="number" id="txtCodProvPrefijo" maxlength="4" style="flex: none; width: 60px;" />
+                            <input type="number" id="txtCodProvPrefijo" maxlength="4" style="flex: none; width: 60px;" inputmode="numeric" />
                             <input type="number" id="txtCodProvAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                     <div class="fila">
                         <label for="txtContratoPrefijo">Nota Compra:</label>
                         <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="number" id="txtContratoPrefijo" maxlength="4" style="flex: none; width: 60px;" />
+                            <input type="number" id="txtContratoPrefijo" maxlength="4" style="flex: none; width: 60px;" inputmode="numeric" />
                             <input type="number" id="txtContratoAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
                         </div>
                     </div>
@@ -49,14 +49,14 @@
                     <div class="fila">
                         <label for="txtVentaPrefijo">Nota Venta:</label>
                         <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="number" id="txtVentaPrefijo" maxlength="4" style="flex: none; width: 60px;" />
+                            <input type="number" id="txtVentaPrefijo" maxlength="4" style="flex: none; width: 60px;" inputmode="numeric" />
                             <input type="number" id="txtVentaAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
                         </div>
                     </div>
 
                     <div class="fila">
                         <label for="txtOC">GDE:</label>
-                        <input type="number" id="txtOC" maxlength="4" style="width: 80px;" />
+                        <input type="number" id="txtOC" maxlength="4" inputmode="numeric" />
                     </div>
 
                     <div class="fila">
@@ -70,17 +70,18 @@
                     <div class="fila">
                         <label for="txtProducto">Producto:</label>
                         <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="number" id="txtProducto" maxlength="4" style="flex: none; width: 60px;" />
+                            <input type="number" id="txtProducto" maxlength="4" style="flex: none; width: 60px;" inputmode="numeric" />
                             <input type="number" disabled="disabled" style="flex: 1; background-color: #eee;" />
                         </div>
                     </div>
 
-                    <table style="width: 100%; border-spacing: 10px 15px;">
+                    <table class="tabla-fsc" >
                         <tr>
                             <td>
-                                <label for="txtFSC">FSC:</label></td>
+                                <label for="txtFSC">FSC:</label>
+                            </td>
                             <td>
-                                <select id="txtFSC" style="width: 100%;">
+                                <select id="txtFSC">
                                     <option value="100%FSC">100%FSC</option>
                                     <option value="Mixto FSC">Mixto FSC</option>
                                     <option value="CW FSC">CW FSC</option>
@@ -91,9 +92,10 @@
 
                         <tr>
                             <td>
-                                <label for="selectBancos">Cantidad de bancos:</label></td>
+                                <label for="selectBancos">Cantidad de bancos:</label>
+                            </td>
                             <td>
-                                <select id="selectBancos" style="width: 100%;">
+                                <select id="selectBancos">
                                     <option value="1">1 banco</option>
                                     <option value="2">2 bancos</option>
                                     <option value="3">3 bancos</option>
@@ -104,9 +106,10 @@
 
                         <tr>
                             <td>
-                                <label for="txtDestino">Destino:</label></td>
+                                <label for="txtDestino">Destino:</label>
+                            </td>
                             <td>
-                                <select id="txtDestino" name="Destino" style="width: 100%;">
+                                <select id="txtDestino" name="Destino">
                                     <option value="San Carlos">San Carlos</option>
                                 </select>
                             </td>
@@ -114,9 +117,10 @@
 
                         <tr>
                             <td>
-                                <label for="LargoTroncos">Largo:</label></td>
+                                <label for="LargoTroncos">Largo:</label>
+                            </td>
                             <td>
-                                <select id="LargoTroncos" name="Largo" style="width: 100%;">
+                                <select id="LargoTroncos" name="Largo">
                                     <option value="2.50M">2.50M</option>
                                     <option value="3.10M">3.10M</option>
                                     <option value="3.30M">3.30M</option>
@@ -125,7 +129,6 @@
                             </td>
                         </tr>
                     </table>
-
                 </div>
 
                 <h3>Información Origen</h3>
@@ -166,7 +169,7 @@
 
                     <div class="fila">
                         <label for="txtRUTDespachador">RUT Despachador:</label>
-                        <input type="text" id="txtRUTDespachador" maxlength="12" placeholder="12345678-9" />
+                        <input type="text" id="txtRUTDespachador" maxlength="12" placeholder="12345678-9" inputmode="numeric" />
                         <span id="errorRUTDespachador" class="error-rut"></span>
                     </div>
 
@@ -177,7 +180,7 @@
 
                     <div class="fila">
                         <label for="txtRUTConductor">RUT Conductor:</label>
-                        <input type="text" id="txtRUTConductor" maxlength="12" placeholder="12345678-9" />
+                        <input type="text" id="txtRUTConductor" maxlength="12" placeholder="12345678-9" inputmode="numeric" />
                         <span id="errorRUTConductor" class="error-rut"></span>
                     </div>
                 </div>
@@ -190,5 +193,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="JS/ingreso.js"></script>
+
 </body>
 </html>
