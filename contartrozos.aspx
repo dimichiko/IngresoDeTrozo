@@ -33,13 +33,6 @@
                             <button id="Resta-1" type="button" onclick="toggleModoResta(event)">Activar Modo Resta</button>
                         </div>
                     </div>
-
-                    <div class="grid-container-1">
-                        <% For i = 16 To 38 Step 2
-                                Response.Write($"<button id='btn-{i}' onclick=""manejarClick('btn-{i}', event)"" data-count='0'>Diámetro {i}</button>")
-                            Next %>
-                    </div>
-
                     <div class="footer">
                         <div class="footer-left">
                             <button id="resetearContador-1" type="button" onclick="resetearContadores(event)">Reset</button>
@@ -50,6 +43,12 @@
                         <div class="footer-right">
                             <button class="btnSiguiente" type="button" onclick="irAlResumen(event)">Resumen</button>
                         </div>
+                    </div>
+
+                    <div class="grid-container-1">
+                        <% For i = 16 To 38 Step 2
+                                Response.Write($"<button id='btn-{i}' onclick=""manejarClick('btn-{i}', event)"" data-count='0'>Diámetro {i}</button>")
+                            Next %>
                     </div>
                 </div>
 
@@ -66,13 +65,6 @@
                             <button id="Resta-2" type="button" onclick="toggleModoResta(event)">Activar Modo Resta</button>
                         </div>
                     </div>
-
-                    <div class="grid-container-2">
-                        <% For i = 40 To 60 Step 2
-                                Response.Write($"<button id='btn-{i}' onclick=""manejarClick('btn-{i}', event)"" data-count='0'>Diámetro {i}</button>")
-                            Next %>
-                    </div>
-
                     <div class="footer">
                         <div class="footer-left">
                             <button id="resetearContador-2" type="button" onclick="resetearContadores(event)">Reset</button>
@@ -84,8 +76,14 @@
                             <button class="btnSiguiente" type="button" onclick="irAlResumen(event)">Resumen</button>
                         </div>
                         <!--   <div
-                            id="footer-version" style="text-align:center; font-size:0.9rem; color:#888; margin-top:40px;">
-                            </div> -->
+        id="footer-version" style="text-align:center; font-size:0.9rem; color:#888; margin-top:40px;">
+        </div> -->
+                    </div>
+
+                    <div class="grid-container-2">
+                        <% For i = 40 To 60 Step 2
+                                Response.Write($"<button id='btn-{i}' onclick=""manejarClick('btn-{i}', event)"" data-count='0'>Diámetro {i}</button>")
+                            Next %>
                     </div>
                 </div>
             </div>

@@ -134,6 +134,7 @@ input[type="date"] {
 }
 
 /* === BOTONES === */
+
 button {
     padding: 12px 24px;
     background-color: #2563eb;
@@ -163,7 +164,10 @@ button {
     margin: 20px auto;
 }
 
-.btnIrContar
+#btnIrContar {
+    margin-top: auto;
+}
+
 /* === HEADER CONTENEDOR === */
 .contenedor {
     position: relative;

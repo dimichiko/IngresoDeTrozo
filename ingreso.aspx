@@ -6,7 +6,7 @@
     <title>Ingreso de Información</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="CSS/ingreso.css" rel="stylesheet" type="text/css" />
+    <link href="/CSS/ingreso.css?v=124" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
@@ -33,30 +33,30 @@
                     <div class="fila">
                         <label for="txtCodProvPrefijo">Código Proveedor:</label>
                         <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="text" id="txtCodProvPrefijo" maxlength="4" style="flex: none; width: 60px;" />
-                            <input type="text" id="txtCodProvAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
+                            <input type="number" id="txtCodProvPrefijo" maxlength="4" style="flex: none; width: 60px;" />
+                            <input type="number" id="txtCodProvAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
                         </div>
                     </div>
 
                     <div class="fila">
                         <label for="txtContratoPrefijo">Nota Compra:</label>
                         <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="text" id="txtContratoPrefijo" maxlength="4" style="flex: none; width: 60px;" />
-                            <input type="text" id="txtContratoAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
+                            <input type="number" id="txtContratoPrefijo" maxlength="4" style="flex: none; width: 60px;" />
+                            <input type="number" id="txtContratoAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
                         </div>
                     </div>
 
                     <div class="fila">
                         <label for="txtVentaPrefijo">Nota Venta:</label>
                         <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="text" id="txtVentaPrefijo" maxlength="4" style="flex: none; width: 60px;" />
-                            <input type="text" id="txtVentaAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
+                            <input type="number" id="txtVentaPrefijo" maxlength="4" style="flex: none; width: 60px;" />
+                            <input type="number" id="txtVentaAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
                         </div>
                     </div>
 
                     <div class="fila">
                         <label for="txtOC">GDE:</label>
-                        <input type="text" id="txtOC" maxlength="4" style="width: 80px;" />
+                        <input type="number" id="txtOC" maxlength="4" style="width: 80px;" />
                     </div>
 
                     <div class="fila">
@@ -70,8 +70,8 @@
                     <div class="fila">
                         <label for="txtProducto">Producto:</label>
                         <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="text" id="txtProducto" maxlength="4" style="flex: none; width: 60px;" />
-                            <input type="text" id="txtProducto" disabled="disabled" style="flex: 1; background-color: #eee;" />
+                            <input type="number" id="txtProducto" maxlength="4" style="flex: none; width: 60px;" />
+                            <input type="number" disabled="disabled" style="flex: 1; background-color: #eee;" />
                         </div>
                     </div>
 
@@ -172,7 +172,7 @@
 
                     <div class="fila">
                         <label for="txtConductor">Conductor:</label>
-                        <input type="text" id="txtConductor" maxlength="30" placeholder="Nombre y Apellido" />
+                        <input type="text" id="txtConductor" minlength="5" maxlength="30" placeholder="Nombre y Apellido" />
                     </div>
 
                     <div class="fila">

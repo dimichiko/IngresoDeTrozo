@@ -6,7 +6,7 @@
 
     const campos = [
         "txtCodProvPrefijo",
-        "txtContratoPrefijo", 
+        "txtContratoPrefijo",
         "txtVentaPrefijo",
         "txtOC", "txtFechaRecepcion",
         "txtProducto", "txtFSC", "txtDestino", "txtRol",
@@ -21,38 +21,71 @@
     });
 
     function formatearRutLive(rut) {
-        rut = rut.replace(/[^\dkK]/gi, '').toUpperCase();
-        if (rut.length < 2) return rut;
+        if (!rut || typeof rut !== 'string') return '';
 
-        let cuerpo = rut.slice(0, -1).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-        let dv = rut.slice(-1);
+        rut = rut.replace(/[^\dkK]/g, '').toUpperCase();
+
+        if (rut.length <= 1) return rut;
+
+        const dv = rut.slice(-1);
+        const cuerpo = rut.slice(0, -1).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
         return cuerpo + '-' + dv;
     }
 
     ["txtRUTConductor", "txtRUTDespachador"].forEach(id => {
-        document.getElementById(id).addEventListener("input", function () {
+        const elemento = document.getElementById(id);
+
+        if (!elemento) return;
+
+        elemento.addEventListener("input", function () {
+            const inicio = this.selectionStart;
+            const fin = this.selectionEnd;
+            const longitudPrevia = this.value.length;
+
             let val = this.value.replace(/\./g, '').replace(/-/g, '');
+
             if (val.length > 9) val = val.slice(0, 9);
+
             this.value = formatearRutLive(val);
+
+            const diferencia = this.value.length - longitudPrevia;
+
+            if (inicio && fin) {
+                this.setSelectionRange(inicio + diferencia, fin + diferencia);
+            }
+        });
+
+        elemento.addEventListener("blur", function () {
+            if (this.value && !validarRutMod11(this.value)) {
+                this.classList.add("rut-invalido");
+            } else {
+                this.classList.remove("rut-invalido");
+            }
         });
     });
-
     function validarRutMod11(rut) {
-        rut = rut.replace(/\./g, '').replace('-', '').toUpperCase();
-        if (!/^\d{7,8}[0-9K]$/.test(rut)) return false;
+        if (!rut || typeof rut !== 'string') return false;
+
+        rut = rut.replace(/\./g, '').replace(/-/g, '').toUpperCase();
+
+        if (!/^(\d{7,8})([0-9K])$/.test(rut)) return false;
 
         const cuerpo = rut.slice(0, -1);
         const dv = rut.slice(-1);
 
-        let suma = 0, multiplo = 2;
+        let suma = 0;
+        let multiplo = 2;
+
         for (let i = cuerpo.length - 1; i >= 0; i--) {
             suma += parseInt(cuerpo.charAt(i)) * multiplo;
-            multiplo = multiplo === 7 ? 2 : multiplo + 1;
+            multiplo = multiplo >= 7 ? 2 : multiplo + 1;
         }
 
-        let resto = 11 - (suma % 11);
-        let dvEsperado = resto === 11 ? '0' : resto === 10 ? 'K' : resto.toString();
-        return dv === dvEsperado;
+        const resto = suma % 11;
+        const dvCalculado = resto === 0 ? '0' : resto === 1 ? 'K' : (11 - resto).toString();
+
+        return dv === dvCalculado;
     }
 
     document.getElementById("txtOC").addEventListener("input", function () {
@@ -60,7 +93,7 @@
     });
 
     document.getElementById("txtRol").addEventListener("input", function () {
-        let val = this.value.replace(/[^0-9]/g, "").slice(0, 6); 
+        let val = this.value.replace(/[^0-9]/g, "").slice(0, 6);
         if (val.length > 3) {
             this.value = val.slice(0, 3) + "-" + val.slice(3);
         } else {
@@ -69,17 +102,22 @@
     });
 
     ["txtCodProvPrefijo", "txtProducto", "txtContratoPrefijo", "txtVentaPrefijo", "txtOC"].forEach(id => {
+        const elemento = document.getElementById(id);
+        if (!elemento) return; 
 
-    document.getElementById(id).addEventListener("input", function () {
+        elemento.addEventListener("input", function () {
             this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);
         });
     });
 
     ["txtDespachador", "txtConductor"].forEach(id => {
-        document.getElementById(id).addEventListener("input", function () {
+        const elemento = document.getElementById(id);
+        if (!elemento) return; 
+
+        elemento.addEventListener("input", function () {
             this.value = this.value
                 .replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "")
-                .replace(/\s{2,}/g, " ")                  
+                .replace(/\s{2,}/g, " ")
                 .trimStart();
 
             const partes = this.value.split(" ");
@@ -95,105 +133,106 @@
     });
 
     const btn = document.getElementById("btnIrContar");
-    btn.addEventListener("click", function () {
-        let incompletos = [];
+    if (btn) { 
+        btn.addEventListener("click", function () {
+            let incompletos = [];
 
-        campos.forEach(id => {
-            const input = document.getElementById(id);
-            if (!input || input.value.trim() === "") {
-                incompletos.push(id);
+            campos.forEach(id => {
+                const input = document.getElementById(id);
+                if (!input || input.value.trim() === "") {
+                    incompletos.push(id);
+                }
+            });
+
+            const rutConductorInput = document.getElementById("txtRUTConductor");
+            const rutDespachadorInput = document.getElementById("txtRUTDespachador");
+
+            if (rutConductorInput && !validarRutMod11(rutConductorInput.value.trim())) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'RUT del Conductor inválido',
+                    text: 'Por favor, verifica el RUT del conductor.'
+                });
+                return;
             }
+
+            if (rutDespachadorInput && !validarRutMod11(rutDespachadorInput.value.trim())) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'RUT del Despachador inválido',
+                    text: 'Por favor, verifica el RUT del despachador.'
+                });
+                return;
+            }
+
+            if (incompletos.length > 0) {
+                const nombresAmigables = {
+                    txtCodProvPrefijo: "Código Proveedor",
+                    txtCodProvAuto: "Código Proveedor (Autocompletado)",
+                    txtContratoPrefijo: "Nota Compra",
+                    txtContratoAuto: "Nota Compra (Autocompletado)",
+                    txtVentaPrefijo: "Nota Venta",
+                    txtVentaAuto: "Nota Venta (Autocompletado)",
+                    txtOC: "Orden de Compra",
+                    txtFechaRecepcion: "Fecha de Recepción",
+                    txtProducto: "Producto",
+                    txtFSC: "FSC",
+                    txtDestino: "Destino",
+                    txtRol: "Rol",
+                    txtDespachador: "Despachador",
+                    txtTransportista: "Transportista",
+                    txtRUTDespachador: "RUT Despachador",
+                    txtConductor: "Conductor",
+                    txtRUTConductor: "RUT Conductor",
+                    LargoTroncos: "Largo de Troncos",
+                    selectBancos: "Cantidad de Bancos"
+                };
+
+                const camposFaltantes = incompletos.map(id =>
+                    `• ${nombresAmigables[id] || id}`).join('\n');
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campos incompletos',
+                    html: `
+                        <div style="text-align: left; font-size: 16px;">
+                             <p>Por favor completa los siguientes campos:</p>
+                             <ul style="padding-left: 20px; line-height: 1.8;">
+                                 ${incompletos.map(id =>
+                        `<li><b>${nombresAmigables[id] || id}</b></li>`).join('')}
+                             </ul>
+                        </div>
+                    `
+                });
+                return;
+            }
+
+            const cantidadSelect = document.getElementById("selectBancos");
+            const cantidad = cantidadSelect ? cantidadSelect.value : null;
+
+            if (!cantidad) {
+                Swal.fire("Debes seleccionar la cantidad de bancos");
+                return;
+            }
+
+            campos.forEach(id => {
+                const elemento = document.getElementById(id);
+                if (elemento) {
+                    sessionStorage.setItem(id, elemento.value);
+                }
+            });
+
+            localStorage.setItem("cantidadBancos", cantidad);
+
+            if (!localStorage.getItem("bancoActual")) {
+                localStorage.setItem("bancoActual", 1);
+            }
+
+            if (!localStorage.getItem("datosBancos")) {
+                localStorage.setItem("datosBancos", JSON.stringify([]));
+            }
+
+            window.location.href = "contartrozos.aspx";
         });
-
-        const rutConductorInput = document.getElementById("txtRUTConductor");
-        const rutDespachadorInput = document.getElementById("txtRUTDespachador");
-
-        const rutConductor = rutConductorInput.value.trim();
-        const rutDespachador = rutDespachadorInput.value.trim();
-
-        const errorRUTConductor = document.getElementById("errorRUTConductor");
-        const errorRUTDespachador = document.getElementById("errorRUTDespachador");
-
-        let rutValido = true;
-
-        if (!validarRutMod11(rutConductor)) {
-            Swal.fire({
-                icon: 'error',
-                title: 'RUT del Conductor inválido',
-                text: 'Por favor, verifica el RUT del conductor.'
-            });
-            return;
-        }
-
-        if (!validarRutMod11(rutDespachador)) {
-            Swal.fire({
-                icon: 'error',
-                title: 'RUT del Despachador inválido',
-                text: 'Por favor, verifica el RUT del despachador.'
-            });
-            return;
-        }
-
-        if (incompletos.length > 0) {
-            const nombresAmigables = {
-                txtCodProvPrefijo: "Código Proveedor",
-                txtCodProvAuto: "Código Proveedor (Autocompletado)",
-                txtContratoPrefijo: "Nota Compra",
-                txtContratoAuto: "Nota Compra (Autocompletado)",
-                txtVentaPrefijo: "Nota Venta",
-                txtVentaAuto: "Nota Venta (Autocompletado)",
-                txtOC: "Orden de Compra",
-                txtFechaRecepcion: "Fecha de Recepción",
-                txtProducto: "Producto",
-                txtFSC: "FSC",
-                txtDestino: "Destino",
-                txtRol: "Rol",
-                txtDespachador: "Despachador",
-                txtTransportista: "Transportista",
-                txtRUTDespachador: "RUT Despachador",
-                txtConductor: "Conductor",
-                txtRUTConductor: "RUT Conductor",
-                LargoTroncos: "Largo de Troncos",
-                selectBancos: "Cantidad de Bancos"
-            };
-
-            const camposFaltantes = incompletos.map(id => `• ${nombresAmigables[id] || id}`).join('\n');
-
-            Swal.fire({
-                icon: 'warning',
-                title: 'Campos incompletos',
-                html: `
-                    <div style="text-align: left; font-size: 16px;">
-                         <p>Por favor completa los siguientes campos:</p>
-                         <ul style="padding-left: 20px; line-height: 1.8;">
-                             ${incompletos.map(id => `<li><b>${nombresAmigables[id] || id}</b></li>`).join('')}
-                         </ul>
-                    </div>
-                `
-            });
-         return;
-        }
-
-        const cantidad = document.getElementById("selectBancos").value;
-        if (!cantidad) {
-            Swal.fire("Debes seleccionar la cantidad de bancos");
-            return;
-        }
-
-        campos.forEach(id => {
-            sessionStorage.setItem(id, document.getElementById(id).value);
-        });
-
-        localStorage.setItem("cantidadBancos", cantidad);
-
-        if (!localStorage.getItem("bancoActual")) {
-            localStorage.setItem("bancoActual", 1);
-        }
-
-        if (!localStorage.getItem("datosBancos")) {
-            localStorage.setItem("datosBancos", JSON.stringify([]));
-        }
-
-        window.location.href = "contartrozos.aspx";
-    });
+    }
 });
