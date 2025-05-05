@@ -2,6 +2,14 @@
 
 Todos los cambios notables del proyecto se registran aquí.
 
+## [1.3.0] - 2025-05-05
+### Mejorado
+- Se mejoró el diseño visual de la tabla FSC, Bancos, Destino y Largo para alinearse con el resto del formulario.
+- Estilos unificados para `select` e `input` con mismo tamaño y espaciado.
+- Se corrigió el alineamiento horizontal y la integración visual con los campos `.fila`.
+- Se mantuvo el uso de `<table>` por razones estructurales, pero se adaptó visualmente al diseño general.
+
+---
 
 ## [1.2.0] - 2025-05-02
 ### Mejorado
