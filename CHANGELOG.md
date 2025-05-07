@@ -4,10 +4,14 @@ Todos los cambios notables del proyecto se registran aquí.
 
 ## [1.4.0] - 2025-05-07
 ### Agregado
-- Sistema completo de login funcional usando ASP.NET Web Forms y VB.NET.
-- Validación visual con notificaciones y manejo de errores.
-- Login funcional mediante API (`AuthService.asmx`) con almacenamiento en `Session`.
-- Diseño responsivo y limpio para la interfaz de login.
+- Login funcional conectado a AuthService.asmx.
+- Validación en frontend con JS moderno.
+- Soporte para "recordar usuario" con localStorage.
+- Sistema de sesiones con redirección y validación.
+
+### Mejorado
+- Estilos de login totalmente rediseñados y responsivos.
+- Footer incluye número de versión cargado desde `xml/version.xml`.
 
 ---
 
