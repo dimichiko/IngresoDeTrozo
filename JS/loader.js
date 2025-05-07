@@ -20,3 +20,25 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+function showLoader() {
+    const loader = document.getElementById('loading-overlay');
+    if (loader) {
+        loader.style.display = 'flex';
+    }
+}
+
+function hideLoader() {
+    const loader = document.getElementById('loading-overlay');
+    if (loader) {
+        loader.style.display = 'none';
+    }
+}
+
+window.addEventListener('load', function () {
+    hideLoader();
+});
+
+window.addEventListener('beforeunload', function () {
+    showLoader();
+});

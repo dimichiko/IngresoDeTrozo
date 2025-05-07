@@ -105,7 +105,16 @@
         } finally {
             btnLogin.classList.remove("loading");
             btnLogin.disabled = false;
-        }
+          }
+
+        //const username = usenameInput.valuer.trim();
+        //const password = passwordInput.value.trim();
+
+
+        //var result = ValidarUsuario(usename, password);
+
+        //var r = result
+
     });
 
     // Accesibilidad
@@ -115,3 +124,4 @@
 
     usernameInput.focus();
 });
+

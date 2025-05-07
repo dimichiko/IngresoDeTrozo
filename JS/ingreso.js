@@ -2,7 +2,7 @@
     $("#acordeon").accordion({
         heightStyle: "content",
         collapsible: true,
-        active: false  
+        active: false
     });
 
     const numericInputs = document.querySelectorAll('input[type="number"]');
@@ -12,6 +12,11 @@
             this.setAttribute('inputmode', 'numeric');
         });
     });
+
+    initializeAutoPopulation("txtCodProvPrefijo", "txtCodProvAuto", "PROV");
+    initializeAutoPopulation("txtContratoPrefijo", "txtContratoAuto", "COMP");
+    initializeAutoPopulation("txtVentaPrefijo", "txtVentaAuto", "VENT");
+    initializeAutoPopulation("txtProducto", document.querySelector("#txtProducto").nextElementSibling, "PROD");
 
     const allInputs = document.querySelectorAll('input, select');
     allInputs.forEach(input => {
@@ -32,59 +37,46 @@
         });
     });
 
-    const campos = [
-        "txtCodProvPrefijo",
-        "txtContratoPrefijo",
-        "txtVentaPrefijo",
-        "txtOC", "txtFechaRecepcion",
-        "txtProducto", "txtFSC", "txtDestino", "txtRol",
-        "txtDespachador", "txtTransportista", "txtRUTDespachador",
-        "txtConductor", "txtRUTConductor", "LargoTroncos", "selectBancos"
-    ];
+    initializeRolField();
 
-    campos.forEach(id => {
-        const valor = sessionStorage.getItem(id);
-        const input = document.getElementById(id);
-        if (valor && input) input.value = valor;
+    initializeRutFields();
+
+    loadSavedValues();
+
+    configureSubmitButton();
+
+    addMobileStyles();
+
+    setCurrentDate();
+
+});
+
+function initializeAutoPopulation(prefixFieldId, autoFieldId, prefix) {
+    const prefixField = document.getElementById(prefixFieldId);
+    const autoField = typeof autoFieldId === 'string' ? document.getElementById(autoFieldId) : autoFieldId;
+
+    if (!prefixField || !autoField) return;
+
+    prefixField.addEventListener("input", function () {
+        const value = this.value.replace(/[^0-9]/g, '').slice(0, 4);
+        this.value = value;
+
+        if (value) {
+            const currentYear = new Date().getFullYear().toString().slice(2);
+            const randomNum = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+            autoField.value = `${prefix}-${value}-${currentYear}-${randomNum}`;
+        } else {
+            autoField.value = '';
+        }
     });
 
-    function formatearRutLive(rut) {
-        if (!rut || typeof rut !== 'string') return '';
-
-        rut = rut.replace(/[^\dkK]/g, '').toUpperCase();
-
-        if (rut.length <= 1) return rut;
-
-        const dv = rut.slice(-1);
-        const cuerpo = rut.slice(0, -1).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-        return cuerpo + '-' + dv;
+    if (prefixField.value) {
+        const event = new Event('input');
+        prefixField.dispatchEvent(event);
     }
+}
 
-    function validarRutMod11(rut) {
-        if (!rut || typeof rut !== 'string') return false;
-
-        rut = rut.replace(/\./g, '').replace(/-/g, '').toUpperCase();
-
-        if (!/^(\d{7,8})([0-9K])$/.test(rut)) return false;
-
-        const cuerpo = rut.slice(0, -1);
-        const dv = rut.slice(-1);
-
-        let suma = 0;
-        let multiplo = 2;
-
-        for (let i = cuerpo.length - 1; i >= 0; i--) {
-            suma += parseInt(cuerpo.charAt(i)) * multiplo;
-            multiplo = multiplo >= 7 ? 2 : multiplo + 1;
-        }
-
-        const resto = suma % 11;
-        const dvCalculado = resto === 0 ? '0' : resto === 1 ? 'K' : (11 - resto).toString();
-
-        return dv === dvCalculado;
-    }
-
+function initializeRutFields() {
     ["txtRUTConductor", "txtRUTDespachador"].forEach(id => {
         const elemento = document.getElementById(id);
 
@@ -128,14 +120,47 @@
             }
         });
     });
+}
 
-    const ocElement = document.getElementById("txtOC");
-    if (ocElement) {
-        ocElement.addEventListener("input", function () {
-            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);
-        });
+function formatearRutLive(rut) {
+    if (!rut || typeof rut !== 'string') return '';
+
+    rut = rut.replace(/[^\dkK]/g, '').toUpperCase();
+
+    if (rut.length <= 1) return rut;
+
+    const dv = rut.slice(-1);
+    const cuerpo = rut.slice(0, -1).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+    return cuerpo + '-' + dv;
+}
+
+function validarRutMod11(rut) {
+    if (!rut || typeof rut !== 'string') return false;
+
+    rut = rut.replace(/\./g, '').replace(/-/g, '').toUpperCase();
+
+    if (!/^(\d{7,8})([0-9K])$/.test(rut)) return false;
+
+    const cuerpo = rut.slice(0, -1);
+    const dv = rut.slice(-1);
+
+    let suma = 0;
+    let multiplo = 2;
+
+    for (let i = cuerpo.length - 1; i >= 0; i--) {
+        suma += parseInt(cuerpo.charAt(i)) * multiplo;
+        multiplo = multiplo >= 7 ? 2 : multiplo + 1;
     }
 
+    const resto = suma % 11;
+    const dvCalculado = resto === 0 ? '0' : resto === 1 ? 'K' : (11 - resto).toString();
+
+    return dv === dvCalculado;
+}
+
+// Initialize Rol field with auto-formatting
+function initializeRolField() {
     const rolElement = document.getElementById("txtRol");
     if (rolElement) {
         rolElement.addEventListener("input", function () {
@@ -146,41 +171,88 @@
                 this.value = val;
             }
         });
-    }
 
-    ["txtCodProvPrefijo", "txtProducto", "txtContratoPrefijo", "txtVentaPrefijo", "txtOC"].forEach(id => {
-        const elemento = document.getElementById(id);
-        if (!elemento) return;
-
-        elemento.setAttribute('inputmode', 'numeric');
-
-        elemento.addEventListener("input", function () {
-            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);
+        // Simulate API lookup for Rol information
+        rolElement.addEventListener("blur", function () {
+            if (this.value && this.value.length >= 5) {
+                // This would be replaced with an actual API call
+                simulateRolLookup(this.value);
+            }
         });
-    });
+    }
+}
 
-    ["txtDespachador", "txtConductor"].forEach(id => {
-        const elemento = document.getElementById(id);
-        if (!elemento) return;
+// Simulate API lookup for Rol information (for demo purposes)
+function simulateRolLookup(rolValue) {
+    // In a real scenario, this would call an API
+    setTimeout(() => {
+        const predioField = document.getElementById("txtPredio");
+        const comunaField = document.getElementById("txtComuna");
+        const rodalField = document.getElementById("txtRodal");
+        const coordField = document.getElementById("txtCoordenadas");
 
-        elemento.addEventListener("input", function () {
-            this.value = this.value
-                .replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "")
-                .replace(/\s{2,}/g, " ")
-                .trimStart();
+        if (predioField && comunaField && rodalField && coordField) {
+            // Simulate data retrieval - in production this would come from backend
+            predioField.value = `Predio ${Math.floor(Math.random() * 100) + 1}`;
+            comunaField.value = ["San Carlos", "Chillán", "Concepción", "Los Ángeles"][Math.floor(Math.random() * 4)];
+            rodalField.value = `R-${Math.floor(Math.random() * 50) + 1}`;
 
-            const partes = this.value.split(" ");
-            if (partes.length > 2) {
-                this.value = partes.slice(0, 2).join(" ");
+            // Generate realistic-looking coordinates for Chile
+            const lat = -37 - Math.random();
+            const lng = -73 - Math.random();
+            coordField.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+        }
+    }, 300);
+}
+
+function loadSavedValues() {
+    const campos = [
+        "txtCodProvPrefijo",
+        "txtContratoPrefijo",
+        "txtVentaPrefijo",
+        "txtOC", "txtFechaRecepcion",
+        "txtProducto", "txtFSC", "txtDestino", "txtRol",
+        "txtDespachador", "txtTransportista", "txtRUTDespachador",
+        "txtConductor", "txtRUTConductor", "LargoTroncos", "selectBancos"
+    ];
+
+    campos.forEach(id => {
+        const valor = sessionStorage.getItem(id);
+        const input = document.getElementById(id);
+        if (valor && input) {
+            input.value = valor;
+
+            if (["txtCodProvPrefijo", "txtContratoPrefijo", "txtVentaPrefijo", "txtProducto"].includes(id)) {
+                const event = new Event('input');
+                input.dispatchEvent(event);
             }
 
-            this.value = this.value
-                .split(" ")
-                .map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase())
-                .join(" ");
-        });
+            if (id === "txtRol") {
+                const event = new Event('blur');
+                input.dispatchEvent(event);
+            }
+        }
     });
 
+    window.addEventListener('pageshow', function (event) {
+        if (event.persisted) {
+            campos.forEach(id => {
+                const valor = sessionStorage.getItem(id);
+                const input = document.getElementById(id);
+                if (valor && input) {
+                    input.value = valor;
+
+                    if (["txtCodProvPrefijo", "txtContratoPrefijo", "txtVentaPrefijo", "txtProducto"].includes(id)) {
+                        const event = new Event('input');
+                        input.dispatchEvent(event);
+                    }
+                }
+            });
+        }
+    });
+}
+
+function configureSubmitButton() {
     const btn = document.getElementById("btnIrContar");
     if (btn) {
         btn.addEventListener('touchstart', function () {
@@ -192,6 +264,16 @@
         });
 
         btn.addEventListener("click", function () {
+            const campos = [
+                "txtCodProvPrefijo",
+                "txtContratoPrefijo",
+                "txtVentaPrefijo",
+                "txtOC", "txtFechaRecepcion",
+                "txtProducto", "txtFSC", "txtDestino", "txtRol",
+                "txtDespachador", "txtTransportista", "txtRUTDespachador",
+                "txtConductor", "txtRUTConductor", "LargoTroncos", "selectBancos"
+            ];
+
             let incompletos = [];
 
             campos.forEach(id => {
@@ -210,7 +292,7 @@
 
             if (rutConductorInput && !validarRutMod11(rutConductorInput.value.trim())) {
                 rutConductorInput.classList.add('input-error');
-                const errorElement = document.getElementById('errorRUTConductor');
+                const errorElement = document.getElementById('errorRUTConductor') || document.getElementById('errortxtRUTConductor');
                 if (errorElement) {
                     errorElement.textContent = "RUT inválido";
                     errorElement.style.display = "block";
@@ -230,7 +312,7 @@
 
             if (rutDespachadorInput && !validarRutMod11(rutDespachadorInput.value.trim())) {
                 rutDespachadorInput.classList.add('input-error');
-                const errorElement = document.getElementById('errorRUTDespachador');
+                const errorElement = document.getElementById('errorRUTDespachador') || document.getElementById('errortxtRUTDespachador');
                 if (errorElement) {
                     errorElement.textContent = "RUT inválido";
                     errorElement.style.display = "block";
@@ -256,7 +338,7 @@
                     txtContratoAuto: "Nota Compra (Autocompletado)",
                     txtVentaPrefijo: "Nota Venta",
                     txtVentaAuto: "Nota Venta (Autocompletado)",
-                    txtOC: "Orden de Compra",
+                    txtOC: "GDE",
                     txtFechaRecepcion: "Fecha de Recepción",
                     txtProducto: "Producto",
                     txtFSC: "FSC",
@@ -309,6 +391,7 @@
                 return;
             }
 
+            // Save all values to sessionStorage
             campos.forEach(id => {
                 const elemento = document.getElementById(id);
                 if (elemento) {
@@ -332,7 +415,10 @@
             }, 300);
         });
     }
+}
 
+// Add mobile styles
+function addMobileStyles() {
     const style = document.createElement('style');
     style.textContent = `
         .swal-confirm-button-mobile {
@@ -372,16 +458,7 @@
     `;
     document.head.appendChild(style);
 
-    window.addEventListener('pageshow', function (event) {
-        if (event.persisted) {
-            campos.forEach(id => {
-                const valor = sessionStorage.getItem(id);
-                const input = document.getElementById(id);
-                if (valor && input) input.value = valor;
-            });
-        }
-    });
-
+    // Adjust viewport for iOS devices
     const viewportMeta = document.querySelector('meta[name="viewport"]');
     if (viewportMeta) {
         if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
@@ -389,11 +466,47 @@
         }
     }
 
+    // Enhance touch targets
     if ('ontouchstart' in window) {
-        document.addEventListener('DOMContentLoaded', function () {
-            Array.from(document.querySelectorAll('button, input, select')).forEach(el => {
-                el.style.cursor = 'pointer';
-            });
+        Array.from(document.querySelectorAll('button, input, select')).forEach(el => {
+            el.style.cursor = 'pointer';
         });
     }
-});
+}
+
+// Set current date in date field
+function setCurrentDate() {
+    const dateField = document.getElementById('txtFechaRecepcion');
+    if (dateField) {
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        dateField.value = formattedDate;
+        dateField.max = formattedDate;
+    }
+}
+
+// Enhance keyboard accessibility
+function enhanceAccessibility() {
+    // Make accordion headers accessible with keyboard
+    const accordionHeaders = document.querySelectorAll('.ui-accordion-header');
+    accordionHeaders.forEach(header => {
+        header.setAttribute('tabindex', '0');
+        header.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                this.click();
+            }
+        });
+    });
+
+    // Add keyboard handling for all interactive elements
+    const interactiveElements = document.querySelectorAll('button, input, select');
+    interactiveElements.forEach(el => {
+        el.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' && this.tagName !== 'TEXTAREA') {
+                event.preventDefault();
+                this.click();
+            }
+        });
+    });
+}

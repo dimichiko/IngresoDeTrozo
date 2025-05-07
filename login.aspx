@@ -9,12 +9,11 @@
     <meta name="description" content="Portal de acceso para Alto Horizonte" />
     <link href="CSS/login.css" rel="stylesheet" type="text/css" />
     <link rel="shortcut icon" href="Content/favicon.ico" type="image/x-icon" />
-    <!-- Preconectar a origenes para mejorar rendimiento -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 </head>
 <body>
-    <form id="loginForm" runat="server" autocomplete="on">
+    <form id="loginForm" autocomplete="on">
         <div class="login-container">
             <div class="login-logo">
                 <img src="Content/LOGO_ALTO_HORIZONTE-SIN-FONDO.png" alt="Logo Alto Horizonte" />
@@ -22,41 +21,42 @@
 
             <h1 class="login-title">Iniciar Sesión</h1>
 
-            <!-- Área de notificaciones -->
             <div id="notification" class="notification" role="alert"></div>
 
             <div class="login-form">
                 <div class="form-group">
                     <label for="txtUsuario">Nombre de usuario</label>
-                    <asp:TextBox ID="txtUsuario" runat="server" CssClass="form-control" placeholder="Ingresa tu usuario" />
+                    <input type="text" id="txtUsuario" class="form-control" placeholder="Ingresa tu usuario" />
                     <div class="error-message" aria-live="polite"></div>
                 </div>
 
                 <div class="form-group">
                     <label for="txtClave">Contraseña</label>
-                    <asp:TextBox ID="txtClave" runat="server" TextMode="Password" CssClass="form-control" placeholder="Ingresa tu contraseña" />
+                    <input type="password" id="txtClave" class="form-control" placeholder="Ingresa tu contraseña" />
                     <div class="error-message" aria-live="polite"></div>
                 </div>
 
                 <label class="remember-me">
                     <input type="checkbox" id="chkRecordar" name="chkRecordar" />
                     Recordar mi usuario
-           
                 </label>
 
-                <asp:Button ID="btnLogin" runat="server" CssClass="btn" Text="Ingresar" OnClick="btnLogin_Click" />
+                <button type="submit" id="btnLogin" class="btn">Ingresar</button>
             </div>
 
             <div class="login-footer">
                 &copy; <%= DateTime.Now.Year %> Alto Horizonte. Todos los derechos reservados.<br />
-                <asp:Label ID="lblVersion" runat="server" CssClass="version-label" />
+                <div id="version-info" class="version-label"></div>
             </div>
         </div>
     </form>
+
     <div id="loading-overlay" class="loading-overlay" style="display: none;">
         <div class="spinner"></div>
     </div>
+
     <script src="JS/login.js"></script>
     <script src="JS/loader.js"></script>
+    <script src="http://portal.altohorizonte.cl:8089/js/comun.js"></script>
 </body>
 </html>
