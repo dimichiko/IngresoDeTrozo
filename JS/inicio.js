@@ -1,1 +1,137 @@
-﻿
+﻿console.log("inicio.js cargado");
+
+document.addEventListener('DOMContentLoaded', function () {
+    const header = document.querySelector('.header-inicio');
+    const buttons = document.querySelectorAll('.btn-nav');
+
+    if (header) {
+        header.classList.add('animate-fade-in');
+    }
+
+    if (buttons.length) {
+        buttons.forEach((button, index) => {
+            setTimeout(() => {
+                button.classList.add('animate-fade-in');
+            }, 200 + (index * 100));
+        });
+    }
+
+    const loadingOverlay = document.createElement('div');
+    loadingOverlay.className = 'loading-overlay';
+    loadingOverlay.innerHTML = '<div class="spinner"></div>';
+    document.body.appendChild(loadingOverlay);
+
+    window.showLoading = function () {
+        loadingOverlay.classList.add('active');
+    };
+
+    window.hideLoading = function () {
+        loadingOverlay.classList.remove('active');
+    };
+
+    window.navigateTo = function (url) {
+        showLoading();
+        setTimeout(() => {
+            window.location.href = url;
+        }, 300);
+    };
+
+    window.limpiarCacheYRedirigir = function (pagina) {
+        showLoading();
+        sessionStorage.clear();
+        localStorage.removeItem('lastPage');
+        setTimeout(() => {
+            window.location.href = pagina;
+        }, 300);
+    };
+
+    localStorage.setItem('lastPage', 'inicio.aspx');
+
+    if (!sessionStorage.getItem('welcomed')) {
+        const username = sessionStorage.getItem('username') || 'Usuario';
+        showWelcomeMessage(username);
+        sessionStorage.setItem('welcomed', 'true');
+    }
+
+    setupEventListeners();
+
+    const versionDiv = document.createElement('div');
+    versionDiv.id = "version-info";
+    versionDiv.style.marginTop = "1rem";
+    versionDiv.style.fontSize = "0.85rem";
+    versionDiv.style.color = "#666";
+    versionDiv.style.textAlign = "center";
+    versionDiv.style.marginBottom = "10px";
+    document.body.appendChild(versionDiv);
+
+    fetch("xml/version.xml")
+        .then(response => response.text())
+        .then(str => {
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(str, "text/xml");
+            const version = xml.querySelector("number")?.textContent;
+
+            if (versionDiv && version) {
+                versionDiv.textContent = "Versión " + version;
+            }
+        })
+        .catch(err => {
+            console.error("Error cargando versión:", err);
+            const versionDiv = document.getElementById("version-info");
+            if (versionDiv) versionDiv.textContent = "Versión no disponible";
+        });
+});
+
+function showWelcomeMessage(username) {
+    const toast = document.createElement('div');
+    toast.style.position = 'fixed';
+    toast.style.bottom = '20px';
+    toast.style.right = '20px';
+    toast.style.backgroundColor = '#005a8d';
+    toast.style.color = 'white';
+    toast.style.padding = '12px 20px';
+    toast.style.borderRadius = '4px';
+    toast.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+    toast.style.zIndex = '1000';
+    toast.style.opacity = '0';
+    toast.style.transition = 'opacity 0.3s ease';
+
+    toast.innerHTML = `<div>Bienvenido, ${username}!</div>`;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.opacity = '1';
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 300);
+        }, 3000);
+    }, 500);
+}
+
+function setupEventListeners() {
+    const navButtons = document.querySelectorAll('.btn-nav');
+    navButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const url = this.dataset.url || this.getAttribute('onclick').match(/['"]([^'"]*)['"]/)[1];
+
+            if (this.classList.contains('clear-cache')) {
+                window.limpiarCacheYRedirigir(url);
+            } else {
+                window.navigateTo(url);
+            }
+        });
+    });
+
+    const exitButton = document.querySelector('.boton-salida button');
+    if (exitButton) {
+        exitButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            window.navigateTo('login.aspx');
+        });
+    }
+}

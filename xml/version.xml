@@ -1,5 +1,5 @@
 ﻿<version>
-	<number>1.3.0</number>
-	<fecha>2025-05-05</fecha>
-	<descripcion>Unificación visual de tabla FSC con el resto del formulario</descripcion>
+	<number>1.4.0</number>
+	<fecha>2025-05-07</fecha>
+	<descripcion>Login funcional con validaciones, API y diseño responsive</descripcion>
 </version>

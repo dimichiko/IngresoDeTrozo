@@ -38,6 +38,7 @@ body {
     width: 100%;
     max-width: 420px;
     transition: transform var(--transition-speed);
+    display: block;
 }
 
     .login-container:hover {
@@ -183,6 +184,26 @@ body {
     color: #666;
 }
 
+.form-control {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: border var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 90, 141, 0.15);
+    }
+
+.version-label {
+    font-size: 0.8rem;
+    color: #777;
+}
+
 /* Animaciones */
 @keyframes spin {
     0% {
@@ -223,7 +244,6 @@ body {
 @media (max-width: 480px) {
     .login-container {
         padding: 1.5rem;
-        margin: 1rem;
         border-radius: calc(var(--border-radius) - 2px);
     }
 

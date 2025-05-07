@@ -2,6 +2,15 @@
 
 Todos los cambios notables del proyecto se registran aquí.
 
+## [1.4.0] - 2025-05-07
+### Agregado
+- Sistema completo de login funcional usando ASP.NET Web Forms y VB.NET.
+- Validación visual con notificaciones y manejo de errores.
+- Login funcional mediante API (`AuthService.asmx`) con almacenamiento en `Session`.
+- Diseño responsivo y limpio para la interfaz de login.
+
+---
+
 ## [1.3.0] - 2025-05-05
 ### Mejorado
 - Se mejoró el diseño visual de la tabla FSC, Bancos, Destino y Largo para alinearse con el resto del formulario.

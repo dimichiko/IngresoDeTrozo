@@ -48,8 +48,8 @@
             </div>
 
             <div class="login-footer">
-                &copy; <%= DateTime.Now.Year %> Alto Horizonte. Todos los derechos reservados.
-       
+                &copy; <%= DateTime.Now.Year %> Alto Horizonte. Todos los derechos reservados.<br />
+                <asp:Label ID="lblVersion" runat="server" CssClass="version-label" />
             </div>
         </div>
     </form>
