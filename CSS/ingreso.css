@@ -44,6 +44,12 @@ legend {
     font-size: 1.1rem;
 }
 
+.logo-izquierdo {
+    width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
 /* === FORMULARIOS Y CAMPOS === */
 fieldset {
     border: none;
@@ -364,6 +370,7 @@ select:active {
 
     .logo-izquierdo {
         margin-bottom: 0;
+        width: 140px;
     }
 
     .titulo-header {
@@ -399,6 +406,11 @@ select:active {
         padding: 25px 20px;
     }
 
+    .logo-izquierdo {
+        margin-bottom: 0;
+        width: 180px;
+    }
+
     .fila {
         flex-direction: row;
         align-items: center;
@@ -423,6 +435,11 @@ select:active {
         font-size: 17px;
         max-width: 900px;
         padding: 30px 20px;
+    }
+
+    .logo-izquierdo {
+        margin-bottom: 0;
+        width: 220px;
     }
 
     .titulo-header h1 {

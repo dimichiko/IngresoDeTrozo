@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="almacen.aspx" />
+    <Content Include="AuthService.asmx" />
     <Content Include="contartrozos.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -187,6 +188,10 @@
       <DependentUpon>almacen.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="AuthService.asmx.vb">
+      <DependentUpon>AuthService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="inicio.aspx.designer.vb">
       <DependentUpon>inicio.aspx</DependentUpon>
     </Compile>
@@ -199,7 +204,7 @@
     </Compile>
     <Compile Include="login.aspx.vb">
       <DependentUpon>login.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="resumen.aspx.designer.vb">
       <DependentUpon>resumen.aspx</DependentUpon>
@@ -274,12 +279,6 @@
     </None>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\DatosCamion\DatosCamion.csproj">
-      <Project>{86673a77-8b6e-4356-a22f-c20f63905c86}</Project>
-      <Name>DatosCamion</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
