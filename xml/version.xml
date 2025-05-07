@@ -1,5 +1,5 @@
 ﻿<version>
-	<number>1.4.0</number>
+	<number>1.5.0</number>
 	<fecha>2025-05-07</fecha>
-	<descripcion>Login funcional con validaciones, API y diseño responsive</descripcion>
+	<descripcion>Loader visual entre pantallas, mejoras visuales y simplificación de login</descripcion>
 </version>

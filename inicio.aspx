@@ -47,7 +47,10 @@
         <div id="version-info" class="version-label"></div>
     </div>
     </form>
-
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
     <script src="JS/inicio.js"></script>
+    <script src="JS/loader.js"></script>
 </body>
 </html>

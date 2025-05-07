@@ -2,6 +2,22 @@
 
 Todos los cambios notables del proyecto se registran aquí.
 
+## [1.5.0] - 2025-05-07
+### Agregado
+- Loader visual al navegar entre login, inicio, ingreso, contartrozos y resumen.
+- Animación de carga reutilizable desde `loader.js`.
+- Lectura automática de versión desde `version.xml` en login, inicio, contartrozos y resumen.
+
+### Eliminado
+- Función de recuperación de contraseña (no requerida para uso privado).
+
+### Mejorado
+- Validación más robusta en login.
+- Diseño responsive mejorado en login.
+- Centralización de funciones comunes para navegación (`navigateTo`, `limpiarCacheYRedirigir`).
+
+---
+
 ## [1.4.0] - 2025-05-07
 ### Agregado
 - Login funcional conectado a AuthService.asmx.

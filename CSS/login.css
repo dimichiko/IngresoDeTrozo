@@ -240,6 +240,43 @@ body {
         align-items: center;
     }
 
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    display: none;
+}
+
+    .loading-overlay.active {
+        display: flex;
+    }
+
+    .loading-overlay .spinner {
+        border: 4px solid rgba(0, 90, 141, 0.2);
+        border-top-color: #005a8d;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 0.8s linear infinite;
+    }
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 /* Media queries para responsividad */
 @media (max-width: 480px) {
     .login-container {

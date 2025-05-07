@@ -114,21 +114,22 @@ function irAlResumen(event) {
         contadores
     };
 
-    let datosBancos = JSON.parse(localStorage.getItem("datosBancos")) || [];
+    let datosBancos = JSON.parse(localStorage.getItem("datosBancos") || []);
     datosBancos = datosBancos.filter(b => b.banco !== bancoActual);
     datosBancos.push(datosActuales);
     datosBancos.sort((a, b) => a.banco - b.banco);
-
     localStorage.setItem("datosBancos", JSON.stringify(datosBancos));
 
-    if (bancoActual < cantidadBancos) {
-        localStorage.setItem("bancoActual", bancoActual + 1);
-        window.location.href = "contartrozos.aspx";
-    } else {
-        window.location.href = "resumen.aspx";
-    }
+    showLoader();
+    setTimeout(() => {
+        if (bancoActual < cantidadBancos) {
+            localStorage.setItem("bancoActual", bancoActual + 1);
+            window.location.href = "contartrozos.aspx";
+        } else {
+            window.location.href = "resumen.aspx";
+        }
+    }, 300);
 }
-
 function actualizarTextoBotones() {
     const btnVolverList = document.querySelectorAll(".btnVolver");
     const btnSiguientes = document.querySelectorAll(".btnSiguiente");
@@ -143,12 +144,15 @@ function actualizarTextoBotones() {
 
         btn.onclick = function (e) {
             e.preventDefault();
-            if (bancoActual === 1) {
-                window.location.href = "ingreso.aspx";
-            } else {
-                localStorage.setItem("bancoActual", bancoActual - 1);
-                window.location.href = "contartrozos.aspx";
-            }
+            showLoader();
+            setTimeout(() => {
+                if (bancoActual === 1) {
+                    window.location.href = "ingreso.aspx";
+                } else {
+                    localStorage.setItem("bancoActual", bancoActual - 1);
+                    window.location.href = "contartrozos.aspx";
+                }
+            }, 300);
         };
     });
 
@@ -159,12 +163,15 @@ function actualizarTextoBotones() {
 
         btn.onclick = function (e) {
             e.preventDefault();
-            if (bancoActual < cantidadBancos) {
-                localStorage.setItem("bancoActual", bancoActual + 1);
-                window.location.href = "contartrozos.aspx";
-            } else {
-                window.location.href = "resumen.aspx";
-            }
+            showLoader();
+            setTimeout(() => {
+                if (bancoActual < cantidadBancos) {
+                    localStorage.setItem("bancoActual", bancoActual + 1);
+                    window.location.href = "contartrozos.aspx";
+                } else {
+                    window.location.href = "resumen.aspx";
+                }
+            }, 300);
         };
     });
 }

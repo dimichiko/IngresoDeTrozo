@@ -135,6 +135,7 @@
     <Content Include="JS\cargar-empresas.js" />
     <Content Include="JS\ingreso.js" />
     <Content Include="JS\inicio.js" />
+    <Content Include="JS\loader.js" />
     <Content Include="JS\login.js" />
     <Content Include="login.aspx" />
     <Content Include="resumen.aspx" />

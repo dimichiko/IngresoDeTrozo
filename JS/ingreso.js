@@ -326,7 +326,10 @@
                 localStorage.setItem("datosBancos", JSON.stringify([]));
             }
 
-            window.location.href = "contartrozos.aspx";
+            showLoader();
+            setTimeout(() => {
+                window.location.href = "contartrozos.aspx";
+            }, 300);
         });
     }
 

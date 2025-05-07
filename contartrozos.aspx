@@ -89,12 +89,15 @@
             </div>
         </div>
     </form>
-
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
     <script src="/scripts/jquery-3.7.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/JS/comun.js?v=2"></script>
     <script src="/JS/cargar-empresas.js?v=1"></script>
     <script src="/JS/contartrozos.js?v=2"></script>
+    <script src="JS/loader.js"></script>
 </body>
 </html>
 

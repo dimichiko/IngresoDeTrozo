@@ -38,153 +38,167 @@
                 </div>
             </section>
 
-                <section id="pantalla-final" style="display: none;" aria-labelledby="titulo-final">
-                    <h1 id="titulo-final">Resumen Final</h1>
+            <section id="pantalla-final" style="display: none;" aria-labelledby="titulo-final">
+                <h1 id="titulo-final">Resumen Final</h1>
 
-                    <!-- Información Proveedor -->
-                    <details class="banco-bloque" open>
-                        <summary>Información Proveedor</summary>
-                        <div class="seccion-final">
-                            <table aria-label="Información del proveedor">
-                                <tbody>
-                                    <tr>
-                                        <td>Proveedor:</td>
-                                        <td><span id="res-proveedor">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Contrato:</td>
-                                        <td><span id="res-contrato">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Venta:</td>
-                                        <td><span id="res-venta">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>OC:</td>
-                                        <td><span id="res-oc">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fecha Recepción:</td>
-                                        <td><span id="res-fecha">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Producto:</td>
-                                        <td><span id="res-producto">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>FSC:</td>
-                                        <td><span id="res-fsc">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Número Bancos:</td>
-                                        <td><span id="res-bancos">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Destino:</td>
-                                        <td><span id="res-destino">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Largo Troncos:</td>
-                                        <td><span id="res-largo">-</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </details>
-
-                    <!-- Información Origen -->
-                    <details class="banco-bloque">
-                        <summary>Información Origen</summary>
-                        <div class="seccion-final">
-                            <table aria-label="Información de origen">
-                                <tbody>
-                                    <tr>
-                                        <td>Rol:</td>
-                                        <td><span id="res-rol">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Predio:</td>
-                                        <td><span id="res-predio">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Comuna:</td>
-                                        <td><span id="res-comuna">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Rodal:</td>
-                                        <td><span id="res-rodal">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Coordenadas:</td>
-                                        <td><span id="res-coordenadas">-</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </details>
-
-                    <!-- Información Transporte -->
-                    <details class="banco-bloque">
-                        <summary>Información Transporte</summary>
-                        <div class="seccion-final">
-                            <table aria-label="Información de transporte">
-                                <tbody>
-                                    <tr>
-                                        <td>Despachador:</td>
-                                        <td><span id="res-despachador">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Transportista:</td>
-                                        <td><span id="res-transportista">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>RUT Despachador:</td>
-                                        <td><span id="res-rutdespachador">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Conductor:</td>
-                                        <td><span id="res-conductor">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>RUT Conductor:</td>
-                                        <td><span id="res-rutconductor">-</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </details>
-
-                    <!-- Totales -->
+                <!-- Información Proveedor -->
+                <details class="banco-bloque" open>
+                    <summary>Información Proveedor</summary>
                     <div class="seccion-final">
-                        <h3>Totales</h3>
-                        <table aria-label="Totales" style="width: 100%; background-color: #fff;">
+                        <table aria-label="Información del proveedor">
                             <tbody>
                                 <tr>
-                                    <td style="font-weight: bold; width: 40%;">Total de Troncos:</td>
-                                    <td><span id="resumen-final-troncos">0</span></td>
+                                    <td>Proveedor:</td>
+                                    <td><span id="res-proveedor">-</span></td>
                                 </tr>
                                 <tr>
-                                    <td style="font-weight: bold;">Volumen Total:</td>
-                                    <td><span id="resumen-final-volumen">0 m³</span></td>
+                                    <td>Contrato:</td>
+                                    <td><span id="res-contrato">-</span></td>
                                 </tr>
                                 <tr>
-                                    <td style="font-weight: bold;">Fecha de impresión:</td>
-                                    <td><span id="fecha-impresion">-</span></td>
+                                    <td>Venta:</td>
+                                    <td><span id="res-venta">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>OC:</td>
+                                    <td><span id="res-oc">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Fecha Recepción:</td>
+                                    <td><span id="res-fecha">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Producto:</td>
+                                    <td><span id="res-producto">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>FSC:</td>
+                                    <td><span id="res-fsc">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Número Bancos:</td>
+                                    <td><span id="res-bancos">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Destino:</td>
+                                    <td><span id="res-destino">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Largo Troncos:</td>
+                                    <td><span id="res-largo">-</span></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+                </details>
 
-                    <!-- Botones -->
-                    <div class="botones no-print">
-                        <button type="button" onclick="mostrarPantallaBancos()">← Volver</button>
-                        <button type="button" onclick="window.print()">Imprimir</button>
-                        <button type="button" onclick="irAlInicio()">← Volver al inicio</button>
+                <!-- Información Origen -->
+                <details class="banco-bloque">
+                    <summary>Información Origen</summary>
+                    <div class="seccion-final">
+                        <table aria-label="Información de origen">
+                            <tbody>
+                                <tr>
+                                    <td>Rol:</td>
+                                    <td><span id="res-rol">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Predio:</td>
+                                    <td><span id="res-predio">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Comuna:</td>
+                                    <td><span id="res-comuna">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Rodal:</td>
+                                    <td><span id="res-rodal">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Coordenadas:</td>
+                                    <td><span id="res-coordenadas">-</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </section>
+                </details>
+
+                <!-- Información Transporte -->
+                <details class="banco-bloque">
+                    <summary>Información Transporte</summary>
+                    <div class="seccion-final">
+                        <table aria-label="Información de transporte">
+                            <tbody>
+                                <tr>
+                                    <td>Despachador:</td>
+                                    <td><span id="res-despachador">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Transportista:</td>
+                                    <td><span id="res-transportista">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>RUT Despachador:</td>
+                                    <td><span id="res-rutdespachador">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Conductor:</td>
+                                    <td><span id="res-conductor">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>RUT Conductor:</td>
+                                    <td><span id="res-rutconductor">-</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+
+                <!-- Totales -->
+                <div class="seccion-final">
+                    <h3>Totales</h3>
+                    <table aria-label="Totales" style="width: 100%; background-color: #fff;">
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: bold; width: 40%;">Total de Troncos:</td>
+                                <td><span id="resumen-final-troncos">0</span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">Volumen Total:</td>
+                                <td><span id="resumen-final-volumen">0 m³</span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">Fecha de impresión:</td>
+                                <td><span id="fecha-impresion">-</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="botones no-print">
+                    <button type="button" onclick="mostrarPantallaBancos()">← Volver</button>
+                    <button type="button" onclick="window.print()">Imprimir</button>
+                    <button type="button" onclick="irAlInicio()">← Volver al inicio</button>
+                </div>
+            </section>
         </div>
     </form>
 
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
     <script src="JS/resumen.js?v=4"></script>
+    <script src="JS/loader.js"></script>
+    <script>
+        document.querySelectorAll("button, a").forEach(el => {
+            el.addEventListener("click", e => {
+                const target = e.target.closest("button, a");
+                if (target && !target.getAttribute("target") === "_blank") {
+                    showLoader();
+                }
+            });
+        });
+    </script>
 </body>
 </html>

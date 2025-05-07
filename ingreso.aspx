@@ -190,9 +190,12 @@
             </div>
         </div>
     </form>
-
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="JS/ingreso.js"></script>
+    <script src="JS/loader.js"></script>
 
 </body>
 </html>

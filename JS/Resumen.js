@@ -340,7 +340,8 @@ function calcularVolumenBanco(contadores) {
 }
 
 function volverAContarTrozos() {
-    window.location.href = 'contartrozos.aspx';
+    showLoader();
+    window.location.href = "contartrozos.aspx";
 }
 
 function terminarProceso() {
@@ -383,6 +384,7 @@ function reiniciarProceso() {
         if (result.isConfirmed) {
             sessionStorage.clear();
             limpiarDatosTemporales();
+            showLoader();
             window.location.href = "ingreso.aspx";
         }
     });
@@ -462,6 +464,7 @@ function irAlInicio() {
         if (result.isConfirmed) {
             sessionStorage.clear();
             limpiarDatosTemporales();
+            showLoader();
             window.location.href = "inicio.aspx";
         }
     });
