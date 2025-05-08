@@ -1,5 +1,8 @@
 ﻿<version>
-	<number>1.5.0</number>
-	<fecha>2025-05-07</fecha>
-	<descripcion>Loader visual entre pantallas, mejoras visuales y simplificación de login</descripcion>
+	<number>1.6.0</number>
+	<fecha>2025-05-08</fecha>
+	<descripcion>
+		Acordeones con tablas por banco, edición flexible de troncos por diámetro,
+		avisos con SweetAlert y actualización automática de totales y resumen final.
+	</descripcion>
 </version>

@@ -57,6 +57,6 @@
 
     <script src="JS/login.js"></script>
     <script src="JS/loader.js"></script>
-    <script src="http://portal.altohorizonte.cl:8089/js/comun.js"></script>
+    <%--<script src="http://portal.altohorizonte.cl:8089/js/comun.js"></script>--%>
 </body>
 </html>

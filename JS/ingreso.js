@@ -1,10 +1,13 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
+    // Initialize jQuery UI accordion with improved settings
     $("#acordeon").accordion({
         heightStyle: "content",
         collapsible: true,
-        active: false
+        active: false,
+        animate: 200
     });
 
+    // Optimize numeric inputs for mobile use
     const numericInputs = document.querySelectorAll('input[type="number"]');
     numericInputs.forEach(input => {
         input.setAttribute('inputmode', 'numeric');
@@ -13,21 +16,21 @@
         });
     });
 
+    // Initialize auto-population fields
     initializeAutoPopulation("txtCodProvPrefijo", "txtCodProvAuto", "PROV");
     initializeAutoPopulation("txtContratoPrefijo", "txtContratoAuto", "COMP");
     initializeAutoPopulation("txtVentaPrefijo", "txtVentaAuto", "VENT");
     initializeAutoPopulation("txtProducto", document.querySelector("#txtProducto").nextElementSibling, "PROD");
 
+    // Improve form validation with better visual feedback
     const allInputs = document.querySelectorAll('input, select');
     allInputs.forEach(input => {
+        // Validate on blur
         input.addEventListener('blur', function () {
-            if (this.hasAttribute('required') && this.value.trim() === '') {
-                this.classList.add('input-error');
-            } else {
-                this.classList.remove('input-error');
-            }
+            validateField(this);
         });
 
+        // Improve touch interaction feedback
         input.addEventListener('touchstart', function () {
             this.classList.add('touch-active');
         });
@@ -35,22 +38,41 @@
         input.addEventListener('touchend', function () {
             this.classList.remove('touch-active');
         });
+
+        // Remove error state when user starts typing
+        input.addEventListener('input', function () {
+            this.classList.remove('input-error');
+            const errorId = 'error' + this.id;
+            const errorElement = document.getElementById(errorId);
+            if (errorElement) {
+                errorElement.style.display = 'none';
+            }
+        });
     });
 
+    // Initialize specialized fields
     initializeRolField();
-
     initializeRutFields();
 
+    // Load any previously saved values
     loadSavedValues();
 
+    // Configure the submit button
     configureSubmitButton();
-
-    addMobileStyles();
-
-    setCurrentDate();
-
 });
 
+// Validate individual field
+function validateField(field) {
+    if (field.hasAttribute('required') && field.value.trim() === '') {
+        field.classList.add('input-error');
+        return false;
+    } else {
+        field.classList.remove('input-error');
+        return true;
+    }
+}
+
+// Improved auto-population function
 function initializeAutoPopulation(prefixFieldId, autoFieldId, prefix) {
     const prefixField = document.getElementById(prefixFieldId);
     const autoField = typeof autoFieldId === 'string' ? document.getElementById(autoFieldId) : autoFieldId;
@@ -58,24 +80,29 @@ function initializeAutoPopulation(prefixFieldId, autoFieldId, prefix) {
     if (!prefixField || !autoField) return;
 
     prefixField.addEventListener("input", function () {
+        // Clean and limit input to numbers only
         const value = this.value.replace(/[^0-9]/g, '').slice(0, 4);
         this.value = value;
 
         if (value) {
+            // Generate code with current year
             const currentYear = new Date().getFullYear().toString().slice(2);
-            const randomNum = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+            // Use more consistent random number generation
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
             autoField.value = `${prefix}-${value}-${currentYear}-${randomNum}`;
         } else {
             autoField.value = '';
         }
     });
 
+    // Trigger input event if there's an initial value
     if (prefixField.value) {
         const event = new Event('input');
         prefixField.dispatchEvent(event);
     }
 }
 
+// Improved RUT field handling
 function initializeRutFields() {
     ["txtRUTConductor", "txtRUTDespachador"].forEach(id => {
         const elemento = document.getElementById(id);
@@ -83,6 +110,7 @@ function initializeRutFields() {
         if (!elemento) return;
 
         elemento.setAttribute('inputmode', 'numeric');
+        elemento.setAttribute('aria-describedby', `error${id}`);
 
         elemento.addEventListener("input", function () {
             const inicio = this.selectionStart;
@@ -111,17 +139,20 @@ function initializeRutFields() {
                     errorElement.textContent = "RUT inválido";
                     errorElement.style.display = "block";
                 }
+                this.setAttribute('aria-invalid', 'true');
             } else {
                 this.classList.remove("input-error");
                 if (errorElement) {
                     errorElement.textContent = "";
                     errorElement.style.display = "none";
                 }
+                this.setAttribute('aria-invalid', 'false');
             }
         });
     });
 }
 
+// Format RUT as user types
 function formatearRutLive(rut) {
     if (!rut || typeof rut !== 'string') return '';
 
@@ -135,6 +166,7 @@ function formatearRutLive(rut) {
     return cuerpo + '-' + dv;
 }
 
+// Validate Chilean RUT with modulo 11 algorithm
 function validarRutMod11(rut) {
     if (!rut || typeof rut !== 'string') return false;
 
@@ -164,12 +196,20 @@ function initializeRolField() {
     const rolElement = document.getElementById("txtRol");
     if (rolElement) {
         rolElement.addEventListener("input", function () {
+            const selectionStart = this.selectionStart;
+            const selectionEnd = this.selectionEnd;
+            const prevLength = this.value.length;
+
             let val = this.value.replace(/[^0-9]/g, "").slice(0, 6);
             if (val.length > 3) {
                 this.value = val.slice(0, 3) + "-" + val.slice(3);
             } else {
                 this.value = val;
             }
+
+            // Preserve cursor position
+            const cursorPos = selectionStart + (this.value.length - prevLength);
+            this.setSelectionRange(cursorPos, cursorPos);
         });
 
         // Simulate API lookup for Rol information
@@ -182,8 +222,12 @@ function initializeRolField() {
     }
 }
 
-// Simulate API lookup for Rol information (for demo purposes)
+// Simulate API lookup for Rol information
 function simulateRolLookup(rolValue) {
+    // Show loading indicator
+    const loading = document.getElementById('loading-overlay');
+    if (loading) loading.style.display = 'flex';
+
     // In a real scenario, this would call an API
     setTimeout(() => {
         const predioField = document.getElementById("txtPredio");
@@ -197,14 +241,18 @@ function simulateRolLookup(rolValue) {
             comunaField.value = ["San Carlos", "Chillán", "Concepción", "Los Ángeles"][Math.floor(Math.random() * 4)];
             rodalField.value = `R-${Math.floor(Math.random() * 50) + 1}`;
 
-            // Generate realistic-looking coordinates for Chile
-            const lat = -37 - Math.random();
-            const lng = -73 - Math.random();
+            // Generate realistic-looking coordinates for Chile's forest regions
+            const lat = -37 - (Math.random() * 0.8);
+            const lng = -73 - (Math.random() * 0.8);
             coordField.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
         }
+
+        // Hide loading indicator
+        if (loading) loading.style.display = 'none';
     }, 300);
 }
 
+// Load saved values from previous session
 function loadSavedValues() {
     const campos = [
         "txtCodProvPrefijo",
@@ -216,8 +264,9 @@ function loadSavedValues() {
         "txtConductor", "txtRUTConductor", "LargoTroncos", "selectBancos"
     ];
 
+    // First attempt to load from localStorage (more persistent)
     campos.forEach(id => {
-        const valor = sessionStorage.getItem(id);
+        const valor = localStorage.getItem(id) || sessionStorage.getItem(id);
         const input = document.getElementById(id);
         if (valor && input) {
             input.value = valor;
@@ -227,17 +276,18 @@ function loadSavedValues() {
                 input.dispatchEvent(event);
             }
 
-            if (id === "txtRol") {
+            if (id === "txtRol" && valor.length >= 5) {
                 const event = new Event('blur');
                 input.dispatchEvent(event);
             }
         }
     });
 
+    // Handle browser back button and page refresh
     window.addEventListener('pageshow', function (event) {
         if (event.persisted) {
             campos.forEach(id => {
-                const valor = sessionStorage.getItem(id);
+                const valor = localStorage.getItem(id) || sessionStorage.getItem(id);
                 const input = document.getElementById(id);
                 if (valor && input) {
                     input.value = valor;
@@ -252,9 +302,11 @@ function loadSavedValues() {
     });
 }
 
+// Configure the submit button behavior
 function configureSubmitButton() {
     const btn = document.getElementById("btnIrContar");
     if (btn) {
+        // Add touch feedback
         btn.addEventListener('touchstart', function () {
             this.classList.add('button-active');
         });
@@ -263,6 +315,7 @@ function configureSubmitButton() {
             this.classList.remove('button-active');
         });
 
+        // Main click handler
         btn.addEventListener("click", function () {
             const campos = [
                 "txtCodProvPrefijo",
@@ -280,10 +333,7 @@ function configureSubmitButton() {
                 const input = document.getElementById(id);
                 if (!input || input.value.trim() === "") {
                     incompletos.push(id);
-
-                    if (input) {
-                        input.classList.add('input-error');
-                    }
+                    if (input) input.classList.add('input-error');
                 }
             });
 
@@ -297,14 +347,14 @@ function configureSubmitButton() {
                     errorElement.textContent = "RUT inválido";
                     errorElement.style.display = "block";
                 }
-
                 Swal.fire({
                     icon: 'error',
                     title: 'RUT del Conductor inválido',
                     text: 'Por favor, verifica el RUT del conductor.',
                     confirmButtonText: 'Entendido',
                     customClass: {
-                        confirmButton: 'swal-confirm-button-mobile'
+                        confirmButton: 'swal-confirm-button-mobile',
+                        popup: 'swal-popup-mobile'
                     }
                 });
                 return;
@@ -317,14 +367,14 @@ function configureSubmitButton() {
                     errorElement.textContent = "RUT inválido";
                     errorElement.style.display = "block";
                 }
-
                 Swal.fire({
                     icon: 'error',
                     title: 'RUT del Despachador inválido',
                     text: 'Por favor, verifica el RUT del despachador.',
                     confirmButtonText: 'Entendido',
                     customClass: {
-                        confirmButton: 'swal-confirm-button-mobile'
+                        confirmButton: 'swal-confirm-button-mobile',
+                        popup: 'swal-popup-mobile'
                     }
                 });
                 return;
@@ -333,11 +383,8 @@ function configureSubmitButton() {
             if (incompletos.length > 0) {
                 const nombresAmigables = {
                     txtCodProvPrefijo: "Código Proveedor",
-                    txtCodProvAuto: "Código Proveedor (Autocompletado)",
                     txtContratoPrefijo: "Nota Compra",
-                    txtContratoAuto: "Nota Compra (Autocompletado)",
                     txtVentaPrefijo: "Nota Venta",
-                    txtVentaAuto: "Nota Venta (Autocompletado)",
                     txtOC: "GDE",
                     txtFechaRecepcion: "Fecha de Recepción",
                     txtProducto: "Producto",
@@ -353,17 +400,17 @@ function configureSubmitButton() {
                     selectBancos: "Cantidad de Bancos"
                 };
 
-                // Mobile-optimized alert with better readability
                 Swal.fire({
                     icon: 'warning',
                     title: 'Campos incompletos',
                     html: `
                         <div style="text-align: left; font-size: 16px; padding: 0 10px;">
-                             <p>Por favor completa los siguientes campos:</p>
-                             <ul style="padding-left: 15px; line-height: 1.8; margin-bottom: 10px;">
-                                 ${incompletos.map(id =>
-                        `<li style="margin-bottom: 8px;"><b>${nombresAmigables[id] || id}</b></li>`).join('')}
-                             </ul>
+                            <p>Por favor completa los siguientes campos:</p>
+                            <ul style="padding-left: 15px; line-height: 1.8; margin-bottom: 10px;">
+                                ${incompletos.map(id =>
+                        `<li style="margin-bottom: 8px;"><b>${nombresAmigables[id] || id}</b></li>`
+                    ).join('')}
+                            </ul>
                         </div>
                     `,
                     confirmButtonText: 'Entendido',
@@ -391,20 +438,17 @@ function configureSubmitButton() {
                 return;
             }
 
-            // Save all values to sessionStorage
+            // Save to sessionStorage
             campos.forEach(id => {
-                const elemento = document.getElementById(id);
-                if (elemento) {
-                    sessionStorage.setItem(id, elemento.value);
-                }
+                const el = document.getElementById(id);
+                if (el) sessionStorage.setItem(id, el.value);
             });
 
+            // Persist config in localStorage
             localStorage.setItem("cantidadBancos", cantidad);
-
             if (!localStorage.getItem("bancoActual")) {
                 localStorage.setItem("bancoActual", 1);
             }
-
             if (!localStorage.getItem("datosBancos")) {
                 localStorage.setItem("datosBancos", JSON.stringify([]));
             }
@@ -415,98 +459,4 @@ function configureSubmitButton() {
             }, 300);
         });
     }
-}
-
-// Add mobile styles
-function addMobileStyles() {
-    const style = document.createElement('style');
-    style.textContent = `
-        .swal-confirm-button-mobile {
-            padding: 15px 25px !important;
-            font-size: 16px !important;
-            min-width: 120px;
-        }
-        
-        .swal-popup-mobile {
-            width: auto !important;
-            max-width: 90vw !important;
-            font-size: 16px !important;
-        }
-        
-        @media (max-width: 480px) {
-            .swal2-popup {
-                padding: 15px 10px !important;
-            }
-            
-            .swal2-title {
-                font-size: 1.4em !important;
-            }
-            
-            .swal2-content {
-                font-size: 0.95em !important;
-            }
-        }
-        
-        .touch-active {
-            background-color: #f0f9ff !important;
-        }
-        
-        .button-active {
-            transform: translateY(2px) !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
-        }
-    `;
-    document.head.appendChild(style);
-
-    // Adjust viewport for iOS devices
-    const viewportMeta = document.querySelector('meta[name="viewport"]');
-    if (viewportMeta) {
-        if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-            viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0';
-        }
-    }
-
-    // Enhance touch targets
-    if ('ontouchstart' in window) {
-        Array.from(document.querySelectorAll('button, input, select')).forEach(el => {
-            el.style.cursor = 'pointer';
-        });
-    }
-}
-
-// Set current date in date field
-function setCurrentDate() {
-    const dateField = document.getElementById('txtFechaRecepcion');
-    if (dateField) {
-        const today = new Date();
-        const formattedDate = today.toISOString().split('T')[0];
-        dateField.value = formattedDate;
-        dateField.max = formattedDate;
-    }
-}
-
-// Enhance keyboard accessibility
-function enhanceAccessibility() {
-    // Make accordion headers accessible with keyboard
-    const accordionHeaders = document.querySelectorAll('.ui-accordion-header');
-    accordionHeaders.forEach(header => {
-        header.setAttribute('tabindex', '0');
-        header.addEventListener('keydown', function (event) {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                this.click();
-            }
-        });
-    });
-
-    // Add keyboard handling for all interactive elements
-    const interactiveElements = document.querySelectorAll('button, input, select');
-    interactiveElements.forEach(el => {
-        el.addEventListener('keydown', function (event) {
-            if (event.key === 'Enter' && this.tagName !== 'TEXTAREA') {
-                event.preventDefault();
-                this.click();
-            }
-        });
-    });
 }

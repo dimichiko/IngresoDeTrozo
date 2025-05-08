@@ -1,5 +1,4 @@
-﻿Imports System.Data.SqlClient
-Imports System.Xml
+﻿Imports System.Xml
 
 Partial Class login
     Inherits System.Web.UI.Page
@@ -13,25 +12,12 @@ Partial Class login
 
                 Dim versionNode As XmlNode = doc.SelectSingleNode("//version/number")
                 If versionNode IsNot Nothing Then
-                    lblVersion.Text = "Versión " & versionNode.InnerText
+                    Dim script As String = $"window.__versionText = 'Versión {versionNode.InnerText}';"
+                    ClientScript.RegisterStartupScript(Me.GetType(), "versionScript", script, True)
                 End If
-            Catch ex As Exception
-                ' Si falla la carga, mostrar versión desconocida
-                lblVersion.Text = "Versión desconocida"
+            Catch
+                ClientScript.RegisterStartupScript(Me.GetType(), "versionScript", "window.__versionText = 'Versión desconocida';", True)
             End Try
-        End If
-    End Sub
-
-    Protected Sub btnLogin_Click(sender As Object, e As EventArgs)
-        Dim usuario As String = txtUsuario.Text.Trim()
-        Dim clave As String = txtClave.Text.Trim()
-
-        ' Validación contra usuario simulado
-        If usuario = "admin" And clave = "1234" Then
-            Session("usuario") = usuario
-            Response.Redirect("inicio.aspx")
-        Else
-            ClientScript.RegisterStartupScript(Me.GetType(), "error", "document.getElementById('notification').innerText='Credenciales incorrectas';", True)
         End If
     End Sub
 End Class

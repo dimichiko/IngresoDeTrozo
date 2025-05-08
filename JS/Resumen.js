@@ -45,62 +45,84 @@ function mostrarErrorYRedirigir(mensaje = "No hay información para mostrar. Ser
 
 function renderizarResumen(bancos) {
     const contenedor = document.getElementById("bloques-bancos");
-    if (!contenedor) return;
-
     contenedor.innerHTML = "";
 
     let totalGlobal = 0;
     let volumenGlobal = 0;
 
     bancos.forEach((bancoObj, index) => {
-        if (!bancoObj) return;
-
         const { banco, total, volumen, contadores } = bancoObj;
-        totalGlobal += total || 0;
-        volumenGlobal += volumen || 0;
 
-        const bloque = document.createElement("details");
-        bloque.className = "banco-bloque";
-        if (index === 0) bloque.setAttribute("open", "open");
-        bloque.setAttribute("data-banco-id", index);
+        totalGlobal += total;
+        volumenGlobal += volumen;
 
-        let tablaHTML = '';
-        if (contadores && typeof contadores === 'object') {
-            tablaHTML = Object.entries(contadores)
-                .map(([d, c]) => `
-                    <tr>
-                        <td>${d}</td>
-                        <td>
-                            <input type="number" min="0" class="contador-input banco-${index}" 
-                                data-diametro="${d}" value="${c}" disabled 
-                                aria-label="Contador para diámetro ${d}" />
-                        </td>
-                    </tr>
-                `).join("");
-        }
+        const detalles = document.createElement("details");
+        detalles.className = "banco-bloque";
+        detalles.open = true;
 
-        const titulo = `<summary style="font-weight: bold; font-size: 1rem; margin-bottom: 10px;">Banco ${banco}</summary>`;
+        const resumen = document.createElement("summary");
+        resumen.textContent = `Banco ${banco}`;
+        detalles.appendChild(resumen);
 
-        bloque.innerHTML = titulo + `
-         <div class="bloque-banco-horizontal">
-           <span class="banco-total">Total: <span id="total-banco-${index}">${total || 0}</span></span>
-           <span class="banco-volumen">Volumen: <span id="volumen-banco-${index}">${(volumen || 0).toFixed(2)} m³</span></span>
-           <span class="banco-largo">Largo: ${sessionStorage.getItem("LargoTroncos") || "-"}</span>
-         </div>
-         <table aria-label="Diámetros banco ${banco}">
-           <thead><tr><th>Diámetro</th><th>Contador</th></tr></thead>
-           <tbody id="tabla-banco-${index}">${tablaHTML}</tbody>
-         </table>
-         <div class="botones-banco">
-           <button type="button" onclick="toggleEdicion(${index})" id="btn-editar-${index}" class="btn-accion">Editar monto</button>
-           <button type="button" onclick="mostrarSelectorDiametro(${index})" id="btn-agregar-${index}" class="btn-accion" style="display:none;">➕ Agregar diámetro</button>
-         </div>
-`;
+        const tabla = document.createElement("table");
+        tabla.innerHTML = `
+            <thead>
+                <tr>
+                    <th>Diámetro (cm)</th>
+                    <th>Cantidad</th>
+                    <th>Volumen (m³)</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${Object.entries(contadores).map(([diametro, cantidad]) => {
+            const volumenParcial = calcularVolumen(parseInt(diametro)) * cantidad;
+            return `
+                        <tr>
+                            <td>${diametro}</td>
+                            <td>
+                                <input 
+                                    type="number" 
+                                    class="banco-${index}" 
+                                    data-diametro="${diametro}" 
+                                    value="${cantidad}" 
+                                    disabled 
+                                    style="width: 80px; text-align: center;"
+                                />
+                            </td>
+                            <td>${volumenParcial.toFixed(2)}</td>
+                        </tr>`;
+        }).join("")}
+            </tbody>
+        `;
+        detalles.appendChild(tabla);
 
-        contenedor.appendChild(bloque);
+        const resumenBanco = document.createElement("p");
+        resumenBanco.innerHTML = `
+            <strong>Total:</strong> <span id="total-banco-${index}">${total}</span> troncos<br>
+            <strong>Volumen:</strong> <span id="volumen-banco-${index}">${volumen.toFixed(2)} m³</span>
+        `;
+        detalles.appendChild(resumenBanco);
+
+        const botones = document.createElement("div");
+        botones.className = "botones no-print";
+        botones.innerHTML = `
+           <button type="button" id="btn-editar-${index}" onclick="toggleEdicion(${index})">Editar monto</button>
+           <button type="button" id="btn-agregar-${index}" onclick="mostrarSelectorDiametro(${index})" style="display: none;">+ Diámetro</button>
+        `;
+        detalles.appendChild(botones);
+
+        contenedor.appendChild(detalles);
     });
 
-    actualizarTotalesGlobales(totalGlobal, volumenGlobal);
+    const totalElem = document.getElementById("total-troncos");
+    const volumenElem = document.getElementById("volumen-total");
+
+    if (totalElem) totalElem.textContent = `Total de Troncos: ${totalGlobal}`;
+    if (volumenElem) volumenElem.textContent = `Volumen Total: ${volumenGlobal.toFixed(2)} m³`;
+}
+
+function calcularVolumen(diametro) {
+    return (diametro * diametro * 3.2) / 10000;
 }
 
 function actualizarTotalesGlobales(totalGlobal, volumenGlobal) {
@@ -231,94 +253,86 @@ function mostrarError(mensaje) {
 }
 
 function toggleEdicion(index) {
-    try {
-        const bancos = getBancosData();
-        if (!bancos || !bancos[index]) {
-            mostrarError("No se encontraron datos del banco.");
-            return;
-        }
+    const bancos = getBancosData();
+    if (!bancos || !bancos[index]) return mostrarError("No se encontraron datos del banco.");
 
-        const inputs = document.querySelectorAll(`.banco-${index}`);
-        const btn = document.getElementById(`btn-editar-${index}`);
-        const btnAgregar = document.getElementById(`btn-agregar-${index}`);
+    const inputs = document.querySelectorAll(`.banco-${index}`);
+    const btn = document.getElementById(`btn-editar-${index}`);
+    const btnAgregar = document.getElementById(`btn-agregar-${index}`);
 
-        if (!btn || !btnAgregar) return;
+    if (!btn || !btnAgregar || inputs.length === 0) return;
 
-        const modoEdicion = btn.innerText === "Editar monto";
+    const modoEdicion = btn.innerText === "Editar monto";
 
-        inputs.forEach(input => {
-            input.disabled = !modoEdicion;
-            if (modoEdicion) {
-                input.classList.add('modo-edicion');
-            } else {
-                input.classList.remove('modo-edicion');
-            }
+    inputs.forEach(input => {
+        input.disabled = !modoEdicion;
+        input.classList.toggle('modo-edicion', modoEdicion);
+    });
+
+    btnAgregar.style.display = modoEdicion ? "inline-block" : "none";
+
+    if (modoEdicion) {
+        btn.innerText = "Guardar edición";
+        btn.classList.add('btn-guardar');
+    } else {
+        const nuevos = {};
+        let total = 0;
+
+        inputs.forEach(i => {
+            const val = Math.max(0, parseInt(i.value) || 0);
+            i.value = val;
+            nuevos[i.dataset.diametro] = val;
+            total += val;
         });
 
-        btnAgregar.style.display = modoEdicion ? "inline-block" : "none";
+        const original = bancos[index].total;
 
-        if (modoEdicion) {
-            btn.innerText = "Guardar edición";
-            btn.classList.add('btn-guardar');
-        } else {
-            const nuevos = {};
-            let total = 0;
-
-            inputs.forEach(i => {
-                let val = Math.max(0, parseInt(i.value) || 0);
-                i.value = val;
-                nuevos[i.dataset.diametro] = val;
-                total += val;
-            });
-
-            const original = bancos[index].total;
-
-            if (total !== original) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Total incorrecto',
-                    text: `El total debe ser ${original}, pero suman ${total}.`,
-                    confirmButtonColor: '#007BFF'
-                });
-
-                inputs.forEach(i => {
-                    i.disabled = false;
-                    i.classList.add('modo-edicion');
-                });
-                btn.innerText = "Guardar edición";
-                btn.classList.add('btn-guardar');
-                btnAgregar.style.display = "inline-block";
-                return;
-            }
-
-            bancos[index].contadores = nuevos;
-            bancos[index].volumen = calcularVolumenBanco(nuevos);
-            guardarBancos(bancos);
-
-            const totalElement = document.getElementById(`total-banco-${index}`);
-            const volumenElement = document.getElementById(`volumen-banco-${index}`);
-
-            if (totalElement) totalElement.textContent = original;
-            if (volumenElement) volumenElement.textContent = `${bancos[index].volumen.toFixed(2)} m³`;
-
-            recalcularTotalesGlobales();
-
-            btn.innerText = "Editar monto";
-            btn.classList.remove('btn-guardar');
+        if (total !== original) {
+            const diferencia = total - original;
+            const mensaje = diferencia > 0
+                ? `Has agregado ${diferencia} troncos más de lo contado originalmente.`
+                : `Has quitado ${Math.abs(diferencia)} troncos del total original.`;
 
             Swal.fire({
-                icon: 'success',
-                title: 'Guardado',
-                text: 'Cambios aplicados correctamente.',
-                confirmButtonColor: '#007BFF',
-                timer: 1500,
-                timerProgressBar: true,
-                showConfirmButton: false
+                icon: 'info',
+                title: 'Total modificado',
+                text: mensaje,
+                confirmButtonColor: '#007BFF'
             });
         }
-    } catch (error) {
-        console.error("Error al alternar modo edición:", error);
-        mostrarError("Error al procesar los datos. Por favor intente nuevamente.");
+
+        bancos[index].contadores = nuevos;
+        bancos[index].total = total;
+        bancos[index].volumen = calcularVolumenBanco(nuevos);
+        guardarBancos(bancos);
+
+        const totalElement = document.getElementById(`total-banco-${index}`);
+        const volumenElement = document.getElementById(`volumen-banco-${index}`);
+
+        if (totalElement) totalElement.textContent = total;
+        if (volumenElement) volumenElement.textContent = `${bancos[index].volumen.toFixed(2)} m³`;
+
+        recalcularTotalesGlobales();
+        mostrarResumenIngreso();
+
+        btn.innerText = "Editar monto";
+        btn.classList.remove('btn-guardar');
+        btnAgregar.style.display = "none";
+
+        inputs.forEach(input => {
+            input.disabled = true;
+            input.classList.remove('modo-edicion');
+        });
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Guardado',
+            text: 'Cambios aplicados correctamente.',
+            confirmButtonColor: '#007BFF',
+            timer: 1500,
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
     }
 }
 
@@ -330,7 +344,7 @@ function calcularVolumenBanco(contadores) {
         Object.entries(contadores).forEach(([diametro, cantidad]) => {
             const d = parseInt(diametro) || 0;
             const c = parseInt(cantidad) || 0;
-            volumen += (d * d * 3.2 / 10000) * c;
+            volumen += calcularVolumen(d) * c;
         });
         return volumen;
     } catch (error) {

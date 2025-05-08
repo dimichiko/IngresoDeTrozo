@@ -90,7 +90,6 @@
             if (isAuthenticated) {
                 showNotification("¡Inicio de sesión exitoso! Redirigiendo...", "success");
 
-                // Mostrar loader
                 showLoading();
 
                 setTimeout(() => {
@@ -123,5 +122,11 @@
     });
 
     usernameInput.focus();
+
+    // Mostrar versión en login
+    const versionInfo = document.getElementById("version-info");
+    if (typeof window.__versionText !== "undefined" && versionInfo) {
+        versionInfo.textContent = window.__versionText;
+    }
 });
 

@@ -2,6 +2,15 @@
 
 Todos los cambios notables del proyecto se registran aquí.
 
+## [1.6.0] - 2025-05-08
+### Mejorado
+- Los bloques de resumen por banco ahora usan acordeones (`<details>`) con tablas por diámetro.
+- Se permite editar la cantidad de troncos por diámetro, con validación visual.
+- Se permite agregar más troncos que el total original, notificando la diferencia con SweetAlert.
+- El total por banco, el total global y el resumen final se actualizan automáticamente.
+
+---
+
 ## [1.5.0] - 2025-05-07
 ### Agregado
 - Loader visual al navegar entre login, inicio, ingreso, contartrozos y resumen.

@@ -268,23 +268,3 @@ function cargarVersion() {
             console.error(err);
         });
 }
-
-/* function cargarVersion() {
-    fetch('xml/version.xml')
-        .then(response => {
-            if (!response.ok) throw new Error('No se pudo cargar version.xml');
-            return response.text();
-        })
-        .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
-        .then(data => {
-            const numero = data.querySelector('number')?.textContent || 'desconocida';
-            const fecha = data.querySelector('fecha')?.textContent || '';
-            document.getElementById('footer-version').textContent = `Versión: ${numero} - ${fecha}`;
-        })
-        .catch(err => {
-            document.getElementById('footer-version').textContent = 'Versión: desconocida';
-            console.error(err);
-        });
-}
-
-document.addEventListener('DOMContentLoaded', cargarVersion); */
