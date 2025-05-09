@@ -38,7 +38,7 @@
                         <label for="txtCodProvPrefijo">Código Proveedor:</label>
                         <div style="display: flex; gap: 10px; align-items: center;">
                             <input type="number" id="txtCodProvPrefijo" maxlength="4" style="flex: none; width: 60px;" inputmode="numeric" />
-                            <input type="number" id="txtCodProvAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
+                            <input type="text" id="txtCodProvAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
                         </div>
                     </div>
 

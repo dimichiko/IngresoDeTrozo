@@ -339,6 +339,24 @@ function loadSavedValues() {
 }
 
 // Configure the submit button behavior
+
+$("#txtCodProvPrefijo").blur(function () {
+    //alert($("#idProv").val());
+    var esNumero = true;
+   
+    idProv = $("#txtCodProvPrefijo").val();
+    /*        esNumero = isNaN(idProv);*/
+
+    if (idProv != "" || (isNaN(idProv))) {
+        var resultado = ObtenerProveedor(idProv);
+        var prov = resultado[0].mcl_nombre.trim();
+        $("#txtCodProvAuto").val(prov);
+    }
+
+
+});
+
+
 function configureSubmitButton() {
     const btn = document.getElementById("btnIrContar");
     if (btn) {
