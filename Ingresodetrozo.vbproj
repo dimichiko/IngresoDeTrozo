@@ -133,6 +133,7 @@
     <Content Include="inicio.aspx" />
     <Content Include="JS\comun.js" />
     <Content Include="JS\cargar-empresas.js" />
+    <Content Include="JS\funciones.js" />
     <Content Include="JS\ingreso.js" />
     <Content Include="JS\inicio.js" />
     <Content Include="JS\loader.js" />
