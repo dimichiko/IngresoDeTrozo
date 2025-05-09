@@ -128,5 +128,21 @@
     if (typeof window.__versionText !== "undefined" && versionInfo) {
         versionInfo.textContent = window.__versionText;
     }
+
+
+    $('#btnLogin2').on('click', function () {
+
+        //alert("Hola mundo");
+
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        //const username = $("#txtUsuario").val();
+        //const password = $("#txtClave").val();
+        var result = ValidarUsuario(username, password);
+
+        var r = result
+
+    });
 });
 
