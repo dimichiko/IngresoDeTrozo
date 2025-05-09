@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="shortcut icon" href="Content/favicon.ico" type="image/x-icon" />
 </head>
 <body>
@@ -23,10 +24,13 @@
                     <h1>Ingreso Información Camión</h1>
                 </div>
                 <div class="boton-salida">
-                    <button type="button" onclick="window.location.href='inicio.aspx'">Salir</button>
+                    <button type="button" onclick="window.location.href='inicio.aspx'" aria-label="Volver al inicio">
+                        <i class="fas fa-arrow-left"></i>Volver a inicio
+   
+                    </button>
                 </div>
             </div>
-            
+
             <div id="acordeon">
                 <h3>Información Proveedor</h3>
                 <div>
@@ -61,10 +65,7 @@
 
                     <div class="fila">
                         <label for="txtFechaRecepcion">Fecha Recepción:</label>
-                        <input type="date" id="txtFechaRecepcion"
-                            max='<%= DateTime.Now.ToString("yyyy-MM-dd") %>'
-                            value='<%= DateTime.Now.ToString("yyyy-MM-dd") %>'
-                            readonly="readonly" />
+                       <input type="text" id="txtFechaRecepcion" readonly="readonly" />
                     </div>
 
                     <div class="fila">
@@ -196,6 +197,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="JS/ingreso.js"></script>
     <script src="JS/loader.js"></script>
-
+    <script src="https://portal.altohorizonte.cl/js/comun_prod.js"></script>
 </body>
 </html>

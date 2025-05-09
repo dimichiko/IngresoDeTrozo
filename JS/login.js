@@ -58,21 +58,6 @@
         }, 5000);
     }
 
-    // Simulación de autenticación
-    async function authenticateUser(username, password) {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                const usuarios = {
-                    "admin": "1234",
-                    "dimitris": "clave123",
-                    "usuario1": "password1"
-                };
-                const isAuthenticated = usuarios[username] && usuarios[username] === password;
-                resolve(isAuthenticated);
-            }, 1000);
-        });
-    }
-
     // === Envío del formulario ===
     loginForm.addEventListener("submit", async function (e) {
         e.preventDefault();
@@ -85,35 +70,31 @@
         btnLogin.disabled = true;
 
         try {
-            const isAuthenticated = await authenticateUser(username, password);
+            const resultado = await ValidarUsuario(username, password); 
+            if (resultado[0]==0) {
 
-            if (isAuthenticated) {
+                sessionStorage.setItem("id_usuario", resultado[3]);
+                sessionStorage.setItem("token", resultado[2]);
+                sessionStorage.setItem("nombre_usuario", resultado[4]);
+                const expiracion = Date.now() + (20 * 60 * 1000);
+                sessionStorage.setItem("expira_en", expiracion.toString());
+
                 showNotification("¡Inicio de sesión exitoso! Redirigiendo...", "success");
-
                 showLoading();
 
                 setTimeout(() => {
                     window.location.href = "inicio.aspx";
                 }, 1000);
             } else {
-                showNotification("Usuario o contraseña incorrectos", "error");
+                showNotification(resultado[1], "error");
             }
         } catch (error) {
-            showNotification("Error al iniciar sesión. Por favor intenta de nuevo más tarde.", "error");
+            showNotification("Error al iniciar sesión. Intenta más tarde.", "error");
             console.error("Error de autenticación:", error);
         } finally {
             btnLogin.classList.remove("loading");
             btnLogin.disabled = false;
-          }
-
-        //const username = usenameInput.valuer.trim();
-        //const password = passwordInput.value.trim();
-
-
-        //var result = ValidarUsuario(usename, password);
-
-        //var r = result
-
+        }
     });
 
     // Accesibilidad
@@ -127,6 +108,6 @@
     const versionInfo = document.getElementById("version-info");
     if (typeof window.__versionText !== "undefined" && versionInfo) {
         versionInfo.textContent = window.__versionText;
-    }
+    };
 });
 

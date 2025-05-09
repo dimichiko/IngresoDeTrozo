@@ -11,6 +11,7 @@
     <link rel="shortcut icon" href="Content/favicon.ico" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <form id="loginForm" autocomplete="on">
@@ -57,6 +58,7 @@
 
     <script src="JS/login.js"></script>
     <script src="JS/loader.js"></script>
-    <%--<script src="http://portal.altohorizonte.cl:8089/js/comun.js"></script>--%>
+    <script src ="Scripts/jquery-3.7.1.min.js"></script>
+    <script src="https://portal.altohorizonte.cl/js/comun_prod.js"></script>
 </body>
 </html>
