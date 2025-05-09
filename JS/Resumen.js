@@ -1,4 +1,25 @@
-﻿const diametrosDisponibles = Array.from({ length: (60 - 16) / 2 + 1 }, (_, i) => 16 + i * 2);
+﻿(function validarSesion() {
+    const id = sessionStorage.getItem("id_usuario");
+    const token = sessionStorage.getItem("token");
+    const expiraEn = sessionStorage.getItem("expira_en");
+
+    const ahora = Date.now();
+    const expiraMs = parseInt(expiraEn, 10);
+
+    if (!id || !token || !expiraEn || token.length < 10 || ahora > expiraMs) {
+        sessionStorage.clear();
+        Swal.fire({
+            icon: 'error',
+            title: 'Sesión expirada o inválida',
+            text: 'Por favor, inicia sesión nuevamente.',
+            confirmButtonText: 'Volver al login'
+        }).then(() => {
+            window.location.href = "login.aspx";
+        });
+    }
+})();
+
+const diametrosDisponibles = Array.from({ length: (60 - 16) / 2 + 1 }, (_, i) => 16 + i * 2);
 
 const STORAGE_KEYS = {
     DATOS_BANCOS: "datosBancos",
@@ -378,7 +399,9 @@ function terminarProceso() {
                 text: 'Los datos fueron consolidados correctamente.',
                 confirmButtonColor: '#007BFF'
             }).then(() => {
-                window.location.href = "inicio.aspx";
+                sessionStorage.clear();
+                localStorage.clear();
+                window.location.href = "login.aspx";
             });
         }
     });
@@ -399,7 +422,9 @@ function reiniciarProceso() {
             sessionStorage.clear();
             limpiarDatosTemporales();
             showLoader();
-            window.location.href = "ingreso.aspx";
+            sessionStorage.clear();
+            localStorage.clear();
+            window.location.href = "login.aspx";
         }
     });
 }
@@ -470,7 +495,7 @@ function irAlInicio() {
         text: "Esto eliminará todos los datos ingresados.",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Sí, volver al inicio',
+        confirmButtonText: 'Sí, volver al login',
         cancelButtonText: 'Cancelar',
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33'
@@ -479,7 +504,7 @@ function irAlInicio() {
             sessionStorage.clear();
             limpiarDatosTemporales();
             showLoader();
-            window.location.href = "inicio.aspx";
+            window.location.href = "login.aspx";
         }
     });
 }

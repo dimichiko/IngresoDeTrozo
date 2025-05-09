@@ -8,6 +8,7 @@
     <title>Conteo de Troncos</title>
     <link rel="stylesheet" type="text/css" href="CSS/contartrozos.css" />
     <link rel="shortcut icon" href="Content/favicon.ico" type="image/x-icon" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -93,11 +94,11 @@
         <div class="spinner"></div>
     </div>
     <script src="/scripts/jquery-3.7.1.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/JS/comun.js?v=2"></script>
     <script src="/JS/cargar-empresas.js?v=1"></script>
     <script src="/JS/contartrozos.js?v=2"></script>
     <script src="JS/loader.js"></script>
+    <script src="https://portal.altohorizonte.cl/js/comun_prod.js"></script>
 </body>
 </html>
 

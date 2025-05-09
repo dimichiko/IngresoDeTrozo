@@ -11,6 +11,7 @@
     <link rel="shortcut icon" href="Content/favicon.ico" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <form id="loginForm" autocomplete="on">
@@ -42,7 +43,6 @@
                 </label>
 
                 <button type="submit" id="btnLogin" class="btn">Ingresar</button>
-     <%--           <div id="btnLogin2" class="btn btn-primary btn-block">Login2</div>--%>
             </div>
 
             <div class="login-footer">
@@ -55,9 +55,10 @@
     <div id="loading-overlay" class="loading-overlay" style="display: none;">
         <div class="spinner"></div>
     </div>
-    <script src="Scripts/jquery-3.7.1.min.js"></script>
+
     <script src="JS/login.js"></script>
     <script src="JS/loader.js"></script>
+    <script src ="Scripts/jquery-3.7.1.min.js"></script>
     <script src="https://portal.altohorizonte.cl/js/comun_prod.js"></script>
 </body>
 </html>

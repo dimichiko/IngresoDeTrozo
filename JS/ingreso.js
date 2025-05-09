@@ -1,4 +1,25 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
+﻿(function validarSesion() {
+    const id = sessionStorage.getItem("id_usuario");
+    const token = sessionStorage.getItem("token");
+    const expiraEn = sessionStorage.getItem("expira_en");
+
+    const ahora = Date.now();
+    const expiraMs = parseInt(expiraEn, 10);
+
+    if (!id || !token || !expiraEn || token.length < 10 || ahora > expiraMs) {
+        sessionStorage.clear();
+        Swal.fire({
+            icon: 'error',
+            title: 'Sesión expirada o inválida',
+            text: 'Por favor, inicia sesión nuevamente.',
+            confirmButtonText: 'Volver al login'
+        }).then(() => {
+            window.location.href = "login.aspx";
+        });
+    }
+})();
+
+document.addEventListener("DOMContentLoaded", function () {
     // Initialize jQuery UI accordion with improved settings
     $("#acordeon").accordion({
         heightStyle: "content",
@@ -15,6 +36,16 @@
             this.setAttribute('inputmode', 'numeric');
         });
     });
+
+    // Insertar fecha actual en formato dd/mm/yyyy
+    const hoy = new Date();
+    const dia = String(hoy.getDate()).padStart(2, '0');
+    const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+    const anio = hoy.getFullYear();
+    const fechaFormateada = `${dia}/${mes}/${anio}`;
+
+    const campoFecha = document.getElementById("txtFechaRecepcion");
+    if (campoFecha) campoFecha.value = fechaFormateada;
 
     // Initialize auto-population fields
     initializeAutoPopulation("txtCodProvPrefijo", "txtCodProvAuto", "PROV");
@@ -87,7 +118,6 @@ function initializeAutoPopulation(prefixFieldId, autoFieldId, prefix) {
         if (value) {
             // Generate code with current year
             const currentYear = new Date().getFullYear().toString().slice(2);
-            // Use more consistent random number generation
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             autoField.value = `${prefix}-${value}-${currentYear}-${randomNum}`;
         } else {
@@ -441,7 +471,9 @@ function configureSubmitButton() {
             // Save to sessionStorage
             campos.forEach(id => {
                 const el = document.getElementById(id);
-                if (el) sessionStorage.setItem(id, el.value);
+                if (el && el.value.trim() !== "") {
+                    sessionStorage.setItem(id, el.value.trim());
+                }
             });
 
             // Persist config in localStorage

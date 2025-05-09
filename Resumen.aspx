@@ -10,6 +10,7 @@
     <meta name="theme-color" content="#007BFF" />
     <meta name="format-detection" content="telephone=no" />
 
+
     <link href="CSS/resumen.css" rel="stylesheet" type="text/css" />
     <link rel="shortcut icon" href="Content/favicon.ico" type="image/x-icon" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -178,7 +179,7 @@
                 <div class="botones no-print">
                     <button type="button" onclick="mostrarPantallaBancos()">← Volver</button>
                     <button type="button" onclick="window.print()">Imprimir</button>
-                    <button type="button" onclick="irAlInicio()">← Volver al inicio</button>
+                    <button type="button" onclick="irAlInicio()">← Volver al Login</button>
                 </div>
             </section>
         </div>
@@ -190,6 +191,7 @@
 
     <script src="JS/resumen.js?v=4"></script>
     <script src="JS/loader.js"></script>
+    <script src="https://portal.altohorizonte.cl/js/comun_prod.js"></script>
     <script>
         document.querySelectorAll("button, a").forEach(el => {
             el.addEventListener("click", e => {

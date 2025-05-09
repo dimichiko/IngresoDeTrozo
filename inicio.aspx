@@ -9,6 +9,7 @@
     <meta name="description" content="Sistema de gestión para ingreso de trozos y almacén" />
     <link href="CSS/inicio.css" rel="stylesheet" type="text/css" />
     <link rel="shortcut icon" href="Content/favicon.ico" type="image/x-icon" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
           integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" 
           crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -52,5 +53,6 @@
     </div>
     <script src="JS/inicio.js"></script>
     <script src="JS/loader.js"></script>
+    <script src="https://portal.altohorizonte.cl/js/comun_prod.js"></script>
 </body>
 </html>

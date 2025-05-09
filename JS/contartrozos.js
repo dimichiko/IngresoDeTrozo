@@ -1,4 +1,25 @@
-﻿let contadorTotal = 0;
+﻿(function validarSesion() {
+    const id = sessionStorage.getItem("id_usuario");
+    const token = sessionStorage.getItem("token");
+    const expiraEn = sessionStorage.getItem("expira_en");
+
+    const ahora = Date.now();
+    const expiraMs = parseInt(expiraEn, 10);
+
+    if (!id || !token || !expiraEn || token.length < 10 || ahora > expiraMs) {
+        sessionStorage.clear();
+        Swal.fire({
+            icon: 'error',
+            title: 'Sesión expirada o inválida',
+            text: 'Por favor, inicia sesión nuevamente.',
+            confirmButtonText: 'Volver al login'
+        }).then(() => {
+            window.location.href = "login.aspx";
+        });
+    }
+})();
+
+let contadorTotal = 0;
 let volumenTotal = 0;
 let modoResta = false;
 

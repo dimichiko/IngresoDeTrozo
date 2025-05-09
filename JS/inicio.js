@@ -1,4 +1,23 @@
-﻿console.log("inicio.js cargado");
+﻿(function validarSesion() {
+    const id = sessionStorage.getItem("id_usuario");
+    const token = sessionStorage.getItem("token");
+    const expiraEn = sessionStorage.getItem("expira_en");
+
+    const ahora = Date.now();
+    const expiraMs = parseInt(expiraEn, 10);
+
+    if (!id || !token || !expiraEn || token.length < 10 || ahora > expiraMs) {
+        sessionStorage.clear();
+        Swal.fire({
+            icon: 'error',
+            title: 'Sesión expirada o inválida',
+            text: 'Por favor, inicia sesión nuevamente.',
+            confirmButtonText: 'Volver al login'
+        }).then(() => {
+            window.location.href = "login.aspx";
+        });
+    }
+})();
 
 document.addEventListener('DOMContentLoaded', function () {
     const header = document.querySelector('.header-inicio');
@@ -38,8 +57,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.limpiarCacheYRedirigir = function (pagina) {
         showLoading();
+
+        // Respaldar sesión de login
+        const id = sessionStorage.getItem("id_usuario");
+        const token = sessionStorage.getItem("token");
+        const expira = sessionStorage.getItem("expira_en");
+        const nombre = sessionStorage.getItem("nombre_usuario");
+
+        // Limpiar todo excepto los datos de login
         sessionStorage.clear();
         localStorage.removeItem('lastPage');
+
+        if (id) sessionStorage.setItem("id_usuario", id);
+        if (token) sessionStorage.setItem("token", token);
+        if (expira) sessionStorage.setItem("expira_en", expira);
+        if (nombre) sessionStorage.setItem("nombre_usuario", nombre);
+
         setTimeout(() => {
             window.location.href = pagina;
         }, 300);
@@ -131,7 +164,12 @@ function setupEventListeners() {
     if (exitButton) {
         exitButton.addEventListener('click', function (e) {
             e.preventDefault();
-            window.navigateTo('login.aspx');
+            sessionStorage.clear();
+            localStorage.clear();
+            showLoading();
+            setTimeout(() => {
+                window.location.href = "login.aspx";
+            }, 300);
         });
     }
 }
