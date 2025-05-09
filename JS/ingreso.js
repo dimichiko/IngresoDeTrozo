@@ -90,6 +90,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Configure the submit button
     configureSubmitButton();
+
+
+    var result = Obtener_Parametros("FSC");
+
+    CargarLista(result, "txtFSC");
+
 });
 
 // Validate individual field

@@ -83,10 +83,10 @@
                             </td>
                             <td>
                                 <select id="txtFSC">
-                                    <option value="100%FSC">100%FSC</option>
+<%--                                    <option value="100%FSC">100%FSC</option>
                                     <option value="Mixto FSC">Mixto FSC</option>
                                     <option value="CW FSC">CW FSC</option>
-                                    <option value="No Certificada">No Certificada</option>
+                                    <option value="No Certificada">No Certificada</option>--%>
                                 </select>
                             </td>
                         </tr>
@@ -195,6 +195,7 @@
         <div class="spinner"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="JS/funciones.js"></script>
     <script src="JS/ingreso.js"></script>
     <script src="JS/loader.js"></script>
     <script src="https://portal.altohorizonte.cl/js/comun_prod.js"></script>
