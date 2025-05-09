@@ -91,10 +91,36 @@ document.addEventListener("DOMContentLoaded", function () {
     // Configure the submit button
     configureSubmitButton();
 
+    function agregarSoloGYG(idSelect) {
+        const opcionGYG = {
+            cod_empresa: "2",
+            nom_empresa: "GYG"
+        };
+
+        const select = document.getElementById(idSelect);
+        if (select) {
+            const yaExiste = Array.from(select.options).some(opt => opt.value === opcionGYG.cod_empresa);
+            if (!yaExiste) {
+                const option = document.createElement("option");
+                option.value = opcionGYG.cod_empresa;
+                option.text = opcionGYG.nom_empresa;
+                select.appendChild(option);
+            }
+        }
+    }
+
+    agregarSoloGYG("txtDestino");
+
 
     var result = Obtener_Parametros("FSC");
-
     CargarLista(result, "txtFSC");
+
+    var result = Obtener_Parametros("Empresa");
+    CargarLista(result, "txtDestino");
+
+    var result = Obtener_Parametros("LargoTrozos");
+    CargarLista(result, "LargoTroncos");
+    
 
 });
 
@@ -516,3 +542,4 @@ function configureSubmitButton() {
         });
     }
 }
+

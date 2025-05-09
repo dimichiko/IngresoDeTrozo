@@ -111,7 +111,7 @@
                             </td>
                             <td>
                                 <select id="txtDestino" name="Destino">
-                                    <option value="San Carlos">San Carlos</option>
+                <%--                    <option value="San Carlos">San Carlos</option>--%>
                                 </select>
                             </td>
                         </tr>
@@ -122,10 +122,10 @@
                             </td>
                             <td>
                                 <select id="LargoTroncos" name="Largo">
-                                    <option value="2.50M">2.50M</option>
+<%--                                    <option value="2.50M">2.50M</option>
                                     <option value="3.10M">3.10M</option>
                                     <option value="3.30M">3.30M</option>
-                                    <option value="4.00M">4.00M</option>
+                                    <option value="4.00M">4.00M</option>--%>
                                 </select>
                             </td>
                         </tr>
