@@ -37,7 +37,7 @@
                     <div class="fila">
                         <label for="txtCodProvPrefijo">Código Proveedor:</label>
                         <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="number" id="txtCodProvPrefijo" maxlength="4" style="flex: none; width: 60px;" inputmode="numeric" />
+                            <input type="text" id="txtCodProvPrefijo" maxlength="4" style="flex: none; width: 60px;" inputmode="numeric" />
                             <input type="text" id="txtCodProvAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
                         </div>
                     </div>
@@ -45,34 +45,36 @@
                     <div class="fila">
                         <label for="txtContratoPrefijo">Nota Compra:</label>
                         <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="number" id="txtContratoPrefijo" maxlength="4" style="flex: none; width: 60px;" inputmode="numeric" />
-                            <input type="number" id="txtContratoAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
+                            <input type="text" id="txtContratoPrefijo" maxlength="4" style="flex: none; width: 60px;" inputmode="numeric" />
+                            <input type="text" id="txtContratoAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
                         </div>
                     </div>
 
                     <div class="fila">
                         <label for="txtVentaPrefijo">Nota Venta:</label>
                         <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="number" id="txtVentaPrefijo" maxlength="4" style="flex: none; width: 60px;" inputmode="numeric" />
-                            <input type="number" id="txtVentaAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
+                            <input type="text" id="txtVentaPrefijo" maxlength="4" style="flex: none; width: 60px;" inputmode="numeric" />
+                            <input type="text" id="txtVentaAuto" disabled="disabled" style="flex: 1; background-color: #eee;" />
                         </div>
                     </div>
 
                     <div class="fila">
                         <label for="txtOC">GDE:</label>
-                        <input type="number" id="txtOC" maxlength="4" inputmode="numeric" />
+                        <div style="display: flex; align-items: center;">
+                            <input type="text" id="txtOC" maxlength="4" style="flex: none; width: 60px;" inputmode="numeric" />
+                        </div>
                     </div>
 
                     <div class="fila">
                         <label for="txtFechaRecepcion">Fecha Recepción:</label>
-                       <input type="text" id="txtFechaRecepcion" readonly="readonly" />
+                        <input type="text" id="txtFechaRecepcion" readonly="readonly" />
                     </div>
 
                     <div class="fila">
                         <label for="txtProducto">Producto:</label>
                         <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="number" id="txtProducto" maxlength="4" style="flex: none; width: 60px;" inputmode="numeric" />
-                            <input type="number" disabled="disabled" style="flex: 1; background-color: #eee;" />
+                            <input type="text" id="txtProducto" maxlength="4" style="flex: none; width: 60px;" inputmode="numeric" />
+                            <input type="text" disabled="disabled" style="flex: 1; background-color: #eee;" />
                         </div>
                     </div>
 
@@ -160,12 +162,12 @@
                 <div>
                     <div class="fila">
                         <label for="txtDespachador">Despachador:</label>
-                        <input type="text" id="txtDespachador" maxlength="30" placeholder="Nombre y Apellido" />
+                        <input type="text" id="txtDespachador" maxlength="17" placeholder="Nombre y Apellido" />
                     </div>
 
                     <div class="fila">
                         <label for="txtTransportista">Transportista:</label>
-                        <input type="text" id="txtTransportista" maxlength="30" placeholder="Nombre empresa" />
+                        <input type="text" id="txtTransportista" maxlength="17" placeholder="Nombre empresa" />
                     </div>
 
                     <div class="fila">
@@ -176,7 +178,7 @@
 
                     <div class="fila">
                         <label for="txtConductor">Conductor:</label>
-                        <input type="text" id="txtConductor" minlength="5" maxlength="30" placeholder="Nombre y Apellido" />
+                        <input type="text" id="txtConductor" minlength="5" maxlength="17" placeholder="Nombre y Apellido" />
                     </div>
 
                     <div class="fila">

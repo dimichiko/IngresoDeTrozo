@@ -37,6 +37,38 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    const soloNumericos = [
+        "txtCodProvPrefijo",
+        "txtContratoPrefijo",
+        "txtVentaPrefijo",
+        "txtOC",
+        "txtProducto"
+    ];
+
+    soloNumericos.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.addEventListener("input", function () {
+                this.value = this.value.replace(/[^0-9]/g, "").slice(0, 4);
+            });
+        }
+    });
+
+    const soloTexto = [
+        "txtDespachador",
+        "txtTransportista",
+        "txtConductor"
+    ];
+
+    soloTexto.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.addEventListener("input", function () {
+                this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "");
+            });
+        }
+    });
+
     // Insertar fecha actual en formato dd/mm/yyyy
     const hoy = new Date();
     const dia = String(hoy.getDate()).padStart(2, '0');
@@ -45,13 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const fechaFormateada = `${dia}/${mes}/${anio}`;
 
     const campoFecha = document.getElementById("txtFechaRecepcion");
-    if (campoFecha) campoFecha.value = fechaFormateada;
-
-    // Initialize auto-population fields
-    initializeAutoPopulation("txtCodProvPrefijo", "txtCodProvAuto", "PROV");
-    initializeAutoPopulation("txtContratoPrefijo", "txtContratoAuto", "COMP");
-    initializeAutoPopulation("txtVentaPrefijo", "txtVentaAuto", "VENT");
-    initializeAutoPopulation("txtProducto", document.querySelector("#txtProducto").nextElementSibling, "PROD");
+    if (campoFecha) campoFecha.value = fechaFormateada;                       
 
     // Improve form validation with better visual feedback
     const allInputs = document.querySelectorAll('input, select');
@@ -99,28 +125,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const select = document.getElementById(idSelect);
         if (select) {
-            const yaExiste = Array.from(select.options).some(opt => opt.value === opcionGYG.cod_empresa);
-            if (!yaExiste) {
-                const option = document.createElement("option");
-                option.value = opcionGYG.cod_empresa;
-                option.text = opcionGYG.nom_empresa;
-                select.appendChild(option);
-            }
+            select.innerHTML = "";
+
+            const option = document.createElement("option");
+            option.value = opcionGYG.cod_empresa;
+            option.text = opcionGYG.nom_empresa;
+            select.appendChild(option);
+
+            select.value = opcionGYG.cod_empresa;
         }
     }
-
     agregarSoloGYG("txtDestino");
-
 
     var result = Obtener_Parametros("FSC");
     CargarLista(result, "txtFSC");
 
     var result = Obtener_Parametros("Empresa");
-    CargarLista(result, "txtDestino");
+    var soloGYG = result.filter(item => item.cod_empresa === "2");
+    const select = document.getElementById("txtDestino");
+    if (select) {
+        select.innerHTML = "";
+
+        if (soloGYG.length > 0) {
+            const gyg = soloGYG[0];
+            const option = document.createElement("option");
+            option.value = gyg.cod_empresa;
+            option.text = gyg.nom_empresa;
+            option.selected = true;
+            select.appendChild(option);
+        }
+    }
 
     var result = Obtener_Parametros("LargoTrozos");
     CargarLista(result, "LargoTroncos");
-    
 
 });
 
@@ -285,34 +322,34 @@ function initializeRolField() {
 }
 
 // Simulate API lookup for Rol information
-function simulateRolLookup(rolValue) {
-    // Show loading indicator
-    const loading = document.getElementById('loading-overlay');
-    if (loading) loading.style.display = 'flex';
+//function simulateRolLookup(rolValue) {
+//    // Show loading indicator
+//    const loading = document.getElementById('loading-overlay');
+//    if (loading) loading.style.display = 'flex';
 
-    // In a real scenario, this would call an API
-    setTimeout(() => {
-        const predioField = document.getElementById("txtPredio");
-        const comunaField = document.getElementById("txtComuna");
-        const rodalField = document.getElementById("txtRodal");
-        const coordField = document.getElementById("txtCoordenadas");
+//    // In a real scenario, this would call an API
+//    setTimeout(() => {
+//        const predioField = document.getElementById("txtPredio");
+//        const comunaField = document.getElementById("txtComuna");
+//        const rodalField = document.getElementById("txtRodal");
+//        const coordField = document.getElementById("txtCoordenadas");
 
-        if (predioField && comunaField && rodalField && coordField) {
-            // Simulate data retrieval - in production this would come from backend
-            predioField.value = `Predio ${Math.floor(Math.random() * 100) + 1}`;
-            comunaField.value = ["San Carlos", "Chillán", "Concepción", "Los Ángeles"][Math.floor(Math.random() * 4)];
-            rodalField.value = `R-${Math.floor(Math.random() * 50) + 1}`;
+//        if (predioField && comunaField && rodalField && coordField) {
+//            // Simulate data retrieval - in production this would come from backend
+//            predioField.value = `Predio ${Math.floor(Math.random() * 100) + 1}`;
+//            comunaField.value = ["San Carlos", "Chillán", "Concepción", "Los Ángeles"][Math.floor(Math.random() * 4)];
+//            rodalField.value = `R-${Math.floor(Math.random() * 50) + 1}`;
 
-            // Generate realistic-looking coordinates for Chile's forest regions
-            const lat = -37 - (Math.random() * 0.8);
-            const lng = -73 - (Math.random() * 0.8);
-            coordField.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-        }
+//            // Generate realistic-looking coordinates for Chile's forest regions
+//            const lat = -37 - (Math.random() * 0.8);
+//            const lng = -73 - (Math.random() * 0.8);
+//            coordField.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+//        }
 
-        // Hide loading indicator
-        if (loading) loading.style.display = 'none';
-    }, 300);
-}
+//        // Hide loading indicator
+//        if (loading) loading.style.display = 'none';
+//    }, 300);
+//}
 
 // Load saved values from previous session
 function loadSavedValues() {
@@ -382,6 +419,38 @@ $("#txtCodProvPrefijo").blur(function () {
 
 });
 
+//$("#txtContratoPrefijo").blur(function () {
+//    //alert($("#idProv").val());
+//    var esNumero = true;
+
+//    idContr = $("#txtContratoPrefijo").val();
+//    /*        esNumero = isNaN(idContr);*/
+
+//    if (idContr != "" || (isNaN(idContr))) {
+//        var resultado = ObtenerProveedor(idProv);
+//        var prov = resultado[0].mcl_nombre.trim();
+//        $("#txtContratoPrefijo").val(prov);
+//    }
+
+
+//});
+
+
+//$("#txtVentaPrefijo").blur(function () {
+//    //alert($("#idProv").val());
+//    var esNumero = true;
+
+//    idProv = $("#txtVentaPrefijo").val();
+//    /*        esNumero = isNaN(idProv);*/
+
+//    if (idProv != "" || (isNaN(idProv))) {
+//        var resultado = ObtenerProveedor(idProv);
+//        var prov = resultado[0].mcl_nombre.trim();
+//        $("#txtVentaPrefijo").val(prov);
+//    }
+
+
+//});
 
 function configureSubmitButton() {
     const btn = document.getElementById("btnIrContar");

@@ -27,13 +27,13 @@
             <div class="login-form">
                 <div class="form-group">
                     <label for="txtUsuario">Nombre de usuario</label>
-                    <input type="text" id="txtUsuario" class="form-control" placeholder="Ingresa tu usuario" />
+                    <input type="text" id="txtUsuario" class="form-control" maxlength="15" placeholder="Ingresa tu usuario" />
                     <div class="error-message" aria-live="polite"></div>
                 </div>
 
                 <div class="form-group">
                     <label for="txtClave">Contraseña</label>
-                    <input type="password" id="txtClave" class="form-control" placeholder="Ingresa tu contraseña" />
+                    <input type="password" id="txtClave" class="form-control" maxlength="15" placeholder="Ingresa tu contraseña" />
                     <div class="error-message" aria-live="polite"></div>
                 </div>
 
