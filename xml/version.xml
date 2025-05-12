@@ -1,8 +1,8 @@
 ﻿<version>
-	<number>1.6.0</number>
-	<fecha>2025-05-08</fecha>
+	<number>1.7.0</number>
+	<fecha>2025-05-12</fecha>
 	<descripcion>
-		Acordeones con tablas por banco, edición flexible de troncos por diámetro,
-		avisos con SweetAlert y actualización automática de totales y resumen final.
+		Login validado visualmente, control de sesión robusto, carga filtrada de empresas,
+		y validaciones estrictas en campos de texto y números.
 	</descripcion>
 </version>

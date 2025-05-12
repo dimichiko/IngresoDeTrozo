@@ -74,7 +74,7 @@
                         <label for="txtProducto">Producto:</label>
                         <div style="display: flex; gap: 10px; align-items: center;">
                             <input type="text" id="txtProducto" maxlength="4" style="flex: none; width: 60px;" inputmode="numeric" />
-                            <input type="text" disabled="disabled" style="flex: 1; background-color: #eee;" />
+                            <input type="text" id="nomProducto" disabled="disabled" style="flex: 1; background-color: #eee;" />
                         </div>
                     </div>
 

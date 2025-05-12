@@ -419,38 +419,54 @@ $("#txtCodProvPrefijo").blur(function () {
 
 });
 
-//$("#txtContratoPrefijo").blur(function () {
-//    //alert($("#idProv").val());
-//    var esNumero = true;
+$("#txtContratoPrefijo").blur(function () {
+    //alert($("#idProv").val());
+    var esNumero = true;
 
-//    idContr = $("#txtContratoPrefijo").val();
-//    /*        esNumero = isNaN(idContr);*/
+    idContr = $("#txtContratoPrefijo").val();
+    /*        esNumero = isNaN(idContr);*/
 
-//    if (idContr != "" || (isNaN(idContr))) {
-//        var resultado = ObtenerProveedor(idProv);
-//        var prov = resultado[0].mcl_nombre.trim();
-//        $("#txtContratoPrefijo").val(prov);
-//    }
-
-
-//});
+    if (idContr != "" || (isNaN(idContr))) {
+        var resultado = Obtener_NC(idContr);
+        var Contr = resultado[0].mcl_nombre.trim();
+        $("#txtContratoAuto").val(Contr);
+    }
 
 
-//$("#txtVentaPrefijo").blur(function () {
-//    //alert($("#idProv").val());
-//    var esNumero = true;
+});
 
-//    idProv = $("#txtVentaPrefijo").val();
-//    /*        esNumero = isNaN(idProv);*/
+$("#txtVentaPrefijo").blur(function () {
+    //alert($("#idVenta").val());
+    var esNumero = true;
 
-//    if (idProv != "" || (isNaN(idProv))) {
-//        var resultado = ObtenerProveedor(idProv);
-//        var prov = resultado[0].mcl_nombre.trim();
-//        $("#txtVentaPrefijo").val(prov);
-//    }
+    idVenta = $("#txtVentaPrefijo").val();
+    /*        esNumero = isNaN(idVenta);*/
+
+    if (idVenta != "" || (isNaN(idVenta))) {
+        var resultado = Obtener_NV(idVenta);
+        //var Venta = resultado[0].nombre.trim();
+        //$("#txtVentaAuto").val(Venta);
+    }
 
 
-//});
+});
+
+
+$("#txtProducto").blur(function () {
+    //alert($("#idProd").val());
+    var esNumero = true;
+
+    idProd = $("#txtProducto").val();
+    /*        esNumero = isNaN(idProv);*/
+
+    if (idProd != "" || (isNaN(idProd))) {
+        var resultado = ObtenerProducto(idProd);
+        var Prod = resultado[0].nombre.trim();
+        $("#nomProducto").val(Prod);
+    }
+
+
+});
 
 function configureSubmitButton() {
     const btn = document.getElementById("btnIrContar");

@@ -475,10 +475,6 @@ function mostrarPantallaFinal() {
     }
 }
 
-function volverAContarTrozos() {
-    window.location.href = "contartrozos.aspx";
-}
-
 function mostrarPantallaBancos() {
     const pantallaFinal = document.getElementById("pantalla-final");
     const pantallaBancos = document.getElementById("pantalla-bancos");

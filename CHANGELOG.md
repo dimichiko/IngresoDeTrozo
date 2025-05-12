@@ -2,6 +2,23 @@
 
 Todos los cambios notables del proyecto se registran aquí.
 
+## [1.7.0] - 2025-05-12
+### Agregado
+- Validación de login con feedback visual y control de sesión usando `sessionStorage`.
+- Carga dinámica de empresas desde `AuthService.asmx`, con opción de mostrar solo "GYG".
+- Restricción de caracteres en campos de texto para nombres (solo letras y espacios).
+- Autoconversión a mayúsculas en campos de nombre (Despachador, Transportista, Conductor).
+
+### Corregido
+- Ya no se sobrescribe el input numérico de Nota Compra/Venta con el nombre del proveedor.
+- Validación de campos numéricos limitada correctamente a 4 dígitos sin símbolos.
+
+### Mejorado
+- Revisión automática de sesión activa en todas las pantallas protegidas.
+- Estructura JS modular y reutilizable para validar inputs y mostrar errores.
+
+---
+
 ## [1.6.0] - 2025-05-08
 ### Mejorado
 - Los bloques de resumen por banco ahora usan acordeones (`<details>`) con tablas por diámetro.
