@@ -50,7 +50,7 @@
                             <tbody>
                                 <tr>
                                     <td>Proveedor:</td>
-                                    <td><span id="res-proveedor">-</span></td>
+                                    <td><span id="txtCodProvAuto">-</span></td>
                                 </tr>
                                 <tr>
                                     <td>Contrato:</td>
@@ -70,7 +70,7 @@
                                 </tr>
                                 <tr>
                                     <td>Producto:</td>
-                                    <td><span id="res-producto">-</span></td>
+                                    <td><span id="nomProducto">-</span></td>
                                 </tr>
                                 <tr>
                                     <td>FSC:</td>

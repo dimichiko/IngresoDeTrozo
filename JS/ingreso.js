@@ -428,8 +428,8 @@ $("#txtContratoPrefijo").blur(function () {
 
     if (idContr != "" || (isNaN(idContr))) {
         var resultado = Obtener_NC(idContr);
-        var Contr = resultado[0].mcl_nombre.trim();
-        $("#txtContratoAuto").val(Contr);
+        //var Contr = resultado[0].mcl_nombre.trim();
+        //$("#txtContratoAuto").val(Contr);
     }
 
 
@@ -450,7 +450,6 @@ $("#txtVentaPrefijo").blur(function () {
 
 
 });
-
 
 $("#txtProducto").blur(function () {
     //alert($("#idProd").val());
