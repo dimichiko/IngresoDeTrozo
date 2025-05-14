@@ -19,8 +19,14 @@
     }
 })();
 
+function showLoader() {
+    const loader = document.getElementById('loader');
+    if (loader) {
+        loader.style.display = 'block';
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
-    // Initialize jQuery UI accordion with improved settings
     $("#acordeon").accordion({
         heightStyle: "content",
         collapsible: true,
@@ -28,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
         animate: 200
     });
 
-    // Optimize numeric inputs for mobile use
     const numericInputs = document.querySelectorAll('input[type="number"]');
     numericInputs.forEach(input => {
         input.setAttribute('inputmode', 'numeric');
@@ -69,7 +74,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Insertar fecha actual en formato dd/mm/yyyy
     const hoy = new Date();
     const dia = String(hoy.getDate()).padStart(2, '0');
     const mes = String(hoy.getMonth() + 1).padStart(2, '0');
@@ -79,7 +83,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const campoFecha = document.getElementById("txtFechaRecepcion");
     if (campoFecha) campoFecha.value = fechaFormateada;                       
 
-    // Improve form validation with better visual feedback
     const allInputs = document.querySelectorAll('input, select');
     allInputs.forEach(input => {
         // Validate on blur
@@ -107,14 +110,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Initialize specialized fields
     initializeRolField();
     initializeRutFields();
 
-    // Load any previously saved values
     loadSavedValues();
 
-    // Configure the submit button
     configureSubmitButton();
 
     function agregarSoloGYG(idSelect) {
@@ -161,7 +161,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// Validate individual field
+function handleError(error, message) {
+    console.error(error);
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: message,
+        confirmButtonColor: '#007BFF'
+    });
+}
+
+function checkDependencies() {
+    if (typeof Swal === 'undefined') {
+        throw new Error('SweetAlert2 no está disponible');
+    }
+}
+
+const StorageManager = {
+    save: function (key, value) {
+        try {
+            localStorage.setItem(key, JSON.stringify(value));
+            sessionStorage.setItem(key, JSON.stringify(value));
+        } catch (error) {
+            handleError(error, 'Error al guardar datos');
+        }
+    },
+    get: function (key) {
+        try {
+            return JSON.parse(localStorage.getItem(key) || sessionStorage.getItem(key));
+        } catch (error) {
+            handleError(error, 'Error al recuperar datos');
+            return null;
+        }
+    }
+};
+
 function validateField(field) {
     if (field.hasAttribute('required') && field.value.trim() === '') {
         field.classList.add('input-error');
@@ -172,7 +206,6 @@ function validateField(field) {
     }
 }
 
-// Improved auto-population function
 function initializeAutoPopulation(prefixFieldId, autoFieldId, prefix) {
     const prefixField = document.getElementById(prefixFieldId);
     const autoField = typeof autoFieldId === 'string' ? document.getElementById(autoFieldId) : autoFieldId;
@@ -180,12 +213,10 @@ function initializeAutoPopulation(prefixFieldId, autoFieldId, prefix) {
     if (!prefixField || !autoField) return;
 
     prefixField.addEventListener("input", function () {
-        // Clean and limit input to numbers only
         const value = this.value.replace(/[^0-9]/g, '').slice(0, 4);
         this.value = value;
 
         if (value) {
-            // Generate code with current year
             const currentYear = new Date().getFullYear().toString().slice(2);
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             autoField.value = `${prefix}-${value}-${currentYear}-${randomNum}`;
@@ -194,14 +225,12 @@ function initializeAutoPopulation(prefixFieldId, autoFieldId, prefix) {
         }
     });
 
-    // Trigger input event if there's an initial value
     if (prefixField.value) {
         const event = new Event('input');
         prefixField.dispatchEvent(event);
     }
 }
 
-// Improved RUT field handling
 function initializeRutFields() {
     ["txtRUTConductor", "txtRUTDespachador"].forEach(id => {
         const elemento = document.getElementById(id);
@@ -251,7 +280,6 @@ function initializeRutFields() {
     });
 }
 
-// Format RUT as user types
 function formatearRutLive(rut) {
     if (!rut || typeof rut !== 'string') return '';
 
@@ -265,7 +293,6 @@ function formatearRutLive(rut) {
     return cuerpo + '-' + dv;
 }
 
-// Validate Chilean RUT with modulo 11 algorithm
 function validarRutMod11(rut) {
     if (!rut || typeof rut !== 'string') return false;
 
@@ -290,7 +317,6 @@ function validarRutMod11(rut) {
     return dv === dvCalculado;
 }
 
-// Initialize Rol field with auto-formatting
 function initializeRolField() {
     const rolElement = document.getElementById("txtRol");
     if (rolElement) {
@@ -306,52 +332,18 @@ function initializeRolField() {
                 this.value = val;
             }
 
-            // Preserve cursor position
             const cursorPos = selectionStart + (this.value.length - prevLength);
             this.setSelectionRange(cursorPos, cursorPos);
         });
 
-        // Simulate API lookup for Rol information
         rolElement.addEventListener("blur", function () {
             if (this.value && this.value.length >= 5) {
-                // This would be replaced with an actual API call
                 simulateRolLookup(this.value);
             }
         });
     }
 }
 
-// Simulate API lookup for Rol information
-//function simulateRolLookup(rolValue) {
-//    // Show loading indicator
-//    const loading = document.getElementById('loading-overlay');
-//    if (loading) loading.style.display = 'flex';
-
-//    // In a real scenario, this would call an API
-//    setTimeout(() => {
-//        const predioField = document.getElementById("txtPredio");
-//        const comunaField = document.getElementById("txtComuna");
-//        const rodalField = document.getElementById("txtRodal");
-//        const coordField = document.getElementById("txtCoordenadas");
-
-//        if (predioField && comunaField && rodalField && coordField) {
-//            // Simulate data retrieval - in production this would come from backend
-//            predioField.value = `Predio ${Math.floor(Math.random() * 100) + 1}`;
-//            comunaField.value = ["San Carlos", "Chillán", "Concepción", "Los Ángeles"][Math.floor(Math.random() * 4)];
-//            rodalField.value = `R-${Math.floor(Math.random() * 50) + 1}`;
-
-//            // Generate realistic-looking coordinates for Chile's forest regions
-//            const lat = -37 - (Math.random() * 0.8);
-//            const lng = -73 - (Math.random() * 0.8);
-//            coordField.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-//        }
-
-//        // Hide loading indicator
-//        if (loading) loading.style.display = 'none';
-//    }, 300);
-//}
-
-// Load saved values from previous session
 function loadSavedValues() {
     const campos = [
         "txtCodProvPrefijo",
@@ -363,7 +355,6 @@ function loadSavedValues() {
         "txtConductor", "txtRUTConductor", "LargoTroncos", "selectBancos"
     ];
 
-    // First attempt to load from localStorage (more persistent)
     campos.forEach(id => {
         const valor = localStorage.getItem(id) || sessionStorage.getItem(id);
         const input = document.getElementById(id);
@@ -382,7 +373,6 @@ function loadSavedValues() {
         }
     });
 
-    // Handle browser back button and page refresh
     window.addEventListener('pageshow', function (event) {
         if (event.persisted) {
             campos.forEach(id => {
@@ -401,7 +391,36 @@ function loadSavedValues() {
     });
 }
 
-// Configure the submit button behavior
+async function obtenerDatosAPI(endpoint, id) {
+    try {
+        const resultado = await endpoint(id);
+        if (!resultado || !resultado.length) {
+            throw new Error('No se encontraron datos');
+        }
+        return resultado[0];
+    } catch (error) {
+        handleError(error, `Error al obtener datos: ${error.message}`);
+        return null;
+    }
+}
+
+function checkExternalFunctions() {
+    const requiredFunctions = [
+        'ObtenerProveedor',
+        'Obtener_NC',
+        'Obtener_NV',
+        'ObtenerProducto',
+        'Obtener_Parametros',
+        'CargarLista'
+    ];
+
+    requiredFunctions.forEach(funcName => {
+        if (typeof window[funcName] !== 'function') {
+            console.error(`Función requerida no encontrada: ${funcName}`);
+        }
+    });
+}
+
 
 $("#txtCodProvPrefijo").blur(function () {
     //alert($("#idProv").val());
@@ -470,7 +489,6 @@ $("#txtProducto").blur(function () {
 function configureSubmitButton() {
     const btn = document.getElementById("btnIrContar");
     if (btn) {
-        // Add touch feedback
         btn.addEventListener('touchstart', function () {
             this.classList.add('button-active');
         });
@@ -479,7 +497,6 @@ function configureSubmitButton() {
             this.classList.remove('button-active');
         });
 
-        // Main click handler
         btn.addEventListener("click", function () {
             const campos = [
                 "txtCodProvPrefijo",
@@ -602,7 +619,6 @@ function configureSubmitButton() {
                 return;
             }
 
-            // Save to sessionStorage
             campos.forEach(id => {
                 const el = document.getElementById(id);
                 if (el && el.value.trim() !== "") {
@@ -610,7 +626,6 @@ function configureSubmitButton() {
                 }
             });
 
-            // Persist config in localStorage
             localStorage.setItem("cantidadBancos", cantidad);
             if (!localStorage.getItem("bancoActual")) {
                 localStorage.setItem("bancoActual", 1);

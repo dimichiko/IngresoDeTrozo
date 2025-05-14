@@ -87,32 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     setupEventListeners();
-
-    const versionDiv = document.createElement('div');
-    versionDiv.id = "version-info";
-    versionDiv.style.marginTop = "1rem";
-    versionDiv.style.fontSize = "0.85rem";
-    versionDiv.style.color = "#666";
-    versionDiv.style.textAlign = "center";
-    versionDiv.style.marginBottom = "10px";
-    document.body.appendChild(versionDiv);
-
-    fetch("xml/version.xml")
-        .then(response => response.text())
-        .then(str => {
-            const parser = new DOMParser();
-            const xml = parser.parseFromString(str, "text/xml");
-            const version = xml.querySelector("number")?.textContent;
-
-            if (versionDiv && version) {
-                versionDiv.textContent = "Versión " + version;
-            }
-        })
-        .catch(err => {
-            console.error("Error cargando versión:", err);
-            const versionDiv = document.getElementById("version-info");
-            if (versionDiv) versionDiv.textContent = "Versión no disponible";
-        });
 });
 
 function showWelcomeMessage(username) {

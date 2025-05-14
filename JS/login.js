@@ -105,9 +105,10 @@
     usernameInput.focus();
 
     // Mostrar versión en login
-    const versionInfo = document.getElementById("version-info");
-    if (typeof window.__versionText !== "undefined" && versionInfo) {
-        versionInfo.textContent = window.__versionText;
-    };
+
+    async function cargarVersionAplicacion() {
+
+    }
+
 });
 

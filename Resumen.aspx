@@ -184,13 +184,14 @@
             </section>
         </div>
     </form>
-
+    <div id="version-info" class="version-info"></div>
     <div id="loading-overlay" class="loading-overlay" style="display: none;">
         <div class="spinner"></div>
     </div>
 
     <script src="JS/resumen.js?v=4"></script>
     <script src="JS/loader.js"></script>
+    <script src="JS/version-utils.js"></script>
     <script src="https://portal.altohorizonte.cl/js/comun_prod.js"></script>
     <script>
         document.querySelectorAll("button, a").forEach(el => {

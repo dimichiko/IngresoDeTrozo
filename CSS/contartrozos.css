@@ -303,6 +303,18 @@ body {
         animation: spin 1s linear infinite;
     }
 
+.version-info {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-size: 12px;
+    color: #666;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px 10px;
+    border-radius: 4px;
+    z-index: 1000;
+}
+
 @keyframes spin {
     to {
         transform: rotate(360deg);

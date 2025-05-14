@@ -76,28 +76,27 @@
                         <div class="footer-right">
                             <button class="btnSiguiente" type="button" onclick="irAlResumen(event)">Resumen</button>
                         </div>
-                        <!--   <div
-        id="footer-version" style="text-align:center; font-size:0.9rem; color:#888; margin-top:40px;">
-        </div> -->
-                    </div>
 
                     <div class="grid-container-2">
                         <% For i = 40 To 60 Step 2
                                 Response.Write($"<button id='btn-{i}' onclick=""manejarClick('btn-{i}', event)"" data-count='0'>Diámetro {i}</button>")
                             Next %>
                     </div>
+                    </div>
                 </div>
             </div>
-        </div>
     </form>
+
+    <div id="version-info" class="version-info"></div>
     <div id="loading-overlay" class="loading-overlay" style="display: none;">
-        <div class="spinner"></div>
+    <div class="spinner"></div>
     </div>
-    <script src="/scripts/jquery-3.7.1.js"></script>
-    <script src="/JS/comun.js?v=2"></script>
-    <script src="/JS/cargar-empresas.js?v=1"></script>
-    <script src="/JS/contartrozos.js?v=2"></script>
+    <script src="scripts/jquery-3.7.1.js"></script>
+    <script src="JS/version-utils.js"></script>
     <script src="JS/loader.js"></script>
+    <script src="JS/comun.js?v=3"></script>
+    <script src="JS/cargar-empresas.js?v=3"></script>
+    <script src="JS/contartrozos.js?v=3"></script>
     <script src="https://portal.altohorizonte.cl/js/comun_prod.js"></script>
 </body>
 </html>

@@ -27,6 +27,14 @@ const STORAGE_KEYS = {
     CANTIDAD_BANCOS: "cantidadBancos"
 };
 
+function showLoader() {
+    const loader = document.getElementById('loader');
+    if (loader) {
+        loader.style.display = 'block';
+    }
+}
+
+
 window.addEventListener('load', function () {
     try {
         const bancos = getBancosData();

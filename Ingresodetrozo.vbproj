@@ -138,6 +138,7 @@
     <Content Include="JS\inicio.js" />
     <Content Include="JS\loader.js" />
     <Content Include="JS\login.js" />
+    <Content Include="JS\version-utils.js" />
     <Content Include="login.aspx" />
     <Content Include="resumen.aspx" />
     <Content Include="JS\contartrozos.js" />

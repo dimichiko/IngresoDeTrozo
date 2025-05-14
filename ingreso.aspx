@@ -191,6 +191,7 @@
             <div class="botones">
                 <button type="button" id="btnIrContar">Ir a contar troncos</button>
             </div>
+            <div id="version-info" class="version-info"></div>
         </div>
     </form>
     <div id="loading-overlay" class="loading-overlay" style="display: none;">
@@ -200,6 +201,7 @@
         <script src="JS/funciones.js"></script>
     <script src="JS/ingreso.js"></script>
     <script src="JS/loader.js"></script>
+    <script src="JS/version-utils.js"></script>
     <script src="https://portal.altohorizonte.cl/js/comun_prod.js"></script>
 </body>
 </html>

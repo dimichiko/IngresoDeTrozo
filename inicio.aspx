@@ -45,7 +45,7 @@
     <div class="login-footer footer-inicio">
         &copy; <%= DateTime.Now.Year %> Alto Horizonte. Todos los derechos reservados.
    
-        <div id="version-info" class="version-label"></div>
+        <div id="version-info" class="version-info"></div>
     </div>
     </form>
     <div id="loading-overlay" class="loading-overlay" style="display: none;">
@@ -53,6 +53,7 @@
     </div>
     <script src="JS/inicio.js"></script>
     <script src="JS/loader.js"></script>
+    <script src="JS/version-utils.js"></script>
     <script src="https://portal.altohorizonte.cl/js/comun_prod.js"></script>
 </body>
 </html>
