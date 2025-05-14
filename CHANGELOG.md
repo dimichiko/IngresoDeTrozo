@@ -2,6 +2,21 @@
 
 Todos los cambios notables del proyecto se registran aquí.
 
+
+## [1.8.0] - 2025-05-14
+### Agregado
+- Ordenamiento alfabético de la lista de proveedores en el resumen final.
+- Mejora visual en la sección de información de proveedor para mayor claridad.
+
+### Corregido
+- Corrección en la validación de sesión en pantallas protegidas, incluyendo `ingreso.aspx`.
+
+### Mejorado
+- Presentación de datos del proveedor ajustada para mayor legibilidad.
+- Código JS optimizado para validar sesión al cargar la página y mostrar alertas claras si expira.
+
+---
+
 ## [1.7.0] - 2025-05-12
 ### Agregado
 - Validación de login con feedback visual y control de sesión usando `sessionStorage`.

@@ -1,8 +1,8 @@
 ﻿<version>
-	<number>1.7.0</number>
-	<fecha>2025-05-12</fecha>
+	<number>1.8.0</number>
+	<fecha>2025-05-14</fecha>
 	<descripcion>
-		Login validado visualmente, control de sesión robusto, carga filtrada de empresas,
-		y validaciones estrictas en campos de texto y números.
+		Lista de proveedores ordenada alfabéticamente, validación de sesión refinada,
+		y mejoras visuales en la sección de proveedor.
 	</descripcion>
 </version>
