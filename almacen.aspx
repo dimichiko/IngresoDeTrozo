@@ -5,7 +5,7 @@
 <head runat="server">
     <title>Almacén</title>
     <meta charset="utf-8" />
-    
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="CSS/almacen.css" rel="stylesheet" type="text/css" />
     <link rel="shortcut icon" href="Content/favicon.ico" type="image/x-icon" />
@@ -29,6 +29,10 @@
             </div>
         </div>
     </form>
-<script src="https://portal.altohorizonte.cl/js/comun_prod.js"></script>
+    <div id="version-info" class="version-info"></div>
+
+    <script src="JS/version-utils.js"></script>
+
+    <script src="https://portal.altohorizonte.cl/js/comun_prod.js"></script>
 </body>
 </html>

@@ -346,11 +346,11 @@ function initializeRolField() {
 
 function loadSavedValues() {
     const campos = [
-        "txtCodProvPrefijo",
-        "txtContratoPrefijo",
-        "txtVentaPrefijo",
+        "txtCodProvAuto",
+        "txtContratoAuto",
+        "txtVentaAuto",
         "txtOC", "txtFechaRecepcion",
-        "txtProducto", "txtFSC", "txtDestino", "txtRol",
+        "nomProducto", "txtFSC", "txtDestino", "txtRol",
         "txtDespachador", "txtTransportista", "txtRUTDespachador",
         "txtConductor", "txtRUTConductor", "LargoTroncos", "selectBancos"
     ];
@@ -361,7 +361,7 @@ function loadSavedValues() {
         if (valor && input) {
             input.value = valor;
 
-            if (["txtCodProvPrefijo", "txtContratoPrefijo", "txtVentaPrefijo", "txtProducto"].includes(id)) {
+            if (["txtCodProvAuto", "txtContratoAuto", "txtVentaAuto", "nomProducto"].includes(id)) {
                 const event = new Event('input');
                 input.dispatchEvent(event);
             }
@@ -381,7 +381,7 @@ function loadSavedValues() {
                 if (valor && input) {
                     input.value = valor;
 
-                    if (["txtCodProvPrefijo", "txtContratoPrefijo", "txtVentaPrefijo", "txtProducto"].includes(id)) {
+                    if (["txtCodProvAuto", "txtContratoAuto", "txtVentaAuto", "nomProducto"].includes(id)) {
                         const event = new Event('input');
                         input.dispatchEvent(event);
                     }
@@ -447,8 +447,8 @@ $("#txtContratoPrefijo").blur(function () {
 
     if (idContr != "" || (isNaN(idContr))) {
         var resultado = Obtener_NC(idContr);
-        //var Contr = resultado[0].mcl_nombre.trim();
-        //$("#txtContratoAuto").val(Contr);
+        var Contr = resultado[0].mcl_nombre.trim();
+        $("#txtContratoAuto").val(Contr);
     }
 
 
@@ -463,8 +463,8 @@ $("#txtVentaPrefijo").blur(function () {
 
     if (idVenta != "" || (isNaN(idVenta))) {
         var resultado = Obtener_NV(idVenta);
-        //var Venta = resultado[0].nombre.trim();
-        //$("#txtVentaAuto").val(Venta);
+        var Venta = resultado[0].nombre.trim();
+        $("#txtVentaAuto").val(Venta);
     }
 
 
