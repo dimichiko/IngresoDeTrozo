@@ -1,291 +1,407 @@
-﻿(function validarSesion() {
-    const id = sessionStorage.getItem("id_usuario");
-    const token = sessionStorage.getItem("token");
-    const expiraEn = sessionStorage.getItem("expira_en");
+﻿(function () {
+    // Validación de sesión
+    (function validarSesion() {
+        const id = sessionStorage.getItem("id_usuario");
+        const token = sessionStorage.getItem("token");
+        const expiraEn = sessionStorage.getItem("expira_en");
 
-    const ahora = Date.now();
-    const expiraMs = parseInt(expiraEn, 10);
+        const ahora = Date.now();
+        const expiraMs = parseInt(expiraEn, 10);
 
-    if (!id || !token || !expiraEn || token.length < 10 || ahora > expiraMs) {
-        sessionStorage.clear();
-        Swal.fire({
-            icon: 'error',
-            title: 'Sesión expirada o inválida',
-            text: 'Por favor, inicia sesión nuevamente.',
-            confirmButtonText: 'Volver al login'
-        }).then(() => {
-            window.location.href = "login.aspx";
-        });
-    }
-})();
-
-let contadorTotal = 0;
-let volumenTotal = 0;
-let modoResta = false;
-
-function manejarClick(id, event) {
-    event.preventDefault();
-    const btn = document.getElementById(id);
-    const diametro = parseInt(id.split('-')[1]);
-    let count = parseInt(btn.dataset.count || 0);
-    if (!diametro) return;
-
-    if (modoResta) {
-        if (count > 0) {
-            count--;
-            contadorTotal--;
-            volumenTotal -= calcularVolumen(diametro);
-            desactivarModoResta();
-        } else {
-            Swal.fire("Correción", "El contador ya está en 0.", "question");
+        if (!id || !token || !expiraEn || token.length < 10 || ahora > expiraMs) {
+            sessionStorage.clear();
+            Swal.fire({
+                icon: 'error',
+                title: 'Sesión expirada o inválida',
+                text: 'Por favor, inicia sesión nuevamente.',
+                confirmButtonText: 'Volver al login'
+            }).then(() => {
+                window.location.href = "login.aspx";
+            });
         }
-    } else {
-        count++;
-        contadorTotal++;
-        volumenTotal += calcularVolumen(diametro);
-    }
+    })();
 
-    btn.dataset.count = count;
-    btn.innerText = `Diámetro ${diametro} | Contador: ${count}`;
-    actualizarTotales();
-    guardarDatosContartrozos();
-}
-
-function calcularVolumen(diametro) {
-    return (diametro * diametro * 3.2) / 10000;
-}
-
-function actualizarTotales() {
-    document.querySelectorAll('[id^="total-display"]').forEach(el =>
-        el.innerText = `Total: ${contadorTotal}`);
-    document.querySelectorAll('[id^="volumen-display"]').forEach(el =>
-        el.innerHTML = `Volumen Total: ${volumenTotal.toFixed(2)} m<sup>3</sup>`);
-}
-
-function toggleModoResta(event) {
-    event.preventDefault();
-    modoResta = !modoResta;
-
-    const btn1 = document.getElementById("Resta-1");
-    const btn2 = document.getElementById("Resta-2");
-
-    if (btn1) btn1.innerText = modoResta ? "Modo Resta Activado" : "Activar Modo Resta";
-    if (btn2) btn2.innerText = modoResta ? "Modo Resta Activado" : "Activar Modo Resta";
-
-    for (let i = 16; i <= 60; i += 2) {
-        const b = document.getElementById(`btn-${i}`);
-        if (b) b.classList.toggle("borde-rojo", modoResta);
-    }
-}
-
-function desactivarModoResta() {
-    modoResta = false;
-
-    const btn1 = document.getElementById("Resta-1");
-    const btn2 = document.getElementById("Resta-2");
-
-    if (btn1) btn1.innerText = "Activar Modo Resta";
-    if (btn2) btn2.innerText = "Activar Modo Resta";
-
-    for (let i = 16; i <= 60; i += 2) {
-        const b = document.getElementById(`btn-${i}`);
-        if (b) b.classList.remove("borde-rojo");
-    }
-}
-
-function resetearContadores(event) {
-    event.preventDefault();
-    contadorTotal = 0;
-    volumenTotal = 0;
-
-    document.querySelectorAll("button[id^='btn-']").forEach(btn => {
-        const d = btn.id.split('-')[1];
-        btn.dataset.count = 0;
-        btn.innerText = `Diámetro ${d} | Contador: 0`;
-    });
-
-    actualizarTotales();
-}
-
-function irAlResumen(event) {
-    event.preventDefault();
-
-    const cantidadBancos = parseInt(localStorage.getItem("cantidadBancos") || 1);
-    let bancoActual = parseInt(localStorage.getItem("bancoActual") || 1);
-
-    let total = 0;
-    let volumen = 0;
-    const contadores = {};
-
-    document.querySelectorAll("button[id^='btn-']").forEach(btn => {
-        const diametro = btn.id.replace("btn-", "");
-        const cantidad = parseInt(btn.getAttribute("data-count")) || 0;
-
-        if (cantidad > 0) {
-            contadores[diametro] = cantidad;
-            total += cantidad;
-            volumen += calcularVolumen(parseInt(diametro)) * cantidad;
-        }
-    });
-
-    const datosActuales = {
-        banco: bancoActual,
-        total,
-        volumen,
-        contadores
+    // Estado de la aplicación
+    const state = {
+        contadorTotal: 0,
+        volumenTotal: 0,
+        modoResta: false,
+        datosModificados: false,
+        bancoActual: parseInt(localStorage.getItem("bancoActual") || 1),
+        cantidadBancos: parseInt(localStorage.getItem("cantidadBancos") || 1),
+        largoTroncos: sessionStorage.getItem("LargoTroncos") || "-"
     };
 
-    let datosBancos = JSON.parse(localStorage.getItem("datosBancos") || []);
-    datosBancos = datosBancos.filter(b => b.banco !== bancoActual);
-    datosBancos.push(datosActuales);
-    datosBancos.sort((a, b) => a.banco - b.banco);
-    localStorage.setItem("datosBancos", JSON.stringify(datosBancos));
+    // Cache de elementos DOM frecuentemente usados
+    const domElements = {};
 
-    showLoader();
-    setTimeout(() => {
-        if (bancoActual < cantidadBancos) {
-            localStorage.setItem("bancoActual", bancoActual + 1);
-            window.location.href = "contartrozos.aspx";
-        } else {
-            window.location.href = "resumen.aspx";
+    // Funciones de utilidad
+    const utils = {
+        calcularVolumen: function (diametro) {
+            return (diametro * diametro * 3.2) / 10000;
+        },
+
+        showLoader: function () {
+            const loader = document.getElementById('loading-overlay');
+            if (loader) loader.style.display = 'flex';
+        },
+
+        hideLoader: function () {
+            const loader = document.getElementById('loading-overlay');
+            if (loader) loader.style.display = 'none';
+        },
+
+        debounce: function (func, wait) {
+            let timeout;
+            return function (...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
         }
-    }, 300);
-}
-function actualizarTextoBotones() {
-    const btnVolverList = document.querySelectorAll(".btnVolver");
-    const btnSiguientes = document.querySelectorAll(".btnSiguiente");
+    };
 
-    const bancoActual = parseInt(localStorage.getItem("bancoActual") || 1);
-    const cantidadBancos = parseInt(localStorage.getItem("cantidadBancos") || 1);
+    // Controlador de eventos
+    const eventHandlers = {
+        manejarClick: function (id, event) {
+            event.preventDefault();
+            const btn = document.getElementById(id);
+            if (!btn) return;
 
-    btnVolverList.forEach(btn => {
-        btn.textContent = bancoActual === 1
-            ? "← Volver a ingreso"
-            : "← Volver al banco anterior";
+            const diametro = parseInt(id.split('-')[1]);
+            if (!diametro) return;
 
-        btn.onclick = function (e) {
-            e.preventDefault();
-            showLoader();
-            setTimeout(() => {
-                if (bancoActual === 1) {
-                    window.location.href = "ingreso.aspx";
+            let count = parseInt(btn.dataset.count || 0);
+
+            if (state.modoResta) {
+                if (count > 0) {
+                    count--;
+                    state.contadorTotal--;
+                    state.volumenTotal -= utils.calcularVolumen(diametro);
+                    uiController.desactivarModoResta();
                 } else {
-                    localStorage.setItem("bancoActual", bancoActual - 1);
-                    window.location.href = "contartrozos.aspx";
+                    Swal.fire("Correción", "El contador ya está en 0.", "question");
                 }
-            }, 300);
-        };
-    });
+            } else {
+                count++;
+                state.contadorTotal++;
+                state.volumenTotal += utils.calcularVolumen(diametro);
+            }
 
-    btnSiguientes.forEach(btn => {
-        btn.textContent = bancoActual < cantidadBancos
-            ? "Siguiente banco"
-            : "Ir a resumen";
+            btn.dataset.count = count;
+            btn.textContent = `Diámetro ${diametro}${count > 0 ? ` | Contador: ${count}` : ''}`;
 
-        btn.onclick = function (e) {
-            e.preventDefault();
-            showLoader();
+            uiController.actualizarTotales();
+            state.datosModificados = true;
+
+            // Usar debounce para guardar datos
+            debouncedGuardarDatos();
+        },
+
+        toggleModoResta: function (event) {
+            event.preventDefault();
+            state.modoResta = !state.modoResta;
+            uiController.actualizarModoResta();
+        },
+
+        resetearContadores: function (event) {
+            event.preventDefault();
+            state.contadorTotal = 0;
+            state.volumenTotal = 0;
+
+            document.querySelectorAll("button[id^='btn-']").forEach(btn => {
+                const d = btn.id.split('-')[1];
+                btn.dataset.count = 0;
+                btn.textContent = `Diámetro ${d}`;
+            });
+
+            uiController.actualizarTotales();
+            state.datosModificados = true;
+            dataController.guardarDatosContartrozos();
+        },
+
+        irAlResumen: function (event) {
+            event.preventDefault();
+
+            if (state.datosModificados) {
+                dataController.guardarDatosContartrozos();
+            }
+
+            utils.showLoader();
             setTimeout(() => {
-                if (bancoActual < cantidadBancos) {
-                    localStorage.setItem("bancoActual", bancoActual + 1);
+                if (state.bancoActual < state.cantidadBancos) {
+                    localStorage.setItem("bancoActual", state.bancoActual + 1);
                     window.location.href = "contartrozos.aspx";
                 } else {
                     window.location.href = "resumen.aspx";
                 }
             }, 300);
-        };
-    });
-}
+        },
 
-function guardarDatosContartrozos() {
-    const cantidadBancos = parseInt(localStorage.getItem("cantidadBancos") || 1);
-    let bancoActual = parseInt(localStorage.getItem("bancoActual") || 1);
+        volverBoton: function (e) {
+            e.preventDefault();
 
-    let total = 0;
-    let volumen = 0;
-    const contadores = {};
+            if (state.datosModificados) {
+                dataController.guardarDatosContartrozos();
+            }
 
-    document.querySelectorAll("button[id^='btn-']").forEach(btn => {
-        const diametro = btn.id.replace("btn-", "");
-        const cantidad = parseInt(btn.getAttribute("data-count")) || 0;
-
-        if (cantidad > 0) {
-            contadores[diametro] = cantidad;
-            total += cantidad;
-            volumen += calcularVolumen(parseInt(diametro)) * cantidad;
+            utils.showLoader();
+            setTimeout(() => {
+                if (state.bancoActual === 1) {
+                    window.location.href = "ingreso.aspx";
+                } else {
+                    localStorage.setItem("bancoActual", state.bancoActual - 1);
+                    window.location.href = "contartrozos.aspx";
+                }
+            }, 300);
         }
-    });
-
-    const datosActuales = {
-        banco: bancoActual,
-        total,
-        volumen,
-        contadores
     };
 
-    let datosBancos = JSON.parse(localStorage.getItem("datosBancos")) || [];
-    datosBancos = datosBancos.filter(b => b.banco !== bancoActual);
-    datosBancos.push(datosActuales);
-    datosBancos.sort((a, b) => a.banco - b.banco);
+    // Controlador de la interfaz de usuario
+    const uiController = {
+        inicializar: function () {
+            // Cachear elementos DOM frecuentemente usados
+            domElements.totalDisplays = document.querySelectorAll('[id^="total-display"]');
+            domElements.volumenDisplays = document.querySelectorAll('[id^="volumen-display"]');
+            domElements.restaButtons = document.querySelectorAll('[id^="Resta-"]');
+            domElements.btnVolver = document.querySelectorAll('.btnVolver');
+            domElements.btnSiguiente = document.querySelectorAll('.btnSiguiente');
+            domElements.largoTroncos = document.querySelectorAll('[id^="largo-troncos"]');
+            domElements.bancoInfo = document.getElementById("banco-info");
 
-    localStorage.setItem("datosBancos", JSON.stringify(datosBancos));
-}
+            // Actualizar información inicial
+            this.actualizarTextoBotones();
+            this.actualizarTotales();
+            this.actualizarInfoBanco();
 
-function cargarDatosBanco(bancoActual) {
-    const datosBancos = JSON.parse(localStorage.getItem("datosBancos") || "[]");
-    const datos = datosBancos.find(d => d.banco === bancoActual);
+            // Configurar eventos
+            this.configurarEventos();
+        },
 
-    if (datos) {
-        contadorTotal = datos.total || 0;
-        volumenTotal = datos.volumen || 0;
+        configurarEventos: function () {
+            // Configurar botones de resta
+            domElements.restaButtons.forEach(btn => {
+                btn.addEventListener('click', eventHandlers.toggleModoResta);
+            });
 
-        Object.entries(datos.contadores || {}).forEach(([diametro, cantidad]) => {
-            const btn = document.getElementById(`btn-${diametro}`);
-            if (btn) {
-                btn.setAttribute("data-count", cantidad);
-                btn.textContent = `Diámetro ${diametro}${cantidad > 0 ? ` | Contador: ${cantidad}` : ''}`;
+            // Configurar botones de volver
+            domElements.btnVolver.forEach(btn => {
+                btn.addEventListener('click', eventHandlers.volverBoton);
+            });
+
+            // Configurar botones de siguiente/resumen
+            domElements.btnSiguiente.forEach(btn => {
+                btn.addEventListener('click', eventHandlers.irAlResumen);
+            });
+
+            // Configurar botones de resetear
+            document.querySelectorAll('[id^="resetearContador"]').forEach(btn => {
+                btn.addEventListener('click', eventHandlers.resetearContadores);
+            });
+
+            // Configurar botones de diámetro mediante delegación
+            document.querySelectorAll('.grid-container-1, .grid-container-2').forEach(container => {
+                container.addEventListener('click', function (event) {
+                    const target = event.target;
+                    if (target.tagName === 'BUTTON' && target.id.startsWith('btn-')) {
+                        eventHandlers.manejarClick(target.id, event);
+                    }
+                });
+            });
+        },
+
+        actualizarTextoBotones: function () {
+            // Actualizar texto de botones Volver
+            domElements.btnVolver.forEach(btn => {
+                btn.textContent = state.bancoActual === 1
+                    ? "← Volver a ingreso"
+                    : "← Volver al banco anterior";
+            });
+
+            // Actualizar texto de botones Siguiente
+            domElements.btnSiguiente.forEach(btn => {
+                btn.textContent = state.bancoActual < state.cantidadBancos
+                    ? "Siguiente banco"
+                    : "Ir a resumen";
+            });
+        },
+
+        actualizarInfoBanco: function () {
+            // Actualizar información del banco
+            if (domElements.bancoInfo) {
+                domElements.bancoInfo.textContent = `Banco ${state.bancoActual} de ${state.cantidadBancos}`;
             }
-        });
 
-        actualizarTotales();
+            // Actualizar información de largo de troncos
+            domElements.largoTroncos.forEach(el => {
+                el.textContent = `Largo de troncos: ${state.largoTroncos}`;
+            });
+        },
+
+        actualizarTotales: function () {
+            // Actualizar totales en todos los displays
+            domElements.totalDisplays.forEach(el => {
+                el.textContent = `Total: ${state.contadorTotal}`;
+            });
+
+            domElements.volumenDisplays.forEach(el => {
+                el.textContent = `Volumen Total: ${state.volumenTotal.toFixed(2)} m³`;
+            });
+        },
+
+        actualizarModoResta: function () {
+            // Actualizar apariencia de botones de resta
+            domElements.restaButtons.forEach(btn => {
+                btn.textContent = state.modoResta ? "Modo Resta Activado" : "Activar Modo Resta";
+            });
+
+            // Actualizar apariencia de botones de diámetro
+            document.querySelectorAll("button[id^='btn-']").forEach(btn => {
+                if (state.modoResta) {
+                    btn.classList.add("borde-rojo");
+                } else {
+                    btn.classList.remove("borde-rojo");
+                }
+            });
+        },
+
+        desactivarModoResta: function () {
+            state.modoResta = false;
+            this.actualizarModoResta();
+        }
+    };
+
+    // Controlador de datos
+    const dataController = {
+        guardarDatosContartrozos: function () {
+            const contadores = {};
+
+            document.querySelectorAll("button[id^='btn-']").forEach(btn => {
+                const diametro = btn.id.replace("btn-", "");
+                const cantidad = parseInt(btn.getAttribute("data-count")) || 0;
+
+                if (cantidad > 0) {
+                    contadores[diametro] = cantidad;
+                }
+            });
+
+            const datosActuales = {
+                banco: state.bancoActual,
+                total: state.contadorTotal,
+                volumen: state.volumenTotal,
+                contadores
+            };
+
+            let datosBancos = JSON.parse(localStorage.getItem("datosBancos") || "[]");
+            datosBancos = datosBancos.filter(b => b.banco !== state.bancoActual);
+            datosBancos.push(datosActuales);
+            datosBancos.sort((a, b) => a.banco - b.banco);
+
+            localStorage.setItem("datosBancos", JSON.stringify(datosBancos));
+            state.datosModificados = false;
+        },
+
+        cargarDatosBanco: function () {
+            const datosBancos = JSON.parse(localStorage.getItem("datosBancos") || "[]");
+            const datos = datosBancos.find(d => d.banco === state.bancoActual);
+
+            if (datos) {
+                state.contadorTotal = datos.total || 0;
+                state.volumenTotal = datos.volumen || 0;
+
+                Object.entries(datos.contadores || {}).forEach(([diametro, cantidad]) => {
+                    const btn = document.getElementById(`btn-${diametro}`);
+                    if (btn) {
+                        btn.setAttribute("data-count", cantidad);
+                        btn.textContent = `Diámetro ${diametro}${cantidad > 0 ? ` | Contador: ${cantidad}` : ''}`;
+                    }
+                });
+
+                uiController.actualizarTotales();
+            }
+        }
+    };
+
+    // Crear funciones con debounce
+    const debouncedGuardarDatos = utils.debounce(() => {
+        dataController.guardarDatosContartrozos();
+    }, 500);
+
+    // Función para generar los botones de diámetro dinámicamente
+    function generarBotonesDiametro() {
+        const gridContainer1 = document.querySelector('.grid-container-1');
+        const gridContainer2 = document.querySelector('.grid-container-2');
+
+        if (gridContainer1) {
+            for (let i = 16; i <= 38; i += 2) {
+                const btn = document.createElement('button');
+                btn.id = `btn-${i}`;
+                btn.dataset.count = '0';
+                btn.textContent = `Diámetro ${i}`;
+                gridContainer1.appendChild(btn);
+            }
+        }
+
+        if (gridContainer2) {
+            for (let i = 40; i <= 60; i += 2) {
+                const btn = document.createElement('button');
+                btn.id = `btn-${i}`;
+                btn.dataset.count = '0';
+                btn.textContent = `Diámetro ${i}`;
+                gridContainer2.appendChild(btn);
+            }
+        }
     }
-}
 
-document.addEventListener("DOMContentLoaded", function () {
-    actualizarTextoBotones();
-    cargarDatosBanco(parseInt(localStorage.getItem("bancoActual") || 1));
-
-    const bancoActual = parseInt(localStorage.getItem("bancoActual") || 1);
-    const cantidadBancos = parseInt(localStorage.getItem("cantidadBancos") || 1);
-
-    const bancoInfo = document.getElementById("banco-info");
-    if (bancoInfo) {
-        bancoInfo.innerText = `Banco ${bancoActual} de ${cantidadBancos}`;
+    // Función para cargar la versión
+    function cargarVersion() {
+        fetch('xml/version.xml')
+            .then(response => {
+                if (!response.ok) throw new Error('No se pudo cargar version.xml');
+                return response.text();
+            })
+            .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+            .then(data => {
+                const numero = data.querySelector('number')?.textContent || 'desconocida';
+                const fecha = data.querySelector('fecha')?.textContent || '';
+                const footerVersion = document.getElementById('footer-version');
+                if (footerVersion) {
+                    footerVersion.textContent = `Versión: ${numero} - ${fecha}`;
+                }
+            })
+            .catch(err => {
+                const footerVersion = document.getElementById('footer-version');
+                if (footerVersion) {
+                    footerVersion.textContent = 'Versión: desconocida';
+                }
+                console.error(err);
+            });
     }
 
-    const largo = sessionStorage.getItem("LargoTroncos") || "-";
+    // Inicialización cuando el DOM está cargado
+    document.addEventListener("DOMContentLoaded", function () {
+        // Si la página usa server-side generation para los botones, comentar la siguiente línea
+        // generarBotonesDiametro();
 
-    const lugarLargo1 = document.getElementById("largo-troncos-1");
-    const lugarLargo2 = document.getElementById("largo-troncos-2");
+        // Inicializar UI
+        uiController.inicializar();
 
-    if (lugarLargo1) lugarLargo1.textContent = `Largo de troncos: ${largo}`;
-    if (lugarLargo2) lugarLargo2.textContent = `Largo de troncos: ${largo}`;
-});
+        // Cargar datos del banco actual
+        dataController.cargarDatosBanco();
 
-function cargarVersion() {
-    fetch('xml/version.xml')
-        .then(response => {
-            if (!response.ok) throw new Error('No se pudo cargar version.xml');
-            return response.text();
-        })
-        .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
-        .then(data => {
-            const numero = data.querySelector('number')?.textContent || 'desconocida';
-            const fecha = data.querySelector('fecha')?.textContent || '';
-            document.getElementById('footer-version').textContent = `Versión: ${numero} - ${fecha}`;
-        })
-        .catch(err => {
-            document.getElementById('footer-version').textContent = 'Versión: desconocida';
-            console.error(err);
-        });
-}
+        // Cargar información de versión
+        cargarVersion();
+
+        // Ocultar loader si está visible
+        utils.hideLoader();
+    });
+
+    // Exponer funciones necesarias globalmente (para compatibilidad con onclick en HTML)
+    window.manejarClick = eventHandlers.manejarClick;
+    window.toggleModoResta = eventHandlers.toggleModoResta;
+    window.resetearContadores = eventHandlers.resetearContadores;
+    window.irAlResumen = eventHandlers.irAlResumen;
+})();
