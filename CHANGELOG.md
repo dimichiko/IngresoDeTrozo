@@ -2,7 +2,7 @@
 
 Todos los cambios notables del proyecto se registran aquí.
 
-## [1.8.0] - 2025-05-14
+## [1.9.0] - 2025-05-15
 ### Agregado
 - Ordenamiento alfabético de la lista de proveedores en el resumen final.
 - Mejora visual en la sección de información de proveedor para mayor claridad.
