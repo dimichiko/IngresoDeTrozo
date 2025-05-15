@@ -622,7 +622,11 @@ function configureSubmitButton() {
             campos.forEach(id => {
                 const el = document.getElementById(id);
                 if (el && el.value.trim() !== "") {
-                    sessionStorage.setItem(id, el.value.trim());
+                    if (el.tagName === "SELECT") {
+                        sessionStorage.setItem(id, el.options[el.selectedIndex].text.trim());
+                    } else {
+                        sessionStorage.setItem(id, el.value.trim());
+                    }
                 }
             });
 

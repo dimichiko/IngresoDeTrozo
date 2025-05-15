@@ -77,11 +77,12 @@
                             <button class="btnSiguiente" type="button" onclick="irAlResumen(event)">Resumen</button>
                         </div>
 
+
+                    </div>
                     <div class="grid-container-2">
                         <% For i = 40 To 60 Step 2
                                 Response.Write($"<button id='btn-{i}' onclick=""manejarClick('btn-{i}', event)"" data-count='0'>Diámetro {i}</button>")
                             Next %>
-                    </div>
                     </div>
                 </div>
             </div>
