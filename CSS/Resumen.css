@@ -373,6 +373,11 @@ details.banco-bloque {
     }
 }
 
+.version-label {
+    font-size: 0.8rem;
+    color: #777;
+}
+
 /* === Media Queries === */
 @media (max-width: 768px) {
     body {

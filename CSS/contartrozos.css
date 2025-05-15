@@ -315,6 +315,11 @@ body {
     z-index: 1000;
 }
 
+.version-label {
+    font-size: 0.8rem;
+    color: #777;
+}
+
 @keyframes spin {
     to {
         transform: rotate(360deg);

@@ -54,3 +54,8 @@
         margin-bottom: 20px;
         color: #333;
     }
+
+.version-label {
+    font-size: 0.8rem;
+    color: #777;
+}

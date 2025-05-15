@@ -199,6 +199,11 @@ body {
         animation: spin 1s linear infinite;
     }
 
+.version-label {
+    font-size: 0.8rem;
+    color: #777;
+}
+
 @keyframes spin {
     to {
         transform: rotate(360deg);
