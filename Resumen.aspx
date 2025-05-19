@@ -33,7 +33,7 @@
                     </div>
                 </div>
 
-                <div class="botones no-print">
+                <div class="botones no-print" style="text-align: center;">
                     <button type="button" onclick="volverAContarTrozos()" aria-label="Volver al conteo">← Volver al conteo</button>
                     <button type="button" onclick="mostrarPantallaFinal()" aria-label="Ver resumen final">→ Ver resumen final</button>
                 </div>
@@ -176,9 +176,10 @@
                     </table>
                 </div>
 
-                <div class="botones no-print">
+                <div class="botones no-print" style="text-align: center;">
                     <button type="button" onclick="mostrarPantallaBancos()">← Volver</button>
-                    <button type="button" onclick="window.print()">Imprimir</button>
+                    <button onclick="guardarTodoComoJSON()">💾 Guardar JSON</button>
+                    <button onclick="imprimirResumenComoPDF()">🖨️ Imprimir PDF</button>
                     <button type="button" onclick="irAlInicio()">← Volver al Login</button>
                 </div>
             </section>
@@ -193,6 +194,7 @@
     <script src="JS/loader.js"></script>
     <script src="JS/version-utils.js"></script>
     <script src="https://portal.altohorizonte.cl/js/comun_prod.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         document.querySelectorAll("button, a").forEach(el => {
             el.addEventListener("click", e => {

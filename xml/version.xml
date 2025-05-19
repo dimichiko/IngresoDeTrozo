@@ -1,8 +1,9 @@
 ﻿<version>
-	<number>1.9.0</number>
-	<fecha>2025-05-15</fecha>
+	<number>2.0.0</number>
+	<fecha>2025-05-19</fecha>
 	<descripcion>
-		Lista de proveedores ordenada alfabéticamente, validación de sesión refinada,
-		y mejoras visuales en la sección de proveedor.
+		Mejoras completas al PDF del resumen final: formato consistente de fechas,
+		sección de transportista más compacta, firma fija en el pie de página,
+		y diseño de tabla de conteo más claro y equilibrado.
 	</descripcion>
 </version>

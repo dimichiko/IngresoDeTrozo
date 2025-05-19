@@ -694,3 +694,373 @@ const appController = (() => {
 
 // Auto-inicio cuando el DOM está listo
 window.addEventListener('load', appController.init);
+
+function guardarTodoComoJSON() {
+    const ingreso = {
+        Proveedor: sessionStorage.getItem("txtCodProvAuto"),
+        NotaCompra: sessionStorage.getItem("txtContratoAuto"),
+        NotaVenta: sessionStorage.getItem("txtVentaAuto"),
+        OC: sessionStorage.getItem("txtOC"),
+        Fecha: sessionStorage.getItem("txtFechaRecepcion"),
+        Producto: sessionStorage.getItem("txtProducto"),
+        FSC: sessionStorage.getItem("txtFSC"),
+        Bancos: sessionStorage.getItem("selectBancos"),
+        Destino: sessionStorage.getItem("txtDestino"),
+        Largo: sessionStorage.getItem("LargoTroncos"),
+        Rol: sessionStorage.getItem("txtRol"),
+        Despachador: sessionStorage.getItem("txtDespachador"),
+        Transportista: sessionStorage.getItem("txtTransportista"),
+        RUT_Despachador: sessionStorage.getItem("txtRUTDespachador"),
+        Conductor: sessionStorage.getItem("txtConductor"),
+        RUT_Conductor: sessionStorage.getItem("txtRUTConductor")
+    };
+
+    // Inicia resumen global vacío
+    const resumenGlobal = {};
+    for (let diam = 16; diam <= 60; diam += 2) {
+        resumenGlobal[diam] = 0;
+    }
+
+    const bancos = JSON.parse(localStorage.getItem("datosBancos")) || [];
+
+    // Sumar todos los bancos al resumen global
+    bancos.forEach(banco => {
+        for (let diam = 16; diam <= 60; diam += 2) {
+            const cantidad = banco.contadores?.[diam] || 0;
+            resumenGlobal[diam] += cantidad;
+        }
+    });
+
+    // Total general de troncos
+    const totalTroncos = Object.values(resumenGlobal).reduce((a, b) => a + b, 0);
+
+    const fechaObj = new Date();
+    const fechaHora = fechaObj.toLocaleString('es-CL');
+    const yyyy = fechaObj.getFullYear();
+    const mm = String(fechaObj.getMonth() + 1).padStart(2, '0');
+    const dd = String(fechaObj.getDate()).padStart(2, '0');
+    const hh = String(fechaObj.getHours()).padStart(2, '0');
+    const min = String(fechaObj.getMinutes()).padStart(2, '0');
+    const ss = String(fechaObj.getSeconds()).padStart(2, '0');
+
+    const nombreUsuario = (sessionStorage.getItem("nombre_usuario") || "usuario")
+        .replace(/\s+/g, '')
+        .replace(/[^a-zA-Z0-9]/g, '');
+
+    const nombreArchivo = `resumen_${nombreUsuario}_${yyyy}-${mm}-${dd}_${hh}-${min}-${ss}.json`;
+
+    const datos = {
+        generado_por: sessionStorage.getItem("nombre_usuario") || "Desconocido",
+        fecha_hora: fechaHora,
+        ingreso: ingreso,
+        resumen_global: resumenGlobal,
+        total_troncos: totalTroncos
+    };
+
+    const blob = new Blob([JSON.stringify(datos, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = nombreArchivo;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+function imprimirResumenComoPDF() {
+    const generado_por = sessionStorage.getItem("nombre_usuario") || "Desconocido";
+    const planta = sessionStorage.getItem("txtDestino") || "Planta";
+
+    const fecha_impresion = (() => {
+        const now = new Date();
+        const pad = n => String(n).padStart(2, '0');
+        const dd = pad(now.getDate());
+        const mm = pad(now.getMonth() + 1);
+        const yyyy = now.getFullYear();
+        const hh = pad(now.getHours());
+        const min = pad(now.getMinutes());
+        const ss = pad(now.getSeconds());
+        return `${dd}-${mm}-${yyyy} ${hh}:${min}:${ss}`;
+    })();
+
+    const fecha_documento = (() => {
+        const fechaRaw = sessionStorage.getItem("txtFechaRecepcion") || "-";
+        if (!fechaRaw.includes("/")) return fechaRaw;
+        const [dd, mm, yyyy] = fechaRaw.split("/");
+        return `${dd}-${mm}-${yyyy}`;
+    })();
+
+    const ingresoP1 = {
+        Proveedor: sessionStorage.getItem("txtCodProvAuto"),
+        "Nota Compra": sessionStorage.getItem("txtContratoAuto"),
+        "Nota Venta": sessionStorage.getItem("txtVentaAuto"),
+        Producto: sessionStorage.getItem("txtProducto"),
+        FSC: sessionStorage.getItem("txtFSC"),
+        Bancos: sessionStorage.getItem("selectBancos")
+    };
+
+    const ingresoP2 = {
+        Rol: sessionStorage.getItem("txtRol") || "-",
+        Comuna: sessionStorage.getItem("txtComuna") || "-",
+        Predio: sessionStorage.getItem("txtPredio") || "-",
+        OC: sessionStorage.getItem("txtOC") || "-",
+        Coordenadas: sessionStorage.getItem("txtCoordenadas") || "-",
+        Rodal: sessionStorage.getItem("txtRodal") || "-",
+        Largo: sessionStorage.getItem("LargoTroncos") || "-"
+    };
+
+    const datosFinales = {
+        Conductor: sessionStorage.getItem("txtConductor"),
+        "RUT Conductor": sessionStorage.getItem("txtRUTConductor"),
+        Transportista: sessionStorage.getItem("txtTransportista"),
+        "RUT Despachador": sessionStorage.getItem("txtRUTDespachador"),
+        Despachador: sessionStorage.getItem("txtDespachador"),
+    };
+
+    const logoURL = "Content/LOGO_ALTO_HORIZONTE-SIN-FONDO.png";
+
+    const resumen = (() => {
+        const r = {};
+        for (let d = 16; d <= 60; d += 2) r[d] = 0;
+        try {
+            const bancos = JSON.parse(localStorage.getItem("datosBancos")) || [];
+            bancos.forEach(b => {
+                for (let d = 16; d <= 60; d += 2) {
+                    r[d] += b.contadores?.[d] || 0;
+                }
+            });
+        } catch (error) {
+            console.error("Error al procesar datos de bancos:", error);
+        }
+        return r;
+    })();
+
+    const calcularVol = d => (d * d * 3.2) / 10000;
+    const totalVolumen = Object.entries(resumen).reduce((sum, [d, c]) =>
+        sum + calcularVol(+d) * c, 0).toFixed(2);
+    const totalTroncos = Object.values(resumen).reduce((a, b) => a + b, 0);
+
+    let html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="UTF-8">
+    <title>Resumen Final</title>
+    <style>
+        @media print {
+            @page { size: A4 portrait; margin: 0.5cm; }
+            body { margin: 0; padding: 0; }
+            table { page-break-inside: avoid; }
+        }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 11pt;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .logo { height: 50px; }
+        .metadata {
+            font-size: 10pt;
+            text-align: right;
+        }
+        .titulo {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            margin: 10px 0 0 0;
+        }
+        .planta {
+            text-align: center;
+            font-size: 12pt;
+            margin: 0 0 10px 0;
+        }
+        .info-generado {
+            font-size: 10pt;
+            text-align: right;
+        }
+        .pagina {
+            font-size: 10pt;
+            text-align: right;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        td, th {
+            padding: 4px 5px;
+            font-size: 10pt;
+        }
+        .summary-table {
+            width: 90%;
+            margin: 0 auto 15px auto;
+            border: 1px solid #000;
+        }
+        .summary-table th, .summary-table td {
+            border: 1px solid #000;
+            text-align: center;
+        }
+        .total-row td {
+            font-weight: bold;
+            text-align: right;
+        }
+        .info-titles {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .separator {
+            border-top: 1px solid #999;
+            margin: 6px 0;
+        }
+        .section-table th {
+            width: 20%;
+            text-align: left;
+        }
+        .section-table td {
+            width: 30%;
+        }
+        .footer {
+            position: fixed;
+            bottom: 40px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            font-size: 10pt;
+            text-align: center;
+        }
+    </style>
+    </head>
+    <body>
+
+    <div class="header">
+        <img src="${logoURL}" class="logo" />
+        <div class="info-generado">
+            <div><strong>Generado por:</strong> ${generado_por}</div>
+            <div><strong>Fecha impreso:</strong> ${fecha_impresion}</div>
+            <div><strong>Fecha doc:</strong> ${fecha_documento}</div>
+            <div class="pagina"><strong>Página:</strong> 1/1</div>
+        </div>
+    </div>
+
+    <div class="titulo">Resumen de Recepción de Troncos</div>
+    <div class="planta">Planta: ${planta}</div>
+
+    <h3>Datos de Ingreso</h3>
+    <table class="section-table">`;
+
+    const keysP1 = Object.keys(ingresoP1);
+    for (let i = 0; i < keysP1.length; i += 2) {
+        html += '<tr>';
+        for (let j = 0; j < 2; j++) {
+            const idx = i + j;
+            if (idx < keysP1.length) {
+                const key = keysP1[idx];
+                html += `<th>${key}:</th><td>${ingresoP1[key] || "-"}</td>`;
+            } else {
+                html += '<th></th><td></td>';
+            }
+        }
+        html += '</tr>';
+    }
+
+    html += `</table>
+    <div class="info-titles">Información Origen</div>
+    <div class="separator"></div>
+    <table class="section-table">`;
+
+    const grid = [
+        ["Rol", "Comuna"],
+        ["Predio", "OC"],
+        ["Coordenadas", "Rodal"],
+        ["Largo", ""]
+    ];
+
+    grid.forEach(row => {
+        html += '<tr>';
+        row.forEach(key => {
+            if (key) {
+                html += `<th>${key}:</th><td>${ingresoP2[key] || "-"}</td>`;
+            } else {
+                html += '<th></th><td></td>';
+            }
+        });
+        html += '</tr>';
+    });
+
+    html += `
+    </table>
+
+    <h3>Resumen Global</h3>
+    <table class="summary-table">
+        <thead>
+            <tr>
+                <th>Diám.</th><th>Cant.</th><th>Diám.</th><th>Cant.</th>
+            </tr>
+        </thead>
+        <tbody>`;
+
+    for (let i = 16; i <= 60; i += 4) {
+        const d1 = i, d2 = i + 2;
+        const c1 = resumen[d1] || 0, c2 = resumen[d2] || 0;
+        html += `
+            <tr>
+                <td>${d1}</td><td>${c1}</td>
+                <td>${d2 <= 60 ? d2 : ""}</td><td>${d2 <= 60 ? c2 : ""}</td>
+            </tr>`;
+    }
+
+    html += `
+            <tr class="total-row">
+                <td colspan="4" style="text-align: right;">
+                    Total Troncos: ${totalTroncos} &nbsp;&nbsp;&nbsp;&nbsp;
+                    Total Volumen: ${totalVolumen} m³
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="info-titles">Información Transportista</div>
+    <div class="separator"></div>
+    <table class="section-table">`;
+
+    const keysFinal = Object.keys(datosFinales);
+    for (let i = 0; i < keysFinal.length; i += 2) {
+        html += '<tr>';
+        for (let j = 0; j < 2; j++) {
+            const idx = i + j;
+            if (idx < keysFinal.length) {
+                const key = keysFinal[idx];
+                html += `<th>${key}:</th><td>${datosFinales[key] || "-"}</td>`;
+            } else {
+                html += '<th></th><td></td>';
+            }
+        }
+        html += '</tr>';
+    }
+
+    html += `</table>
+
+    <div class="footer">
+        <div>_____________________________<br>Firma Encargado</div>
+        <div>_____________________________<br>Firma Receptor</div>
+    </div>
+
+    <script>
+        window.onload = () => setTimeout(() => window.print(), 300);
+    </script>
+    </body>
+    </html>`;
+
+    const ventana = window.open('', '_blank');
+    if (!ventana) {
+        alert('Por favor habilita ventanas emergentes para imprimir.');
+        return;
+    }
+    ventana.document.write(html);
+    ventana.document.close();
+    ventana.focus()
+}

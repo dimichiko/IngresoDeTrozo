@@ -2,6 +2,19 @@
 
 Todos los cambios notables del proyecto se registran aquí.
 
+## [2.0.0] - 2025-05-19
+### Agregado
+- Fecha de impresión y fecha de documento con formato consistente `dd-mm-yyyy`.
+- Firma fija al pie de página en la impresión del PDF.
+
+### Mejorado
+- Diseño del título y metadata en el encabezado del PDF.
+- Tabla de resumen global más clara y más pequeña.
+- Sección de Información Transportista más compacta horizontalmente.
+- Consistencia general del diseño para mejor presentación impresa.
+
+---
+
 ## [1.9.0] - 2025-05-15
 ### Agregado
 - Ordenamiento alfabético de la lista de proveedores en el resumen final.
