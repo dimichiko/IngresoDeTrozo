@@ -813,9 +813,9 @@ function imprimirResumenComoPDF() {
     const datosFinales = {
         Conductor: sessionStorage.getItem("txtConductor"),
         "RUT Conductor": sessionStorage.getItem("txtRUTConductor"),
-        Transportista: sessionStorage.getItem("txtTransportista"),
-        "RUT Despachador": sessionStorage.getItem("txtRUTDespachador"),
         Despachador: sessionStorage.getItem("txtDespachador"),
+        "RUT Despachador": sessionStorage.getItem("txtRUTDespachador"),
+        Transportista: sessionStorage.getItem("txtTransportista")
     };
 
     const logoURL = "Content/LOGO_ALTO_HORIZONTE-SIN-FONDO.png";
@@ -942,7 +942,7 @@ function imprimirResumenComoPDF() {
             <div><strong>Generado por:</strong> ${generado_por}</div>
             <div><strong>Fecha impreso:</strong> ${fecha_impresion}</div>
             <div><strong>Fecha doc:</strong> ${fecha_documento}</div>
-            <div class="pagina"><strong>Página:</strong> 1/1</div>
+            <div class="pagina"><strong>Página:</strong> 1 de 1</div>
         </div>
     </div>
 
@@ -1003,14 +1003,27 @@ function imprimirResumenComoPDF() {
         </thead>
         <tbody>`;
 
-    for (let i = 16; i <= 60; i += 4) {
-        const d1 = i, d2 = i + 2;
-        const c1 = resumen[d1] || 0, c2 = resumen[d2] || 0;
+    const izquierda = [];
+    const derecha = [];
+
+    for (let d = 16; d <= 60; d += 2) {
+        if (d <= 38) izquierda.push(d);
+        else derecha.push(d);
+    }
+
+    const maxFilas = Math.max(izquierda.length, derecha.length);
+
+    for (let i = 0; i < maxFilas; i++) {
+        const d1 = izquierda[i] ?? "";
+        const c1 = d1 ? resumen[d1] || 0 : "";
+        const d2 = derecha[i] ?? "";
+        const c2 = d2 ? resumen[d2] || 0 : "";
+
         html += `
-            <tr>
-                <td>${d1}</td><td>${c1}</td>
-                <td>${d2 <= 60 ? d2 : ""}</td><td>${d2 <= 60 ? c2 : ""}</td>
-            </tr>`;
+        <tr>
+            <td>${d1}</td><td>${c1}</td>
+            <td>${d2}</td><td>${c2}</td>
+        </tr>`;
     }
 
     html += `

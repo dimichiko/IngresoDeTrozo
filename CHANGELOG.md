@@ -12,6 +12,8 @@ Todos los cambios notables del proyecto se registran aquí.
 - Tabla de resumen global más clara y más pequeña.
 - Sección de Información Transportista más compacta horizontalmente.
 - Consistencia general del diseño para mejor presentación impresa.
+- Validación de RUT más estricta (mínimo 1 millón + Mod11).
+- SweetAlerts en lugar de alerts nativos para toda la validación de campos.
 
 ---
 
