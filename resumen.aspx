@@ -178,8 +178,7 @@
 
                 <div class="botones no-print" style="text-align: center;">
                     <button type="button" onclick="mostrarPantallaBancos()">← Volver</button>
-                    <button onclick="guardarTodoComoJSON()">💾 Guardar JSON</button>
-                    <button onclick="imprimirResumenComoPDF()">🖨️ Imprimir PDF</button>
+                    <button type="button" onclick="guardarDatos()">💾 Guardar</button>
                     <button type="button" onclick="irAlInicio()">← Volver al Login</button>
                 </div>
             </section>
@@ -189,11 +188,11 @@
     <div id="loading-overlay" class="loading-overlay" style="display: none;">
         <div class="spinner"></div>
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://portal.altohorizonte.cl/js/comun_prod.js"></script>
     <script src="JS/resumen.js?v=4"></script>
     <script src="JS/loader.js"></script>
     <script src="JS/version-utils.js"></script>
-    <script src="https://portal.altohorizonte.cl/js/comun_prod.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         document.querySelectorAll("button, a").forEach(el => {

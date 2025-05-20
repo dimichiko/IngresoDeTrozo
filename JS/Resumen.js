@@ -695,45 +695,54 @@ const appController = (() => {
 // Auto-inicio cuando el DOM está listo
 window.addEventListener('load', appController.init);
 
-function guardarTodoComoJSON() {
-    const ingreso = {
-        Proveedor: sessionStorage.getItem("txtCodProvAuto"),
-        NotaCompra: sessionStorage.getItem("txtContratoAuto"),
-        NotaVenta: sessionStorage.getItem("txtVentaAuto"),
-        OC: sessionStorage.getItem("txtOC"),
-        Fecha: sessionStorage.getItem("txtFechaRecepcion"),
-        Producto: sessionStorage.getItem("txtProducto"),
-        FSC: sessionStorage.getItem("txtFSC"),
-        Bancos: sessionStorage.getItem("selectBancos"),
-        Destino: sessionStorage.getItem("txtDestino"),
-        Largo: sessionStorage.getItem("LargoTroncos"),
-        Rol: sessionStorage.getItem("txtRol"),
-        Despachador: sessionStorage.getItem("txtDespachador"),
-        Transportista: sessionStorage.getItem("txtTransportista"),
-        RUT_Despachador: sessionStorage.getItem("txtRUTDespachador"),
-        Conductor: sessionStorage.getItem("txtConductor"),
-        RUT_Conductor: sessionStorage.getItem("txtRUTConductor")
+async function guardarDatos() {
+    const datos = {
+        NC: sessionStorage.getItem("txtContratoAuto") || "0",
+        NV: sessionStorage.getItem("txtVentaAuto") || "0",
+        GDE: sessionStorage.getItem("txtOC") || "",
+        codProv: sessionStorage.getItem("txtCodProvAuto") || "0",
+        CodFSC: sessionStorage.getItem("txtFSC") || "",
+        Pila: "-",
+        LargoTrozo: sessionStorage.getItem("LargoTroncos") || "",
+        CodEmp: sessionStorage.getItem("id_usuario") || "",
+        TotUnidades: 0,
+        TotVolM3: 0,
+        strObs: "-",
+        RutTrans: sessionStorage.getItem("txtRUTTransportista") || "0",
+        NomTrans: sessionStorage.getItem("txtTransportista") || "",
+        RutDesp: sessionStorage.getItem("txtRUTDespachador") || "",
+        NomDesp: sessionStorage.getItem("txtDespachador") || "",
+        RutCond: sessionStorage.getItem("txtRUTConductor") || "",
+        NomCond: sessionStorage.getItem("txtConductor") || "",
+        PatenteCam: "-",
+        PatenteCar: "-",
+        Rol: sessionStorage.getItem("txtRol") || "",
+        Destino: sessionStorage.getItem("txtDestino") || "",
+        EstadoCod: "1",
+        CodUsuario: sessionStorage.getItem("id_usuario") || ""
     };
 
-    // Inicia resumen global vacío
-    const resumenGlobal = {};
-    for (let diam = 16; diam <= 60; diam += 2) {
-        resumenGlobal[diam] = 0;
+    const bancos = dataController.getBancos();
+    if (!bancos || bancos.length === 0) {
+        Swal.fire("Error", "No hay bancos registrados para guardar.", "error");
+        return;
     }
 
-    const bancos = JSON.parse(localStorage.getItem("datosBancos")) || [];
+    bancos.forEach(b => {
+        datos.TotUnidades += b.total;
+        datos.TotVolM3 += b.volumen;
+    });
 
-    // Sumar todos los bancos al resumen global
-    bancos.forEach(banco => {
-        for (let diam = 16; diam <= 60; diam += 2) {
-            const cantidad = banco.contadores?.[diam] || 0;
-            resumenGlobal[diam] += cantidad;
+    // === Guardar archivo JSON local ===
+    const resumenGlobal = {};
+    for (let d = 16; d <= 60; d += 2) resumenGlobal[d] = 0;
+    bancos.forEach(b => {
+        for (let d = 16; d <= 60; d += 2) {
+            resumenGlobal[d] += b.contadores?.[d] || 0;
         }
     });
 
-    // Total general de troncos
     const totalTroncos = Object.values(resumenGlobal).reduce((a, b) => a + b, 0);
-
     const fechaObj = new Date();
     const fechaHora = fechaObj.toLocaleString('es-CL');
     const yyyy = fechaObj.getFullYear();
@@ -742,14 +751,31 @@ function guardarTodoComoJSON() {
     const hh = String(fechaObj.getHours()).padStart(2, '0');
     const min = String(fechaObj.getMinutes()).padStart(2, '0');
     const ss = String(fechaObj.getSeconds()).padStart(2, '0');
-
     const nombreUsuario = (sessionStorage.getItem("nombre_usuario") || "usuario")
         .replace(/\s+/g, '')
         .replace(/[^a-zA-Z0-9]/g, '');
-
     const nombreArchivo = `resumen_${nombreUsuario}_${yyyy}-${mm}-${dd}_${hh}-${min}-${ss}.json`;
 
-    const datos = {
+    const ingreso = {
+        Proveedor: datos.codProv,
+        NotaCompra: datos.NC,
+        NotaVenta: datos.NV,
+        OC: datos.GDE,
+        Fecha: sessionStorage.getItem("txtFechaRecepcion") || "-",
+        Producto: datos.CodProd,
+        FSC: datos.CodFSC,
+        Bancos: sessionStorage.getItem("selectBancos") || "-",
+        Destino: datos.Destino,
+        Largo: datos.LargoTrozo,
+        Rol: datos.Rol,
+        Despachador: datos.NomDesp,
+        Transportista: datos.NomTrans,
+        RUT_Despachador: datos.RutDesp,
+        Conductor: datos.NomCond,
+        RUT_Conductor: datos.RutCond
+    };
+
+    const datosFinales = {
         generado_por: sessionStorage.getItem("nombre_usuario") || "Desconocido",
         fecha_hora: fechaHora,
         ingreso: ingreso,
@@ -757,9 +783,8 @@ function guardarTodoComoJSON() {
         total_troncos: totalTroncos
     };
 
-    const blob = new Blob([JSON.stringify(datos, null, 2)], { type: "application/json" });
+    const blob = new Blob([JSON.stringify(datosFinales, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
-
     const a = document.createElement("a");
     a.href = url;
     a.download = nombreArchivo;
@@ -767,7 +792,62 @@ function guardarTodoComoJSON() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+
+    console.log("Datos enviados a IngresarTrozos:", datos);
+
+    const resultado = await IngresarTrozos(
+        datos.codProv, datos.NC, datos.NV, datos.GDE, datos.CodProd, datos.CodFSC,
+        datos.Pila, datos.LargoTrozo, datos.TotUnidades, datos.TotVolM3,
+        datos.CodEmp, datos.strObs, datos.RutTrans, datos.NomTrans,
+        datos.RutDesp, datos.NomDesp, datos.RutCond, datos.NomCond,
+        datos.PatenteCam, datos.PatenteCar, datos.Rol, datos.Destino, datos.EstadoCod,
+        datos.CodUsuario
+    );
+
+    console.log("Resultado de IngresarTrozos:", resultado);
+
+    // === Enviar al servidor ===
+    //const resultado = IngresarTrozos(
+    //    10, 10, 10, 10, 10, 1,
+    //    4, 330, 20, 36.1,
+    //    10, "holi", "1-1", "n1",
+    //    "2-2", "n2", "3-3", "n3",
+    //    "AABBCC", "CCDDFF", "147-8", 1, 10,
+    //    10
+    //);
+
+    if (!resultado || !resultado.GDE) {
+        Swal.fire("Error", "Falló el ingreso general de trozos.", "error");
+        return;
+    }
+
+    for (const b of bancos) {
+        const contadores = b.contadores || {};
+        for (const diam in contadores) {
+            const cantidad = contadores[diam];
+            if (cantidad > 0) {
+                await IngresarTrozosDet(resultado.GDE, parseInt(diam), cantidad);
+            }
+        }
+    }
+
+    // === Confirmar y preguntar por impresión ===
+    Swal.fire({
+        title: "Datos guardados",
+        text: "¿Deseas imprimir el resumen ahora?",
+        icon: "success",
+        showCancelButton: true,
+        confirmButtonText: "Sí, imprimir",
+        cancelButtonText: "No, más tarde",
+        confirmButtonColor: "#007BFF",
+        cancelButtonColor: "#6c757d"
+    }).then(result => {
+        if (result.isConfirmed) {
+            imprimirResumenComoPDF();
+        }
+    });
 }
+
 function imprimirResumenComoPDF() {
     const generado_por = sessionStorage.getItem("nombre_usuario") || "Desconocido";
     const planta = sessionStorage.getItem("txtDestino") || "Planta";
@@ -1075,5 +1155,5 @@ function imprimirResumenComoPDF() {
     }
     ventana.document.write(html);
     ventana.document.close();
-    ventana.focus()
+    ventana.focus();
 }
