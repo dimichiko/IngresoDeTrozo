@@ -517,7 +517,7 @@ function configureSubmitButton() {
                     const el = document.getElementById(id);
                     if (el && el.value.trim() !== "") {
                         if (el.tagName === "SELECT") {
-                            sessionStorage.setItem(id, el.options[el.selectedIndex].text.trim());
+                            sessionStorage.setItem(id, el.value.trim());
                         } else {
                             sessionStorage.setItem(id, el.value.trim());
                         }
@@ -533,9 +533,12 @@ function configureSubmitButton() {
                     localStorage.setItem("datosBancos", JSON.stringify([]));
                 }
 
+
+
                 // Navegar a la siguiente página
                 showLoader();
                 setTimeout(() => {
+
                     window.location.href = "contartrozos.aspx";
                 }, 300);
             }
@@ -563,8 +566,8 @@ async function obtenerDatosAPI(endpoint, id) {
 // Función para configurar selects con una sola opción
 function agregarSoloGYG(idSelect) {
     const opcionGYG = {
-        cod_empresa: "2",
-        nom_empresa: "GYG"
+        cod_empresa: "2",          // <- Este es el número que se enviará
+        nom_empresa: "GYG"         // <- Este es lo que se muestra al usuario
     };
 
     const select = document.getElementById(idSelect);
@@ -572,11 +575,11 @@ function agregarSoloGYG(idSelect) {
         select.innerHTML = "";
 
         const option = document.createElement("option");
-        option.value = opcionGYG.cod_empresa;
-        option.text = opcionGYG.nom_empresa;
+        option.value = opcionGYG.cod_empresa;     // <-- VALOR REAL
+        option.text = opcionGYG.nom_empresa;      // <-- TEXTO VISIBLE
         select.appendChild(option);
 
-        select.value = opcionGYG.cod_empresa;
+        select.value = opcionGYG.cod_empresa;     // <-- Establece seleccionado
     }
 }
 
@@ -747,9 +750,10 @@ $("#txtCodProvPrefijo").blur(function () {
 
         if (idProv && typeof ObtenerProveedor === 'function') {
             const resultado = ObtenerProveedor(idProv);
-            if (resultado && resultado.length > 0 && resultado[0].mcl_nombre) {
-                const prov = resultado[0].mcl_nombre.trim();
-                $("#txtCodProvAuto").val(prov);
+            if (resultado && resultado.length > 0) {
+                const prov = resultado[0];
+                $("#txtCodProvAuto").val(prov.mcl_nombre || "-"); // mostrar nombre
+                sessionStorage.setItem("txtCodProvAuto", idProv); // ← GUARDA con nombre correcto
             } else {
                 $("#txtCodProvAuto").val("");
                 $("#txtCodProvPrefijo").addClass("input-error");
@@ -766,9 +770,9 @@ $("#txtContratoPrefijo").blur(function () {
 
         if (idContr && typeof Obtener_NC === 'function') {
             const resultado = Obtener_NC(idContr);
-            if (resultado && resultado.length > 0 && resultado[0].mcl_nombre) {
-                const Contr = resultado[0].mcl_nombre.trim();
-                $("#txtContratoAuto").val(Contr);
+            if (resultado && resultado.length > 0) {
+                const Contr = resultado[0];
+                $("#txtContratoAuto").val(Contr.mcl_codigo);
             } else {
                 $("#txtContratoAuto").val("");
                 $("#txtContratoPrefijo").addClass("input-error");
@@ -785,9 +789,9 @@ $("#txtVentaPrefijo").blur(function () {
 
         if (idVenta && typeof Obtener_NV === 'function') {
             const resultado = Obtener_NV(idVenta);
-            if (resultado && resultado.length > 0 && resultado[0].nombre) {
-                const Venta = resultado[0].nombre.trim();
-                $("#txtVentaAuto").val(Venta);
+            if (resultado && resultado.length > 0) {
+                const Venta = resultado[0];
+                $("#txtVentaAuto").val(Venta.mcl_codigo);
             } else {
                 $("#txtVentaAuto").val("");
                 $("#txtVentaPrefijo").addClass("input-error");
@@ -804,9 +808,10 @@ $("#txtProducto").blur(function () {
 
         if (idProd && typeof ObtenerProducto === 'function') {
             const resultado = ObtenerProducto(idProd);
-            if (resultado && resultado.length > 0 && resultado[0].tpt_nombre) {
-                const Prod = resultado[0].tpt_nombre.trim();
-                $("#nomProducto").val(Prod);
+            if (resultado && resultado.length > 0) {
+                const Prod = resultado[0];
+                $("#nomProducto").val(Prod.tpt_nombre);
+                $("#txtProducto").val(Prod.tpt_codigo);
             } else {
                 $("#nomProducto").val("");
                 $("#txtProducto").addClass("input-error");

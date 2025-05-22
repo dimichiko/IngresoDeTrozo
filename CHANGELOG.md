@@ -2,6 +2,24 @@
 
 Todos los cambios notables del proyecto se registran aquí.
 
+## [2.1.0] - 2025-05-22
+### Agregado
+- Lógica para ofrecer opciones post-guardado: imprimir, nuevo ingreso o login.
+- Nueva lógica que limpia `sessionStorage` y `localStorage` después de guardar.
+- Generación de JSON local con nombre personalizado y timestamp completo.
+- Detección y manejo de errores de inserción con mensajes claros desde el servidor.
+
+### Mejorado
+- Validación visual y semántica de los errores en consola y alertas.
+- Flujo UX: permite imprimir antes de decidir si reiniciar o cerrar sesión.
+- Modularidad del código `guardarDatos()` y `confirmarYPreguntarImpresion()`.
+
+### Corregido
+- Error por `resultado.GDE` no válido tras respuesta del backend.
+- Referencia `mostrarPantallaFinal` faltante ahora correctamente definida en `window`.
+
+---
+
 ## [2.0.0] - 2025-05-19
 ### Agregado
 - Fecha de impresión y fecha de documento con formato consistente `dd-mm-yyyy`.

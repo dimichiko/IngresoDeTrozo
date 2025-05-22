@@ -1,9 +1,8 @@
 ﻿<version>
-	<number>2.0.0</number>
-	<fecha>2025-05-19</fecha>
+	<number>2.1.0</number>
+	<fecha>2025-05-22</fecha>
 	<descripcion>
-		Mejoras completas al PDF del resumen final: formato consistente de fechas,
-		sección de transportista más compacta, firma fija en el pie de página,
-		y diseño de tabla de conteo más claro y equilibrado.
+		Agrega opciones post-guardado con limpieza de datos automática, impresión PDF condicional
+		y mejoras en manejo de errores del backend. Refactor de funciones clave para robustez.
 	</descripcion>
 </version>

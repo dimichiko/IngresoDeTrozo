@@ -696,14 +696,20 @@ const appController = (() => {
 window.addEventListener('load', appController.init);
 
 async function guardarDatos() {
+    const largoStr = sessionStorage.getItem("LargoTroncos") || "";
+    const largoMatch = largoStr.match(/[\d.]+/);
+    const largoEnCm = largoMatch ? Math.round(parseFloat(largoMatch[0])) : 0;
+    const fscIndex = (document.getElementById("txtFSC")?.selectedIndex ?? -1);
+
     const datos = {
         NC: sessionStorage.getItem("txtContratoAuto") || "0",
         NV: sessionStorage.getItem("txtVentaAuto") || "0",
         GDE: sessionStorage.getItem("txtOC") || "",
-        codProv: sessionStorage.getItem("txtCodProvAuto") || "0",
-        CodFSC: sessionStorage.getItem("txtFSC") || "",
-        Pila: "-",
-        LargoTrozo: sessionStorage.getItem("LargoTroncos") || "",
+        codProv: sessionStorage.getItem("txtCodProvPrefijo") || "0",
+        CodProd: sessionStorage.getItem("txtProducto") || "0",
+        CodFSC: (fscIndex >= 0) ? String(fscIndex + 1) : "1",
+        Pila: document.getElementById("selectBancos")?.value || "1",
+        LargoTrozo: largoEnCm,
         CodEmp: sessionStorage.getItem("id_usuario") || "",
         TotUnidades: 0,
         TotVolM3: 0,
@@ -733,7 +739,6 @@ async function guardarDatos() {
         datos.TotVolM3 += b.volumen;
     });
 
-    // === Guardar archivo JSON local ===
     const resumenGlobal = {};
     for (let d = 16; d <= 60; d += 2) resumenGlobal[d] = 0;
     bancos.forEach(b => {
@@ -744,7 +749,6 @@ async function guardarDatos() {
 
     const totalTroncos = Object.values(resumenGlobal).reduce((a, b) => a + b, 0);
     const fechaObj = new Date();
-    const fechaHora = fechaObj.toLocaleString('es-CL');
     const yyyy = fechaObj.getFullYear();
     const mm = String(fechaObj.getMonth() + 1).padStart(2, '0');
     const dd = String(fechaObj.getDate()).padStart(2, '0');
@@ -777,24 +781,36 @@ async function guardarDatos() {
 
     const datosFinales = {
         generado_por: sessionStorage.getItem("nombre_usuario") || "Desconocido",
-        fecha_hora: fechaHora,
+        fecha_hora: fechaObj.toLocaleString('es-CL'),
         ingreso: ingreso,
         resumen_global: resumenGlobal,
         total_troncos: totalTroncos
     };
 
-    const blob = new Blob([JSON.stringify(datosFinales, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = nombreArchivo;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    guardarJSONLocal(datosFinales, nombreArchivo);
 
-    console.log("Datos enviados a IngresarTrozos:", datos);
+    console.log("📤 Datos enviados a IngresarTrozos:");
+    console.table(datos);
 
+    try {
+        const exito = await enviarAlServidor(datos, bancos);
+        if (exito) {
+            confirmarYPreguntarImpresion();
+        } else {
+            throw new Error("El servidor no devolvió un GDE válido.");
+        }
+    } catch (error) {
+        Swal.fire({
+            icon: "error",
+            title: "Error al guardar",
+            text: error.message || "Ocurrió un error inesperado al guardar los datos.",
+            confirmButtonColor: "#007BFF"
+        });
+    }
+    return true;
+}
+
+async function enviarAlServidor(datos, bancos) {
     const resultado = await IngresarTrozos(
         datos.codProv, datos.NC, datos.NV, datos.GDE, datos.CodProd, datos.CodFSC,
         datos.Pila, datos.LargoTrozo, datos.TotUnidades, datos.TotVolM3,
@@ -804,21 +820,9 @@ async function guardarDatos() {
         datos.CodUsuario
     );
 
-    console.log("Resultado de IngresarTrozos:", resultado);
-
-    // === Enviar al servidor ===
-    //const resultado = IngresarTrozos(
-    //    10, 10, 10, 10, 10, 1,
-    //    4, 330, 20, 36.1,
-    //    10, "holi", "1-1", "n1",
-    //    "2-2", "n2", "3-3", "n3",
-    //    "AABBCC", "CCDDFF", "147-8", 1, 10,
-    //    10
-    //);
-
-    if (!resultado || !resultado.GDE) {
-        Swal.fire("Error", "Falló el ingreso general de trozos.", "error");
-        return;
+    if (!resultado || !datos.GDE || !resultado[0].EstCod === -1) {
+        console.error("❌ Error al guardar: resultado.GDE no válido");
+        return false;
     }
 
     for (const b of bancos) {
@@ -826,26 +830,78 @@ async function guardarDatos() {
         for (const diam in contadores) {
             const cantidad = contadores[diam];
             if (cantidad > 0) {
-                await IngresarTrozosDet(resultado.GDE, parseInt(diam), cantidad);
+                await IngresarTrozosDet(datos.GDE, parseInt(diam), cantidad, resultado[0].EstCod);
             }
         }
     }
 
-    // === Confirmar y preguntar por impresión ===
+    return true;
+}
+
+function confirmarYPreguntarImpresion() {
     Swal.fire({
         title: "Datos guardados",
         text: "¿Deseas imprimir el resumen ahora?",
         icon: "success",
+        showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Sí, imprimir",
-        cancelButtonText: "No, más tarde",
+        denyButtonText: "Nuevo ingreso",
+        cancelButtonText: "Cerrar sesión",
         confirmButtonColor: "#007BFF",
+        denyButtonColor: "#28a745",
+        cancelButtonColor: "#dc3545"
+    }).then(result => {
+        if (result.isConfirmed) {
+            imprimirResumenComoPDF(() => {
+                mostrarOpcionesPostImpresion();
+            });
+        } else if (result.isDenied) {
+            limpiarYRedirigir("ingreso.aspx");
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            limpiarYRedirigir("login.aspx");
+        }
+    });
+}
+
+function mostrarOpcionesPostImpresion() {
+    Swal.fire({
+        title: "Resumen impreso",
+        text: "¿Qué deseas hacer ahora?",
+        icon: "info",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Nuevo ingreso",
+        denyButtonText: "Cerrar sesión",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#28a745",
+        denyButtonColor: "#dc3545",
         cancelButtonColor: "#6c757d"
     }).then(result => {
         if (result.isConfirmed) {
-            imprimirResumenComoPDF();
+            limpiarYRedirigir("ingreso.aspx");
+        } else if (result.isDenied) {
+            limpiarYRedirigir("login.aspx");
         }
     });
+}
+
+function limpiarYRedirigir(url) {
+    localStorage.clear();
+    sessionStorage.clear();
+    setTimeout(() => window.location.href = url, 300);
+}
+
+function guardarJSONLocal(datosFinales, nombreArchivo) {
+    const blob = new Blob([JSON.stringify(datosFinales, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = nombreArchivo;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }
 
 function imprimirResumenComoPDF() {
@@ -876,8 +932,17 @@ function imprimirResumenComoPDF() {
         "Nota Compra": sessionStorage.getItem("txtContratoAuto"),
         "Nota Venta": sessionStorage.getItem("txtVentaAuto"),
         Producto: sessionStorage.getItem("txtProducto"),
-        FSC: sessionStorage.getItem("txtFSC"),
-        Bancos: sessionStorage.getItem("selectBancos")
+        Bancos: sessionStorage.getItem("selectBancos"),
+        FSC: (() => {
+            const cod = sessionStorage.getItem("txtFSC");
+            switch (cod) {
+                case "1": return "100% FSC";
+                case "2": return "Mixto FSC";
+                case "3": return "CW FSC";
+                case "4": return "No Certificada";
+                default: return "-";
+            }
+        })(),
     };
 
     const ingresoP2 = {
@@ -887,7 +952,13 @@ function imprimirResumenComoPDF() {
         OC: sessionStorage.getItem("txtOC") || "-",
         Coordenadas: sessionStorage.getItem("txtCoordenadas") || "-",
         Rodal: sessionStorage.getItem("txtRodal") || "-",
-        Largo: sessionStorage.getItem("LargoTroncos") || "-"
+        Largo: (() => {
+            const largoRaw = sessionStorage.getItem("LargoTroncos") || "";
+            const match = largoRaw.match(/([\d.]+)/);
+            if (!match) return "-";
+            const metros = parseFloat(match[1]);
+            return `${Math.round(metros * 100)} cm`;
+        })()
     };
 
     const datosFinales = {
@@ -1157,3 +1228,5 @@ function imprimirResumenComoPDF() {
     ventana.document.close();
     ventana.focus();
 }
+
+window.mostrarPantallaFinal = uiController.mostrarPantallaFinal;
