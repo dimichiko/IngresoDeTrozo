@@ -127,6 +127,7 @@
     <Content Include="CSS\ingreso.css" />
     <Content Include="CSS\inicio.css" />
     <Content Include="CSS\login.css" />
+    <Content Include="CSS\movimientos.css" />
     <Content Include="CSS\resumen.css" />
     <Content Include="Content\favicon.ico" />
     <Content Include="Global.asax" />
@@ -138,8 +139,10 @@
     <Content Include="JS\inicio.js" />
     <Content Include="JS\loader.js" />
     <Content Include="JS\login.js" />
+    <Content Include="JS\movimientos.js" />
     <Content Include="JS\version-utils.js" />
     <Content Include="login.aspx" />
+    <Content Include="movimientos.aspx" />
     <Content Include="resumen.aspx" />
     <Content Include="JS\contartrozos.js" />
     <Content Include="README.md" />
@@ -208,6 +211,13 @@
     <Compile Include="login.aspx.vb">
       <DependentUpon>login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="movimientos.aspx.designer.vb">
+      <DependentUpon>movimientos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="movimientos.aspx.vb">
+      <DependentUpon>movimientos.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="resumen.aspx.designer.vb">
       <DependentUpon>resumen.aspx</DependentUpon>

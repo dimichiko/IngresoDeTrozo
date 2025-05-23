@@ -15,11 +15,14 @@
     <form id="form1" runat="server">
         <div class="contenedor-almacen">
             <div class="header-almacen">
-                <img src="Content/LOGO_ALTO_HORIZONTE-SIN-FONDO.png" alt="Logo Empresa" />
+                <img src="Content/LOGO_ALTO_HORIZONTE-SIN-FONDO.png" alt="Logo Empresa" class="logo-almacen" />
+
+                <h1 class="titulo-almacen">Sección Almacén</h1>
+
                 <div class="boton-salida">
                     <button type="button" onclick="window.location.href='inicio.aspx'" aria-label="Volver al inicio">
                         <i class="fas fa-arrow-left"></i>Volver a inicio
-   
+       
                     </button>
                 </div>
             </div>

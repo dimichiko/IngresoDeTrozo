@@ -1,0 +1,132 @@
+﻿:root {
+    --primary-color: #005a8d;
+    --primary-hover: #003e5f;
+    --secondary-color: #cc0000;
+    --background-color: #f9f9f9;
+    --text-color: #333333;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition-speed: 0.3s;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-movimientos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 15px 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin: 2rem auto;
+    max-width: 1000px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.logo-movimientos {
+    height: 60px;
+    flex-shrink: 0;
+}
+
+.titulo-movimientos {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.boton-volver button,
+#btn-actualizar {
+    padding: 10px 18px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: var(--box-shadow);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    .boton-volver button:hover,
+    #btn-actualizar:hover {
+        background-color: var(--primary-hover);
+        transform: translateY(-2px);
+    }
+
+#movimientos-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow-x: auto;
+}
+
+    #movimientos-container table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+
+    #movimientos-container th,
+    #movimientos-container td {
+        padding: 8px;
+        border: 1px solid #ccc;
+        font-size: 0.95rem;
+    }
+
+    #movimientos-container thead {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+/* Responsive */
+@media (max-width: 640px) {
+    .header-movimientos {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .titulo-movimientos {
+        font-size: 1.5rem;
+        margin-top: 10px;
+    }
+
+    .boton-volver {
+        width: 100%;
+        justify-content: center;
+    }
+
+    #movimientos-container {
+        padding: 1rem;
+    }
+
+        #movimientos-container th,
+        #movimientos-container td {
+            font-size: 0.85rem;
+        }
+}

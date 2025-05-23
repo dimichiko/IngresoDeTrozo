@@ -9,7 +9,6 @@
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
-
 }
 
 .header-almacen {
@@ -18,14 +17,29 @@
     align-items: center;
     background-color: white;
     padding: 15px 20px;
-    color: white;
     border-radius: 6px;
     margin-bottom: 30px;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
     .header-almacen img {
         height: 60px;
     }
+
+.logo-almacen {
+    height: 60px;
+    flex-shrink: 0;
+}
+
+.titulo-almacen {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
 
 .boton-salida button {
     color: white;
@@ -34,8 +48,12 @@
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
-    transition: background 0.3s ease;
     background-color: red;
+    transition: background 0.3s ease;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
     .boton-salida button:hover {
@@ -58,4 +76,27 @@
 .version-label {
     font-size: 0.8rem;
     color: #777;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-almacen {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .titulo-almacen {
+        font-size: 1.4rem;
+        margin-top: 10px;
+    }
+
+    .boton-salida {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+        .boton-salida button {
+            width: auto;
+        }
 }

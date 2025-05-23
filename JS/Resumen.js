@@ -820,19 +820,31 @@ async function enviarAlServidor(datos, bancos) {
         datos.CodUsuario
     );
 
-    if (!resultado || !datos.GDE || !resultado[0].EstCod === -1) {
-        console.error("❌ Error al guardar: resultado.GDE no válido");
+    if (!resultado || !resultado[0] || resultado[0].EstCod === -1) {
         return false;
     }
+
+    const correlativo = resultado[0].EstCod;
 
     for (const b of bancos) {
         const contadores = b.contadores || {};
         for (const diam in contadores) {
             const cantidad = contadores[diam];
             if (cantidad > 0) {
-                await IngresarTrozosDet(datos.GDE, parseInt(diam), cantidad, resultado[0].EstCod);
+                await IngresarTrozosDet(
+                    correlativo,         // ✅ correlativo correcto
+                    parseInt(diam),
+                    cantidad,
+                    correlativo          // ✅ usar correlativo como referencia también aquí
+                );
             }
         }
+    }
+
+    const previos = JSON.parse(localStorage.getItem('correlativos') || '[]');
+    if (!previos.includes(correlativo)) {
+        previos.unshift(correlativo);
+        localStorage.setItem('correlativos', JSON.stringify(previos.slice(0, 10)));
     }
 
     return true;
