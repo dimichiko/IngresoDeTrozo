@@ -1,9 +1,9 @@
 ﻿async function cargarMovimientos() {
     const container = document.getElementById('movimientos-container');
-    const correlativos = [0]; // solo el correlativo 0
     container.innerHTML = "";
 
     const tabla = document.createElement('table');
+    tabla.id = 'tabla-movimientos';
     tabla.style.width = '100%';
     tabla.style.borderCollapse = 'collapse';
     tabla.innerHTML = `
@@ -50,6 +50,19 @@
         </td>
     `;
     tbody.appendChild(row);
+
+    const table = $('#tabla-movimientos').DataTable({
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+        },
+        pageLength: 5,
+        lengthChange: false,
+        searching: false
+    });
+
+    if (table.data().count() <= 1) {
+        $('.dataTables_paginate').hide();
+    }
 }
 
 // Expone verDetalle al ámbito global
@@ -98,3 +111,10 @@ window.verDetalle = function (correlativo) {
 };
 
 document.addEventListener('DOMContentLoaded', cargarMovimientos);
+
+document.getElementById('btn-actualizar').addEventListener('click', () => {
+    if ($.fn.DataTable.isDataTable('#tabla-movimientos')) {
+        $('#tabla-movimientos').DataTable().destroy();
+    }
+    cargarMovimientos();
+});

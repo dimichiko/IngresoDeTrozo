@@ -218,12 +218,12 @@ const uiController = (() => {
 
     const mostrarResumenIngreso = () => {
         const campos = {
-            "res-proveedor": "txtCodigoProveedor",
-            "res-contrato": "txtNombreContrato",
-            "res-venta": "txtNombreVenta",
+            "txtCodProvAuto": "txtCodProvAuto",
+            "res-contrato": "txtContratoAuto", 
+            "res-venta": "txtVentaAuto", 
+            "nomProducto": "nomProducto", 
             "res-oc": "txtOC",
             "res-fecha": "txtFechaRecepcion",
-            "res-producto": "txtProducto",
             "res-fsc": "txtFSC",
             "res-bancos": "selectBancos",
             "res-destino": "txtDestino",
@@ -698,7 +698,7 @@ window.addEventListener('load', appController.init);
 async function guardarDatos() {
     const largoStr = sessionStorage.getItem("LargoTroncos") || "";
     const largoMatch = largoStr.match(/[\d.]+/);
-    const largoEnCm = largoMatch ? Math.round(parseFloat(largoMatch[0])) : 0;
+    const largoEnCm = largoMatch ? Math.round(parseFloat(largoMatch[0]) * 100) : 0;
     const fscIndex = (document.getElementById("txtFSC")?.selectedIndex ?? -1);
 
     const datos = {
@@ -812,11 +812,29 @@ async function guardarDatos() {
 
 async function enviarAlServidor(datos, bancos) {
     const resultado = await IngresarTrozos(
-        datos.codProv, datos.NC, datos.NV, datos.GDE, datos.CodProd, datos.CodFSC,
-        datos.Pila, datos.LargoTrozo, datos.TotUnidades, datos.TotVolM3,
-        datos.CodEmp, datos.strObs, datos.RutTrans, datos.NomTrans,
-        datos.RutDesp, datos.NomDesp, datos.RutCond, datos.NomCond,
-        datos.PatenteCam, datos.PatenteCar, datos.Rol, datos.Destino, datos.EstadoCod,
+        datos.codProv,
+        datos.NC,
+        datos.NV,
+        datos.GDE,
+        datos.CodProd,
+        datos.CodFSC,
+        datos.Pila,
+        datos.LargoTrozo,
+        datos.TotUnidades,
+        datos.TotVolM3,
+        datos.CodEmp,
+        datos.strObs,
+        datos.RutTrans,
+        datos.NomTrans,
+        datos.RutDesp,
+        datos.NomDesp,
+        datos.RutCond,
+        datos.NomCond,
+        datos.PatenteCam,
+        datos.PatenteCar,
+        datos.Rol,
+        datos.Destino,
+        datos.EstadoCod,
         datos.CodUsuario
     );
 
@@ -905,6 +923,11 @@ function limpiarYRedirigir(url) {
 }
 
 function guardarJSONLocal(datosFinales, nombreArchivo) {
+    delete datosFinales.ingreso.Proveedor;
+    delete datosFinales.ingreso.NotaCompra;
+    delete datosFinales.ingreso.NotaVenta;
+    delete datosFinales.ingreso.Producto;
+
     const blob = new Blob([JSON.stringify(datosFinales, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -969,7 +992,7 @@ function imprimirResumenComoPDF() {
             const match = largoRaw.match(/([\d.]+)/);
             if (!match) return "-";
             const metros = parseFloat(match[1]);
-            return `${Math.round(metros * 100)} cm`;
+            return `${Math.round(metros * 100)}`;
         })()
     };
 

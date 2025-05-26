@@ -346,6 +346,16 @@ function loadSavedValues() {
                 const event = new Event('blur');
                 input.dispatchEvent(event);
             }
+
+            if (id === "LargoTroncos" && input.tagName === "SELECT") {
+                for (let opt of input.options) {
+                    const num = parseFloat(opt.textContent);
+                    if (Math.round(num * 100) === parseInt(valor)) {
+                        opt.selected = true;
+                        break;
+                    }
+                }
+            }
         }
     });
 
@@ -364,6 +374,15 @@ function loadSavedValues() {
                     }
                 }
             });
+        }
+    });
+
+    ["txtCodProvPrefijo", "txtContratoPrefijo", "txtVentaPrefijo", "txtProducto"].forEach(id => {
+        const valor = sessionStorage.getItem(id);
+        const input = document.getElementById(id);
+        if (valor && input) {
+            input.value = valor;
+            input.dispatchEvent(new Event("blur"));
         }
     });
 }
@@ -537,6 +556,27 @@ function configureSubmitButton() {
 
                 // Navegar a la siguiente página
                 showLoader();
+                // Sobrescribir valores para mostrar los nombres en el resumen
+                const fscSelect = document.getElementById("txtFSC");
+                const destinoSelect = document.getElementById("txtDestino");
+                const provAuto = document.getElementById("txtCodProvAuto");
+                const nomProducto = document.getElementById("nomProducto");
+                const largoRaw = document.getElementById("LargoTroncos")?.value || "";
+                console.log("Guardando largo:", largoRaw); // <-- AGREGA ESTO
+                sessionStorage.setItem("LargoTroncos", largoRaw.trim());
+
+                if (fscSelect) {
+                    sessionStorage.setItem("txtFSC", fscSelect.options[fscSelect.selectedIndex].text);
+                }
+                if (destinoSelect) {
+                    sessionStorage.setItem("txtDestino", destinoSelect.options[destinoSelect.selectedIndex].text);
+                }
+                if (provAuto) {
+                    sessionStorage.setItem("txtCodProvAuto", provAuto.value.trim());
+                }
+                if (nomProducto) {
+                    sessionStorage.setItem("nomProducto", nomProducto.value.trim());
+                }
                 setTimeout(() => {
 
                     window.location.href = "contartrozos.aspx";

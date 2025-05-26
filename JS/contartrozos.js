@@ -32,6 +32,8 @@
         largoTroncos: sessionStorage.getItem("LargoTroncos") || "-"
     };
 
+    console.log("Cargando largo en contartrozos:", sessionStorage.getItem("LargoTroncos"));
+
     // Cache de elementos DOM frecuentemente usados
     const domElements = {};
 
@@ -237,7 +239,9 @@
 
             // Actualizar información de largo de troncos
             domElements.largoTroncos.forEach(el => {
-                el.textContent = `Largo de troncos: ${state.largoTroncos}`;
+                const largo = parseFloat(state.largoTroncos);
+                const largoCm = Math.round(largo * 10);
+                el.textContent = `Largo de troncos: ${largoCm}`;
             });
         },
 
