@@ -17,7 +17,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
     line-height: 1.6;
@@ -26,16 +26,22 @@ body {
     flex-direction: column;
 }
 
+.contenedor-movimientos {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
 .header-movimientos {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: white;
-    padding: 15px 20px;
+    padding: 20px 30px;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
-    margin: 2rem auto;
-    max-width: 1000px;
+    margin-bottom: 2rem;
     gap: 20px;
     flex-wrap: wrap;
 }
@@ -43,6 +49,7 @@ body {
 .logo-movimientos {
     height: 60px;
     flex-shrink: 0;
+    object-fit: contain;
 }
 
 .titulo-movimientos {
@@ -51,36 +58,49 @@ body {
     font-size: 1.8rem;
     color: var(--primary-color);
     margin: 0;
+    font-weight: 600;
 }
 
 .boton-volver button,
 #btn-actualizar {
-    padding: 10px 18px;
+    padding: 12px 20px;
     background-color: var(--secondary-color);
     color: white;
     border: none;
     border-radius: var(--border-radius);
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 1rem;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: all var(--transition-speed) ease;
     box-shadow: var(--box-shadow);
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    text-decoration: none;
 }
 
     .boton-volver button:hover,
     #btn-actualizar:hover {
         background-color: var(--primary-hover);
         transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
 
+    .boton-volver button:active,
+    #btn-actualizar:active {
+        transform: translateY(0);
+    }
+
+.btn-container {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
 #movimientos-container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     background-color: white;
-    padding: 1.5rem;
+    padding: 2rem;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     overflow-x: auto;
@@ -94,9 +114,10 @@ body {
 
     #movimientos-container th,
     #movimientos-container td {
-        padding: 8px;
-        border: 1px solid #ccc;
+        padding: 12px 8px;
+        border: 1px solid #ddd;
         font-size: 0.95rem;
+        text-align: center;
     }
 
     #movimientos-container thead {
@@ -104,11 +125,80 @@ body {
         color: white;
     }
 
-/* Responsive */
-@media (max-width: 640px) {
+    #movimientos-container tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    #movimientos-container tbody tr:hover {
+        background-color: #e3f2fd;
+        transition: background-color 0.2s ease;
+    }
+
+.btn-detalle {
+    background-color: #28a745;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+    .btn-detalle:hover {
+        background-color: #218838;
+        transform: scale(1.05);
+    }
+
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.no-data-message {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.version-info {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: #666;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .contenedor-movimientos {
+        padding: 0.5rem;
+    }
+
     .header-movimientos {
         flex-direction: column;
         text-align: center;
+        padding: 15px 20px;
     }
 
     .titulo-movimientos {
@@ -128,5 +218,27 @@ body {
         #movimientos-container th,
         #movimientos-container td {
             font-size: 0.85rem;
+            padding: 8px 6px;
+        }
+
+    .btn-detalle {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .titulo-movimientos {
+        font-size: 1.3rem;
+    }
+
+    #movimientos-container {
+        padding: 0.5rem;
+    }
+
+        #movimientos-container th,
+        #movimientos-container td {
+            font-size: 0.8rem;
+            padding: 6px 4px;
         }
 }

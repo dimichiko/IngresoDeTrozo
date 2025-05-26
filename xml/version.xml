@@ -1,5 +1,5 @@
 ﻿<version>
-	<number>2.1.0</number>
+	<number>2.2.0</number>
 	<fecha>2025-05-22</fecha>
 	<descripcion>
 		Agrega opciones post-guardado con limpieza de datos automática, impresión PDF condicional
