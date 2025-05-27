@@ -1,8 +1,9 @@
 ﻿<version>
-	<number>2.2.0</number>
-	<fecha>2025-05-22</fecha>
+	<number>2.3.0</number>
+	<fecha>2025-05-27</fecha>
 	<descripcion>
-		Agrega opciones post-guardado con limpieza de datos automática, impresión PDF condicional
-		y mejoras en manejo de errores del backend. Refactor de funciones clave para robustez.
+		Visualización múltiple de ingresos en movimientos.aspx con DataTables responsivo.
+		Detalle de troncos funcional por cada correlativo, con correcciones a errores de contexto
+		y mejora de UX móvil mediante ajuste dinámico de títulos.
 	</descripcion>
 </version>

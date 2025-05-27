@@ -2,6 +2,25 @@
 
 Todos los cambios notables del proyecto se registran aquí.
 
+## [2.3.0] - 2025-05-27
+## Agregado
+- Visualización múltiple de ingresos en movimientos.aspx usando Obtener_Ingreso_Trozo(0) para mostrar todos.
+- Inclusión de botón “Ver detalle” con funcionalidad dinámica para cada ingreso.
+- Soporte responsivo total en DataTables con responsive: true y estilo mejorado.
+- Abreviación automática de títulos en pantallas pequeñas (<768px) mediante función JS.
+- Detalle de troncos muestra cantidad y volumen calculado dinámicamente.
+
+## Mejorado
+- Consola ahora muestra logs detallados con correlativos solicitados y llamados a funciones clave.
+- Mejora visual en botón de carga y mensajes de error con Swal.fire.
+- Función verDetalle refactorizada para evitar errores por datos indefinido.
+
+## Corregido
+- Error ReferenceError: datos is not defined corregido con parámetro explícito de LargoTrozo.
+- Bug donde solo el ingreso #0 se mostraba corregido: ahora se itera sobre todos los elementos del array.
+
+---
+
 ## [2.2.0] - 2025-05-26
 ### Agregado
 - Lógica para ofrecer opciones post-guardado: imprimir, nuevo ingreso o login.
