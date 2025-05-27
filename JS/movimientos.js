@@ -22,16 +22,19 @@ async function cargarMovimientos() {
         container.appendChild(tabla);
 
         // Obtener datos
-        const datos = Obtener_Ingreso_Trozo(0);
-        const item = datos?.DS?.[0];
+        const correlativoSolicitado = 0;
+        console.log("📥 Solicitando ingreso con correlativo:", correlativoSolicitado);
+        const datos = Obtener_Ingreso_Trozo(correlativoSolicitado);
+        const items = datos?.DS || [];
 
-        if (!item) {
+        if (items.length === 0) {
             mostrarMensajeSinDatos(container);
             return;
         }
 
-        // Poblar tabla
-        poblarTabla(item);
+        for (const item of items) {
+            poblarTabla(item);
+        }
 
         // Inicializar DataTable
         inicializarDataTable();
@@ -52,23 +55,33 @@ function mostrarLoading(container) {
 }
 
 function crearEstructuraTabla() {
+    const esMovil = window.innerWidth <= 768;
+
+    const headers = esMovil
+        ? ['Corr.', 'GDE', 'Fec.', 'Prov.', 'Vol. (m³)', 'Acc.']
+        : ['Correlativo', 'GDE', 'Fecha', 'Proveedor', 'Volumen (m³)', 'Acción'];
+
     const tabla = document.createElement('table');
     tabla.id = 'tabla-movimientos';
     tabla.style.width = '100%';
     tabla.style.borderCollapse = 'collapse';
-    tabla.innerHTML = `
-        <thead>
-            <tr>
-                <th>Correlativo</th>
-                <th>GDE</th>
-                <th>Fecha</th>
-                <th>Proveedor</th>
-                <th>Volumen (m³)</th>
-                <th>Acción</th>
-            </tr>
-        </thead>
-        <tbody id="tbody-movimientos"></tbody>
-    `;
+
+    const thead = document.createElement('thead');
+    const tr = document.createElement('tr');
+
+    headers.forEach(titulo => {
+        const th = document.createElement('th');
+        th.textContent = titulo;
+        tr.appendChild(th);
+    });
+
+    thead.appendChild(tr);
+    tabla.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    tbody.id = 'tbody-movimientos';
+    tabla.appendChild(tbody);
+
     return tabla;
 }
 
@@ -83,7 +96,7 @@ function poblarTabla(item) {
         <td>${item.CodProv || '-'}</td>
         <td>${formatearVolumen(item.TotVolM3)}</td>
         <td>
-            <button class="btn-detalle" onclick="verDetalle(${item.Correlativo})" 
+            <button class="btn-detalle" onclick="verDetalle(event, ${item.Correlativo})"
                     title="Ver detalles del ingreso">
                 <i class="fas fa-eye"></i> Ver detalle
             </button>
@@ -152,13 +165,15 @@ function formatearVolumen(volumen) {
 }
 
 // Función global para ver detalle
-window.verDetalle = function (correlativo) {
+window.verDetalle = function (event, correlativo) {
+    event.preventDefault();
+    event.stopPropagation();
+
     if (!correlativo) {
         mostrarError('Correlativo no válido.');
         return;
     }
 
-    // Mostrar loading en el botón
     const btn = event.target.closest('button');
     const textoOriginal = btn.innerHTML;
     btn.innerHTML = '<div class="loading-spinner"></div>';
@@ -178,7 +193,6 @@ window.verDetalle = function (correlativo) {
         console.error('Error al obtener detalle:', error);
         mostrarError(error.message || 'No se pudo obtener el detalle del ingreso.');
     } finally {
-        // Restaurar botón
         btn.innerHTML = textoOriginal;
         btn.disabled = false;
     }
@@ -201,8 +215,8 @@ function mostrarModalDetalle(correlativo, detalle) {
     let totalCantidad = 0;
 
     for (const item of detalle) {
-        const volumen = Number(item.Volumen) || 0;
-        const cantidad = Number(item.Cantidad) || 0;
+        const cantidad = Number(item.NroTrozo) || 0;
+        const volumen = 0; 
 
         totalVolumen += volumen;
         totalCantidad += cantidad;
@@ -261,6 +275,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 500);
         });
     }
+
+    window.addEventListener('resize', () => {
+        cargarMovimientos();
+    });
 });
 
 // Manejo de errores global

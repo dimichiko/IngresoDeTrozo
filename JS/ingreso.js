@@ -569,7 +569,8 @@ function configureSubmitButton() {
                     sessionStorage.setItem("txtFSC", fscSelect.options[fscSelect.selectedIndex].text);
                 }
                 if (destinoSelect) {
-                    sessionStorage.setItem("txtDestino", destinoSelect.options[destinoSelect.selectedIndex].text);
+                    sessionStorage.setItem("txtDestino", destinoSelect.value);
+                    sessionStorage.setItem("txtDestinoNombre", destinoSelect.options[destinoSelect.selectedIndex].text);
                 }
                 if (provAuto) {
                     sessionStorage.setItem("txtCodProvAuto", provAuto.value.trim());

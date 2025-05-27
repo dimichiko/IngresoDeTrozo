@@ -420,6 +420,13 @@ const eventHandlers = (() => {
                 input.value = val;
                 nuevosContadores[input.dataset.diametro] = val;
                 total += val;
+                const diametro = parseInt(input.dataset.diametro);
+                const fila = input.closest('tr');
+                const celdaVolumen = fila?.querySelector('td:last-child');
+                if (celdaVolumen) {
+                    const volumenIndividual = dataController.calcularVolumen(diametro) * val;
+                    celdaVolumen.textContent = volumenIndividual.toFixed(2);
+                }
             });
 
             const original = bancos[index].total;
@@ -698,7 +705,7 @@ window.addEventListener('load', appController.init);
 async function guardarDatos() {
     const largoStr = sessionStorage.getItem("LargoTroncos") || "";
     const largoMatch = largoStr.match(/[\d.]+/);
-    const largoEnCm = largoMatch ? Math.round(parseFloat(largoMatch[0]) * 100) : 0;
+    const largoEnCm = largoMatch ? Math.round(parseFloat(largoMatch[0]) * 10) : 0;
     const fscIndex = (document.getElementById("txtFSC")?.selectedIndex ?? -1);
 
     const datos = {
@@ -849,11 +856,17 @@ async function enviarAlServidor(datos, bancos) {
         for (const diam in contadores) {
             const cantidad = contadores[diam];
             if (cantidad > 0) {
+                console.log("📤 Insertando detalle:", {
+                    correlativo,
+                    diametro: parseInt(diam),
+                    cantidad
+                });
+
                 await IngresarTrozosDet(
-                    correlativo,         // ✅ correlativo correcto
+                    correlativo,
                     parseInt(diam),
                     cantidad,
-                    correlativo          // ✅ usar correlativo como referencia también aquí
+                    correlativo
                 );
             }
         }
@@ -923,10 +936,6 @@ function limpiarYRedirigir(url) {
 }
 
 function guardarJSONLocal(datosFinales, nombreArchivo) {
-    delete datosFinales.ingreso.Proveedor;
-    delete datosFinales.ingreso.NotaCompra;
-    delete datosFinales.ingreso.NotaVenta;
-    delete datosFinales.ingreso.Producto;
 
     const blob = new Blob([JSON.stringify(datosFinales, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
