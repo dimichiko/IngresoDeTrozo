@@ -1,9 +1,8 @@
 ﻿<version>
-	<number>2.3.0</number>
-	<fecha>2025-05-27</fecha>
+	<number>2.3.1</number>
+	<fecha>2025-05-28</fecha>
 	<descripcion>
-		Visualización múltiple de ingresos en movimientos.aspx con DataTables responsivo.
-		Detalle de troncos funcional por cada correlativo, con correcciones a errores de contexto
-		y mejora de UX móvil mediante ajuste dinámico de títulos.
+		Mejoras visuales y estructurales en el detalle de troncos con DataTables.
+		Mayor claridad en volumen por diámetro y ajuste de cálculo por unidad para precisión.
 	</descripcion>
 </version>

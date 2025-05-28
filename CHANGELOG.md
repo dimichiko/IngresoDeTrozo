@@ -2,6 +2,22 @@
 
 Todos los cambios notables del proyecto se registran aquí.
 
+## [2.3.1] - 2025-05-28
+### Agregado
+- Mejora visual compacta y clara en la tabla de detalle de troncos usando DataTable.
+- Aplicación de diseño con líneas suaves, alineación precisa y alto contraste sin exceso de espacio.
+- Formato numérico refinado para volúmenes con `toFixed(3)` y alineación a la derecha.
+
+### Mejorado
+- Tabla de detalle más legible en dispositivos pequeños sin sacrificar densidad de datos.
+- Estructura HTML optimizada para diferenciar filas sin usar espacio innecesario.
+
+### Corregido
+- Estilo de tabla mal renderizado en el modal corregido.
+- Cálculo erróneo por unidades iguales en todos los diámetros ajustado.
+
+---
+
 ## [2.3.0] - 2025-05-27
 ## Agregado
 - Visualización múltiple de ingresos en movimientos.aspx usando Obtener_Ingreso_Trozo(0) para mostrar todos.

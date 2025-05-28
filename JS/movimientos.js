@@ -98,7 +98,7 @@ function poblarTabla(item) {
         <td>
             <button class="btn-detalle" onclick="verDetalle(event, ${item.Correlativo})"
                     title="Ver detalles del ingreso">
-                <i class="fas fa-eye"></i> Ver detalle
+                <i class="fas fa-eye"></i>
             </button>
         </td>
     `;
@@ -112,18 +112,14 @@ function inicializarDataTable() {
             url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
         },
         pageLength: 10,
-        lengthChange: false,
+        lengthMenu: [5, 10, 25, 50, 100],
+        lengthChange: true,
         searching: true,
         ordering: true,
         info: true,
         responsive: true,
-        dom: 'frtip'
+        dom: 'lfrtip'
     });
-
-    // Ocultar paginación si hay pocos registros
-    if (tablaMovimientos.data().count() <= 10) {
-        $('.dataTables_paginate').hide();
-    }
 }
 
 function mostrarMensajeSinDatos(container) {
@@ -199,59 +195,82 @@ window.verDetalle = function (event, correlativo) {
 };
 
 function mostrarModalDetalle(correlativo, detalle) {
-    let contenido = `
-        <div style="overflow-x: auto;">
-            <table style="width:100%; text-align:left; border-collapse: collapse; margin-top: 1rem;">
-                <thead>
-                    <tr style="background:#f8f9fa; border-bottom: 2px solid #dee2e6;">
-                        <th style="padding: 12px; border: 1px solid #dee2e6;">Diámetro</th>
-                        <th style="padding: 12px; border: 1px solid #dee2e6;">Cantidad</th>
-                        <th style="padding: 12px; border: 1px solid #dee2e6;">Volumen (m³)</th>
-                    </tr>
-                </thead>
-                <tbody>`;
+    const largo = Number(sessionStorage.getItem("LargoTroncos")) || 3.2;
+    const calcularVolumenUnitario = d => Math.PI * Math.pow(d / 200, 2) * largo;
 
     let totalVolumen = 0;
     let totalCantidad = 0;
+    let rows = "";
 
     for (const item of detalle) {
-        const cantidad = Number(item.NroTrozo) || 0;
-        const volumen = 0; 
+        const cantidad = Number(item.NroTrozo || 0);
+        const diametro = Number(item.Diametro || 0);
+        const volumen = calcularVolumenUnitario(diametro) * cantidad;
 
         totalVolumen += volumen;
         totalCantidad += cantidad;
 
-        contenido += `
-            <tr style="border-bottom: 1px solid #dee2e6;">
-                <td style="padding: 10px; border: 1px solid #dee2e6;">${item.Diametro || '-'}</td>
-                <td style="padding: 10px; border: 1px solid #dee2e6; text-align: center;">${cantidad}</td>
-                <td style="padding: 10px; border: 1px solid #dee2e6; text-align: right;">${volumen.toFixed(3)}</td>
+        rows += `
+            <tr>
+                <td>${diametro}</td>
+                <td>${cantidad}</td>
+                <td>${volumen.toFixed(3)}</td>
             </tr>`;
     }
 
-    // Agregar fila de totales
-    contenido += `
-            <tr style="background:#e9ecef; font-weight: bold; border-top: 2px solid #dee2e6;">
-                <td style="padding: 12px; border: 1px solid #dee2e6;">TOTAL</td>
-                <td style="padding: 12px; border: 1px solid #dee2e6; text-align: center;">${totalCantidad}</td>
-                <td style="padding: 12px; border: 1px solid #dee2e6; text-align: right;">${totalVolumen.toFixed(3)}</td>
-            </tr>
-        </tbody>
-    </table>
-    </div>`;
+    rows += `
+        <tr class="total-row">
+            <td><strong>TOTAL</strong></td>
+            <td><strong>${totalCantidad}</strong></td>
+            <td><strong>${totalVolumen.toFixed(3)}</strong></td>
+        </tr>`;
+
+    const tablaHTML = `
+        <style>
+            #detalleTabla {
+                font-size: 13px;
+                width: 100%;
+                border-collapse: collapse;
+            }
+            #detalleTabla thead th {
+                background-color: #f2f2f2;
+                border-bottom: 2px solid #ccc;
+                padding: 6px;
+                text-align: center;
+            }
+            #detalleTabla td {
+                padding: 5px;
+                text-align: center;
+                border-top: 1px solid #eee;
+            }
+            #detalleTabla tr:nth-child(even) {
+                background-color: #fafafa;
+            }
+            .total-row td {
+                background-color: #e9ecef;
+                font-weight: bold;
+            }
+        </style>
+
+        <table id="detalleTabla">
+            <thead>
+                <tr>
+                    <th>Diámetro</th>
+                    <th>Cantidad</th>
+                    <th>Volumen (m³)</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${rows}
+            </tbody>
+        </table>`;
 
     Swal.fire({
         title: `<i class="fas fa-list-alt"></i> Detalle del Ingreso #${correlativo}`,
-        html: contenido,
+        html: tablaHTML,
         width: '700px',
         confirmButtonColor: '#007BFF',
-        confirmButtonText: 'Cerrar',
-        showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-        }
+        confirmButtonText: 'Cerrar'
     });
 }
 

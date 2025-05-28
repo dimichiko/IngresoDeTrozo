@@ -862,4 +862,3 @@ $("#txtProducto").blur(function () {
         handleError(error, "Error al obtener datos del producto");
     }
 });
-

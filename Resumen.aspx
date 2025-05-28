@@ -184,8 +184,7 @@
             </section>
         </div>
     </form>
-    <div id="version-info" class="version-info"></div>
-    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+    <div id="loading-overlay" class="loading-overlay">
         <div class="spinner"></div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -194,15 +193,6 @@
     <script src="JS/loader.js"></script>
     <script src="JS/version-utils.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script>
-        document.querySelectorAll("button, a").forEach(el => {
-            el.addEventListener("click", e => {
-                const target = e.target.closest("button, a");
-                if (target && !target.getAttribute("target") === "_blank") {
-                    showLoader();
-                }
-            });
-        });
-    </script>
+
 </body>
 </html>

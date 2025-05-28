@@ -40,7 +40,23 @@
     // Funciones de utilidad
     const utils = {
         calcularVolumen: function (diametro) {
-            return (diametro * diametro * 3.2) / 10000;
+            const tipoLargo = sessionStorage.getItem("LargoTroncos") || "2";
+            const largo = utils.LargoJAS(tipoLargo);
+            return (diametro * diametro * largo) / 10000;
+        },
+
+        LargoJAS: function (tipo) {
+            switch (tipo) {
+                case "1": return 2.40;
+                case "2": return 3.20;
+                case "3": return 3.60;
+                case "4": return 4.00;
+                default: return 3.20;
+            }
+        },
+
+        redondear: function (num, decimales = 3) {
+            return +(Math.round(num + "e+" + decimales) + "e-" + decimales);
         },
 
         showLoader: function () {
@@ -254,6 +270,19 @@
             domElements.volumenDisplays.forEach(el => {
                 el.textContent = `Volumen Total: ${state.volumenTotal.toFixed(2)} m³`;
             });
+
+            // ✅ Mostrar toast si volumen sobrepasa 35
+            if (state.volumenTotal > 35) {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'warning',
+                    title: `¡Volumen alto: ${state.volumenTotal.toFixed(2)} m³!`,
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            }
         },
 
         actualizarModoResta: function () {
@@ -292,10 +321,16 @@
                 }
             });
 
+            const volumenTotal = Object.entries(contadores).reduce((total, [diam, cant]) => {
+                const diametroNum = parseInt(diam);
+                const volumenParcial = utils.calcularVolumen(diametroNum) * cant;
+                return total + volumenParcial;
+            }, 0);
+
             const datosActuales = {
                 banco: state.bancoActual,
                 total: state.contadorTotal,
-                volumen: state.volumenTotal,
+                volumen: utils.redondear(volumenTotal),
                 contadores
             };
 
@@ -306,6 +341,8 @@
 
             localStorage.setItem("datosBancos", JSON.stringify(datosBancos));
             state.datosModificados = false;
+
+            console.log(`✅ Banco ${state.bancoActual} guardado con volumen: ${datosActuales.volumen}`);
         },
 
         cargarDatosBanco: function () {

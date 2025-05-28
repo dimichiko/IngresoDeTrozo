@@ -214,6 +214,18 @@ const uiController = (() => {
 
         if (totalTroncos) totalTroncos.textContent = `Total de Troncos: ${totalGlobal}`;
         if (volumenTotal) volumenTotal.textContent = `Volumen Total: ${volumenGlobal.toFixed(2)} m³`;
+
+        if (volumenGlobal > 35) {
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'warning',
+                title: `Volumen total alto: ${volumenGlobal.toFixed(2)} m³`,
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+        }
     };
 
     const mostrarResumenIngreso = () => {
@@ -703,6 +715,7 @@ const appController = (() => {
 window.addEventListener('load', appController.init);
 
 async function guardarDatos() {
+    showLoader();
     const largoStr = sessionStorage.getItem("LargoTroncos") || "";
     const largoMatch = largoStr.match(/[\d.]+/);
     const largoEnCm = largoMatch ? Math.round(parseFloat(largoMatch[0]) * 10) : 0;
@@ -745,6 +758,8 @@ async function guardarDatos() {
         datos.TotUnidades += b.total;
         datos.TotVolM3 += b.volumen;
     });
+
+    sessionStorage.setItem("TotVolM3", datos.TotVolM3.toFixed(3));
 
     const resumenGlobal = {};
     for (let d = 16; d <= 60; d += 2) resumenGlobal[d] = 0;
@@ -802,11 +817,13 @@ async function guardarDatos() {
     try {
         const exito = await enviarAlServidor(datos, bancos);
         if (exito) {
+            hideLoader();
             confirmarYPreguntarImpresion();
         } else {
             throw new Error("El servidor no devolvió un GDE válido.");
         }
     } catch (error) {
+        hideLoader();
         Swal.fire({
             icon: "error",
             title: "Error al guardar",
@@ -921,6 +938,7 @@ function mostrarOpcionesPostImpresion() {
         denyButtonColor: "#dc3545",
         cancelButtonColor: "#6c757d"
     }).then(result => {
+        hideLoader();
         if (result.isConfirmed) {
             limpiarYRedirigir("ingreso.aspx");
         } else if (result.isDenied) {

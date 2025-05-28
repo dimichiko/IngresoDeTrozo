@@ -356,6 +356,21 @@ details.banco-bloque {
     display: inline-block;
 }
 
+#loading-overlay::before {
+    content: "Cargando...";
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
 @keyframes spin {
     to {
         transform: rotate(360deg);
