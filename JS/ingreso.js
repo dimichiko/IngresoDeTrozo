@@ -562,8 +562,10 @@ function configureSubmitButton() {
                 const provAuto = document.getElementById("txtCodProvAuto");
                 const nomProducto = document.getElementById("nomProducto");
                 const largoRaw = document.getElementById("LargoTroncos")?.value || "";
-                console.log("Guardando largo:", largoRaw); // <-- AGREGA ESTO
-                sessionStorage.setItem("LargoTroncos", largoRaw.trim());
+                const largoCm = parseInt(largoRaw.trim()) || 320;
+                const largoMetros = largoCm / 100;
+                console.log("Guardando largo en metros:", largoMetros);
+                sessionStorage.setItem("LargoTroncos", largoMetros.toFixed(2));
 
                 if (fscSelect) {
                     sessionStorage.setItem("txtFSC", fscSelect.options[fscSelect.selectedIndex].text);

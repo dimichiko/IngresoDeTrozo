@@ -718,7 +718,10 @@ async function guardarDatos() {
     showLoader();
     const largoStr = sessionStorage.getItem("LargoTroncos") || "";
     const largoMatch = largoStr.match(/[\d.]+/);
-    const largoEnCm = largoMatch ? Math.round(parseFloat(largoMatch[0]) * 10) : 0;
+    let largoParsed = largoMatch ? parseFloat(largoMatch[0]) : 0;
+    if (largoParsed <= 0) largoParsed = 3.2;
+    if (largoParsed <= 20) largoParsed = largoParsed * 100;
+    const largoEnCm = Math.round(largoParsed);
     const fscIndex = (document.getElementById("txtFSC")?.selectedIndex ?? -1);
 
     const datos = {
@@ -836,59 +839,59 @@ async function guardarDatos() {
 
 async function enviarAlServidor(datos, bancos) {
     const resultado = await IngresarTrozos(
-        datos.codProv,
-        datos.NC,
-        datos.NV,
-        datos.GDE,
-        datos.CodProd,
-        datos.CodFSC,
-        datos.Pila,
-        datos.LargoTrozo,
-        datos.TotUnidades,
-        datos.TotVolM3,
-        datos.CodEmp,
-        datos.strObs,
-        datos.RutTrans,
-        datos.NomTrans,
-        datos.RutDesp,
-        datos.NomDesp,
-        datos.RutCond,
-        datos.NomCond,
-        datos.PatenteCam,
-        datos.PatenteCar,
-        datos.Rol,
-        datos.Destino,
-        datos.EstadoCod,
-        datos.CodUsuario
+        datos.codProv, datos.NC, datos.NV, datos.GDE, datos.CodProd, datos.CodFSC,
+        datos.Pila, datos.LargoTrozo, datos.TotUnidades, 0,
+        datos.CodEmp, datos.strObs, datos.RutTrans, datos.NomTrans,
+        datos.RutDesp, datos.NomDesp, datos.RutCond, datos.NomCond,
+        datos.PatenteCam, datos.PatenteCar, datos.Rol, datos.Destino,
+        datos.EstadoCod, datos.CodUsuario
     );
 
-    if (!resultado || !resultado[0] || resultado[0].EstCod === -1) {
-        return false;
-    }
+    if (!resultado || !resultado[0] || resultado[0].EstCod === -1) return false;
 
     const correlativo = resultado[0].EstCod;
 
+    let largoEnMetros = parseFloat(sessionStorage.getItem("LargoTroncos")) || 3.2;
+    if (largoEnMetros > 20) {
+        console.warn("⚠️ Largo parece estar en centímetros, convirtiendo a metros.");
+        largoEnMetros = largoEnMetros / 100;
+    }
+    const largoEnCm = Math.round(largoEnMetros * 100);
+
+    volumenTotal = 0;
+    const calcularVolumen = (d, l) => ((d * d * l * Math.PI) / 40000);
     for (const b of bancos) {
         const contadores = b.contadores || {};
         for (const diam in contadores) {
             const cantidad = contadores[diam];
-            if (cantidad > 0) {
-                console.log("📤 Insertando detalle:", {
-                    correlativo,
-                    diametro: parseInt(diam),
-                    cantidad
-                });
-
-                await IngresarTrozosDet(
-                    correlativo,
-                    parseInt(diam),
-                    cantidad,
-                    correlativo
-                );
-            }
+            const diametro = parseInt(diam);
+            if (!diametro || !cantidad) continue;
+            const volumenUnitario = calcularVolumen(diametro, largoEnMetros);
+            volumenTotal += cantidad * volumenUnitario;
         }
     }
+    volumenTotal = parseFloat(volumenTotal.toFixed(4));
 
+    console.table({ largoEnMetros, largoEnCm, volumenTotal });
+
+    //for (const b of bancos) {
+    //    const contadores = b.contadores || {};
+    //    for (const diam in contadores) {
+    //        const cantidad = contadores[diam];
+    //        const diametro = parseInt(diam);
+    //        if (diametro === 0 || cantidad === 0) continue;
+
+    //        const volumenUnitario = calcularVolumen(diametro, largoEnMetros);
+    //        const volumen = cantidad * volumenUnitario;
+
+    //        await IngresarTrozosDet(datos.GDE, diametro, cantidad, correlativo, 0);
+    //        console.log("🧾 Detalle enviado:", { diametro, cantidad, volumen });
+    //    }
+    //}
+
+    // Solo una vez y con await: total consolidado
+    await IngresarTrozosDet(datos.GDE, 0, 0, correlativo, volumenTotal);
+    console.log("📦 Detalle consolidado enviado:", { diametro: 0, cantidad: 0, volumen: volumenTotal });
     const previos = JSON.parse(localStorage.getItem('correlativos') || '[]');
     if (!previos.includes(correlativo)) {
         previos.unshift(correlativo);
