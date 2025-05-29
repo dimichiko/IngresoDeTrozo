@@ -179,6 +179,9 @@ window.verDetalle = function (event, correlativo) {
         const resultado = Obtener_Ingreso_Trozo_Det(correlativo);
         const detalle = resultado?.DS;
 
+        console.log("🔎 Obteniendo detalle de correlativo:", correlativo);
+        console.log("👉 Resultado de Obtener_Ingreso_Trozo_Det:", resultado);
+
         if (!Array.isArray(detalle) || detalle.length === 0) {
             throw new Error("No se encontró información de detalle para este ingreso.");
         }
