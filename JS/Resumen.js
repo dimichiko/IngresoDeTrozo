@@ -876,14 +876,16 @@ async function enviarAlServidor(datos, bancos) {
                 console.log("📤 Insertando detalle:", {
                     correlativo,
                     diametro: parseInt(diam),
-                    cantidad
+                    cantidad,
+                    Volumen
                 });
 
                 await IngresarTrozosDet(
                     correlativo,
                     parseInt(diam),
                     cantidad,
-                    correlativo
+                    correlativo,
+                    Volumen
                 );
             }
         }

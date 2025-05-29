@@ -40,7 +40,7 @@
     // Funciones de utilidad
     const utils = {
         calcularVolumen: function (diametro) {
-            const tipoLargo = sessionStorage.getItem("LargoTroncos") || "2";
+            const tipoLargo = sessionStorage.getItem("LargoTroncos") || "3";
             const largo = utils.LargoJAS(tipoLargo);
             return (diametro * diametro * largo) / 10000;
         },
