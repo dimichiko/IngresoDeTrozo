@@ -182,6 +182,7 @@
                     <button type="button" onclick="irAlInicio()">← Volver al Login</button>
                 </div>
             </section>
+            <div id="version-info" class="version-info"></div>
         </div>
     </form>
     <div id="loading-overlay" class="loading-overlay">

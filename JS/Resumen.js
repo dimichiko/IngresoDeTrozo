@@ -840,7 +840,7 @@ async function guardarDatos() {
 async function enviarAlServidor(datos, bancos) {
     const resultado = await IngresarTrozos(
         datos.codProv, datos.NC, datos.NV, datos.GDE, datos.CodProd, datos.CodFSC,
-        datos.Pila, datos.LargoTrozo, datos.TotUnidades, 0,
+        datos.Pila, datos.LargoTrozo, datos.TotUnidades, datos.TotVolM3,
         datos.CodEmp, datos.strObs, datos.RutTrans, datos.NomTrans,
         datos.RutDesp, datos.NomDesp, datos.RutCond, datos.NomCond,
         datos.PatenteCam, datos.PatenteCar, datos.Rol, datos.Destino,
@@ -851,25 +851,20 @@ async function enviarAlServidor(datos, bancos) {
 
     const correlativo = resultado[0].EstCod;
 
-    let largoEnMetros = parseFloat(sessionStorage.getItem("LargoTroncos")) || 3.2;
-    if (largoEnMetros > 20) {
-        console.warn("⚠️ Largo parece estar en centímetros, convirtiendo a metros.");
-        largoEnMetros = largoEnMetros / 100;
-    }
-    const largoEnCm = Math.round(largoEnMetros * 100);
-
-    volumenTotal = 0;
-    const calcularVolumen = (d, l) => ((d * d * l * Math.PI) / 40000);
     for (const b of bancos) {
         const contadores = b.contadores || {};
         for (const diam in contadores) {
             const cantidad = contadores[diam];
             if (cantidad > 0) {
+                const volumenParcial = (b.volumen && b.total)
+                    ? (b.volumen * cantidad / b.total)
+                    : 0;
+
                 console.log("📤 Insertando detalle:", {
                     correlativo,
                     diametro: parseInt(diam),
                     cantidad,
-                    Volumen
+                    volumenParcial: volumenParcial.toFixed(3)
                 });
 
                 await IngresarTrozosDet(
@@ -877,15 +872,21 @@ async function enviarAlServidor(datos, bancos) {
                     parseInt(diam),
                     cantidad,
                     correlativo,
-                    Volumen
+                    volumenParcial
                 );
             }
         }
     }
 
-    // Solo una vez y con await: total consolidado
-    await IngresarTrozosDet(datos.GDE, 0, 0, correlativo, volumenTotal);
-    console.log("📦 Detalle consolidado enviado:", { diametro: 0, cantidad: 0, volumen: volumenTotal });
+    //// Consolidado: usa directamente el volumen total ya calculado
+    //await IngresarTrozosDet(datos.GDE, 0, 0, correlativo, datos.TotVolM3);
+
+    console.log("📦 Detalle consolidado enviado:", {
+        diametro: 0,
+        cantidad: 0,
+        volumen: datos.TotVolM3
+    });
+
     const previos = JSON.parse(localStorage.getItem('correlativos') || '[]');
     if (!previos.includes(correlativo)) {
         previos.unshift(correlativo);
